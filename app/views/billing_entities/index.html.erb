@@ -1,0 +1,39 @@
+<h2>Billing Entities (<%= @billing_entities.size %>)</h2>
+
+
+<%= link_to '+ Add New', new_billing_entity_path %>
+<%=
+  link_to_if params[:active] && params[:active] == "false",  'Show Active', billing_entities_path() do
+    link_to('Show Inactive', billing_entities_path(:active => "false"))
+  end
+%>
+
+<table>
+  <tr>
+    <th></th>
+    <th>Entity Type</th>
+    <th>Billing Format</th>
+    <th>Contact Information</th>
+  </tr>
+  <% @billing_entities.each do |billing_entity| %>
+    <tr>
+      <td>
+        <%= link_to billing_entity.name, billing_entity %> <br />
+        <%= billing_entity.branch %> <%= billing_entity.departement %><br />
+        <%= billing_entity.city %>,<%= billing_entity.state %> <%= billing_entity.zip %>
+      </td>
+      <td>
+        <%= billing_entity.entity_type %>
+      </td>
+      <td>
+        <%= billing_entity.billing_format %>
+      </td>
+      <td>
+        Telephone: <%= billing_entity.phone %> <br />
+        Fax: <%= billing_entity.fax %>
+      </td>
+      <td><%= link_to 'Edit', edit_billing_entity_path(billing_entity) %></td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @billing_entities %>

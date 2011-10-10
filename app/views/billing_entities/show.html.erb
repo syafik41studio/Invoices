@@ -1,0 +1,110 @@
+<p id="notice"><%= notice %></p>
+<% if @billing_entity.invoice %>
+  <p>
+    <b>Invoice Name :</b>
+    <%= @billing_entity.invoice.name %>
+  </p>
+<% end %>
+<p>
+  <b>Name:</b>
+  <%= @billing_entity.name %>
+</p>
+
+<p>
+  <b>Branch:</b>
+  <%= @billing_entity.branch %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @billing_entity.entity_type %>
+</p>
+
+<p>
+  <b>Active:</b>
+  <%= @billing_entity.active %>
+</p>
+
+<p>
+  <b>Billing format:</b>
+  <%= @billing_entity.billing_format %>
+</p>
+
+<p>
+  <b>Clearring house:</b>
+  <%= @billing_entity.clearing_house %>
+</p>
+
+<p>
+  <b>Departement:</b>
+  <%= @billing_entity.departement %>
+</p>
+
+<p>
+  <b>Attn:</b>
+  <%= @billing_entity.attn %>
+</p>
+
+<p>
+  <b>Address line 1:</b>
+  <%= @billing_entity.address_line_1 %>
+</p>
+
+<p>
+  <b>Address line 2:</b>
+  <%= @billing_entity.address_line_2 %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @billing_entity.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @billing_entity.state %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @billing_entity.zip %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @billing_entity.phone %>
+</p>
+
+<p>
+  <b>Fax:</b>
+  <%= @billing_entity.fax %>
+</p>
+
+<p>
+  <b>Other info 1:</b>
+  <%= @billing_entity.other_info_1 %>
+</p>
+
+<p>
+  <b>Other info 2:</b>
+  <%= @billing_entity.other_info_2 %>
+</p>
+
+<p>
+  <b>Other info 3:</b>
+  <%= @billing_entity.other_info_3 %>
+</p>
+
+<p>
+  <b>Other info 4:</b>
+  <%= @billing_entity.other_info_4 %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @billing_entity.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_billing_entity_path(@billing_entity) %> |
+<%= link_to 'Back', billing_entities_path %>
