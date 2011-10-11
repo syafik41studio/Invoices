@@ -1,0 +1,5 @@
+<% if @user.nil? %>
+  <h2>No Messages</h2>
+<% else %>
+  <%= link_to @user.email, message_path(@user), :remote => true%>
+<% end %>

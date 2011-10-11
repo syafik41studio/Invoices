@@ -1,0 +1,7 @@
+<% @message_recipients.each do |mr| %>
+  <% mr.view %>
+  <strong><%= mr.receiver.email %></strong><br />
+  <%= mr.message.message %><br />
+  <small><%= mr.created_at.strftime("%b %d, %Y at %l:%m %p") %></small>
+  <hr />
+<% end %>
