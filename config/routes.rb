@@ -4,7 +4,11 @@ App::Application.routes.draw do
   devise_for :users
   resources :billing_entities
   resources :messages do
-    get :autocomplete_user_email, :on => :collection
+    collection do
+      post 'search'
+      get 'notifications'
+      get 'autocomplete_user_email'
+    end
   end
 
 

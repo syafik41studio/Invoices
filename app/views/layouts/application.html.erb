@@ -12,6 +12,8 @@
     <%= javascript_include_tag "jquery.min.js" %>
     <%= javascript_include_tag "rails" %>
     <%= javascript_include_tag "autocomplete-rails.js" %>
+    <%= javascript_include_tag "jquery.periodicalupdater.js" %>
+    <%= javascript_include_tag "jquery.updater.js" %>
     <%= yield :add_billing %>
 
     <!-- embedded styles for dynamic layout options -->
@@ -47,7 +49,7 @@
             <div id="col1_content" class="clearfix">
               <h3>Left Pane contents</h3>
               <%= link_to "Billing Entites", billing_entities_path %> <br />
-              <%= link_to "Messages", messages_path %>
+              <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, messages_path %>
             </div>
           </div>
           <div id="col2">

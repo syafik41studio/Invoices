@@ -5,5 +5,7 @@
   /*Show the div post_errors*/
   $("#message_errors").show(300);
 <% else -%>
-  $('<%= escape_javascript(render :partial => "show") %>').appendTo("#list-messages");
+  /*  $('<%#= escape_javascript(render :partial => "show") %>').appendTo("#list-messages"); */
+  $("#list-messages").html("<%= escape_javascript(render :partial => "list") %>");
+  $("#new-message").html('');
 <% end -%>
