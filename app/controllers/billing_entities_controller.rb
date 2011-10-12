@@ -1,4 +1,7 @@
 class BillingEntitiesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  
   # GET /billing_providers
   # GET /billing_providers.xml
   def index

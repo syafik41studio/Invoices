@@ -13,7 +13,7 @@ class MessageRecipient < ActiveRecord::Base
   before_create :get_user_id
   
   def get_user_id
-    self.recipient_id = User.where(:email => self.email).first.id
+    self.recipient_id = User.where(:email => self.email).first.id 
   end
 
   def self.get_unread(user_id)

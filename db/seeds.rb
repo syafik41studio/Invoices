@@ -15,3 +15,8 @@ Invoice.create(:name => "Invoice 6", :description => "description 6")
 Invoice.create(:name => "Invoice 7", :description => "description 7")
 Invoice.create(:name => "Invoice 8", :description => "description 8")
 Invoice.create(:name => "Invoice 9", :description => "description 9")
+
+
+User.create(:email => "admin@email.com", :password => "password")
+User.create(:email => "sender@email.com", :password => "password")
+User.create(:email => "recipient@email.com", :password => "password")
