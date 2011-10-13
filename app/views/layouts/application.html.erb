@@ -15,7 +15,22 @@
     <%= javascript_include_tag "jquery.periodicalupdater.js" %>
     <%= javascript_include_tag "jquery.updater.js" %>
     <%= yield :add_billing %>
-
+    <% if current_user %>
+      <script>
+        $.PeriodicalUpdater('/messages/notifications', {
+          method: 'get', // method; get or post
+          data: '1', // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}
+          minTimeout: 3000, // starting value for the timeout in milliseconds
+          maxTimeout: 8000, // maximum length of time between requests
+          multiplier: 2, // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
+          type: '', // response type - text, xml, json, etc. See $.ajax config options
+          maxCalls: 0, // maximum number of calls. 0 = no limit.
+          autoStop: 0 // automatically stop requests after this many returns of the same data. 0 = disabled.
+        }, function(remoteData, success, xhr, handle) {
+          // Process the new data (only called when there was a change)
+        });
+      </script>
+    <% end %>
     <!-- embedded styles for dynamic layout options -->
     <style type="text/css">
       #js-info { display:block; padding: 10px 20px; background: #fee; color: #800; margin: 0 0 10px 0; }
@@ -48,6 +63,7 @@
           <div id="col1">
             <div id="col1_content" class="clearfix">
               <h3>Left Pane contents</h3>
+              <%= link_to "Patients", patients_path %> <br />
               <%= link_to "Billing Entites", billing_entities_path %> <br />
               <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, messages_path %>
             </div>
