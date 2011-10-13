@@ -1,4 +1,6 @@
 App::Application.routes.draw do
+  resources :patients
+
   get "messages/index"
 
   devise_for :users

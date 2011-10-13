@@ -19,7 +19,7 @@ gem 'devise'
 
 gem 'aasm'
 gem 'rails3-jquery-autocomplete'
-
+gem 'paperclip'
 # following gem is used for dummy data generation
 gem 'faker'  , :group  =>[:development, :test]
 gem 'rspec'  , :group  =>[:development, :test]
