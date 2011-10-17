@@ -19,4 +19,5 @@ class MessageRecipient < ActiveRecord::Base
   def self.get_unread(user_id)
     self.where(:recipient_id => user_id, :status => "unread").includes(:message)
   end
+  
 end

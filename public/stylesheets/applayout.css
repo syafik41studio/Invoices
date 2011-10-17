@@ -15,3 +15,76 @@
 
 /* import print layout | Druck-Layout einbinden */
 @import url(yaml/print/print_draft.css);
+a.btn_search {
+    background: url("/images/btn_search.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 26px;
+    width: 22px;
+}
+.tag_menu input {
+    border: 1px solid #D3D3D3;
+    color: #666666;
+    float: right;
+    height: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+}
+a.btn_newmessage {
+    background: none repeat scroll 0 0 #E6E6E6;
+    border: 1px solid #D3D3D3;
+    border-radius: 0 0 0 0 !important;
+    color: #AAAAAA;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+}
+.list_message {
+    border-top: 1px solid #DEDEDE;
+    float: left;
+    margin-top: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+.unread{
+  background: none repeat scroll 0 0 #F8F8F8;
+}
+.desc_message {
+    float: right;
+    width: 85%;
+}
+.date_msg {
+    color: #B5B5B5;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: right;
+    width: 28%;
+}
+.opt_message {
+    float: right;
+    margin-top: 10px;
+    width: 100px;
+}
+a.opt_1 {
+    background: url("/images/opt_1.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 9px;
+    margin-left: 10px;
+    width: 8px;
+}
+
+a.opt_2 {
+    background: url("/images/opt_2.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 10px;
+    margin-left: 10px;
+    width: 10px;
+}
+.content_msg p {
+    color: #777777 !important;
+    float: left;
+    line-height: 15px;
+    width: 70%;
+}

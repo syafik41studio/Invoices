@@ -5,6 +5,11 @@ App::Application.routes.draw do
 
   devise_for :users
   resources :billing_entities
+  resources :message_recipients do
+    member do
+      delete 'unread'
+    end
+  end
   resources :messages do
     collection do
       post 'search'
@@ -12,7 +17,6 @@ App::Application.routes.draw do
       get 'autocomplete_user_email'
     end
   end
-
 
   get "pages/home"
   root :to => "pages#home"
