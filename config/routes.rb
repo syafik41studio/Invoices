@@ -18,6 +18,8 @@ App::Application.routes.draw do
     end
   end
 
+  resources :conversations
+
   get "pages/home"
   root :to => "pages#home"
 

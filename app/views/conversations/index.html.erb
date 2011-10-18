@@ -1,0 +1,36 @@
+<h2>Messages</h2>
+<div class="tag_menu">
+  <a class="btn_search" href="#"></a>
+  <% form_tag(search_messages_path, :remote => true) do %>
+    <%#= autocomplete_field_tag "search_message", "",autocomplete_user_email_messages_path, :as => :autocomplete %>
+  <% end %>
+  <%= link_to "+ New Message", new_message_path, :class=>"btn_newmessage", :id=>"create-user", :remote => true %>
+  <div style="clear:both"></div>
+</div>
+<div id="list-messages">
+  <% @conversations.each do |conversation| %>
+    <div class="list_message" id="list-messages-<%= conversation.id %>">
+      <img width="" height="" class="img_stle" src="/images/photo.png" />
+      <div class="desc_message">
+        <a href="#" class="hovertitle">
+          <div class="name_msg">
+            <%  if current_user.id == message.recipient_id%>
+              <%  user = User.find(message.sender_id) %>
+              <%= link_to user.email, message_path(user), :remote => true %>
+            <% else %>
+              <%= link_to conversation_title(conversation), conversation_path(conversation) %>
+            <% end %>
+          </div>
+        </a>
+        <div class="date_msg"><%= conversation.messages.last.created_at.strftime("%b %d, %Y at %l:%m %p") rescue nil%></div>
+        <div class="content_msg">
+          <p><%= conversation.message.last.body rescue nil %></p>
+          <div class="opt_message">
+            <%= link_to "", message_path(:id => message.recipient_id), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class=>"opt_2"  %>
+  <%#= link_to "", unread_message_recipient_path(message.receiver.get_last_message(message.recipient_id,current_user.id)), :method => :delete, :remote => true, :class=>"opt_1"  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -67,7 +67,7 @@
               <h3>Left Pane contents</h3>
               <%= link_to "Patients", patients_path %> <br />
               <%= link_to "Billing Entites", billing_entities_path %> <br />
-              <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, messages_path %>
+              <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, conversations_path %>
             </div>
           </div>
           <div id="col2">
@@ -82,6 +82,12 @@
               <p class="notice"><%= notice %></p>
               <p class="alert"><%= alert %></p>
               <%= yield %>
+              <!-- Popup Content -->
+              <div id="dialog-form" title="New Message" >
+                <div id="new-message">
+                </div>
+              </div>
+              <!-- //Popup Content -->
             </div>
             <!-- IE Column Clearing -->
             <div id="ie_clearing"> &#160; </div>
