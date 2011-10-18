@@ -1,22 +1,7 @@
-<<<<<<< HEAD
 <% simple_form_for(@message, :remote => true, :html => {:class => "yform"}) do |f| %>
-  <div class="subcolumns">
-	  <div class="c80l">
-      <div id= "message_errors" style="display:none"></div>
-	    <%= label_tag :recipient %>
-	    <%= autocomplete_field :message_recipient ,:email, autocomplete_user_email_messages_path, :as => :autocomplete, :class => "subcl type-text" %> 
-	    <%= f.input :message, :as => "text", :label => "Message", :input_html => { :rows => 5, :cols => 40 }%>
-			<%= f.button :submit, :value => "Send" %>
-		</div>
-	  <div class="c20r">
-		</div>
-  </div>
-=======
-<% simple_form_for(@message, :remote => true) do |f| %>
  <fieldset>
   <div id= "message_errors" style="display:none"></div>
   Recipient : <%= autocomplete_field :message_recipient ,:email, autocomplete_user_email_messages_path, :as => :autocomplete, :size => 37 %> <br />
   Message : <%= f.input :message, :label => false,  :input_html =>{:rows => 6 , :cols => 35}%>
   </fieldset>
->>>>>>> 05d7d6f8b29529a7e1b998b1e5d4dce256dae040
 <% end %>

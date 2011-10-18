@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20111012152719) do
 
   add_index "message_recipients", ["message_id"], :name => "index_message_recipients_on_message_id"
   add_index "message_recipients", ["recipient_id"], :name => "index_message_recipients_on_recipient_id"
+  add_index "message_recipients", ["status"], :name => "index_message_recipients_on_status"
 
   create_table "messages", :force => true do |t|
     t.integer  "sender_id",                :null => false
@@ -73,15 +74,17 @@ ActiveRecord::Schema.define(:version => 20111012152719) do
     t.datetime "updated_at"
   end
 
+  add_index "messages", ["message"], :name => "index_messages_on_message"
   add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
+  add_index "messages", ["status"], :name => "index_messages_on_status"
 
   create_table "patients", :force => true do |t|
     t.integer  "user_id"
     t.string   "name"
     t.float    "age"
     t.text     "description"
+    t.string   "visit"
     t.string   "primary_contact"
-    t.string   "visits"
     t.string   "relation"
     t.string   "email"
     t.string   "phone_number"
