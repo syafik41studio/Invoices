@@ -5,6 +5,7 @@
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag "applayout", :media =>"all" %>
+    <%= stylesheet_link_tag "common" %>
     <!--[if lte IE 7]>
     <%= stylesheet_link_tag "yaml/patches/patch_nav_vlist", :media =>"all" %>
     <![endif]-->
@@ -14,6 +15,21 @@
     <%= javascript_include_tag "autocomplete-rails.js" %>
     <%= javascript_include_tag "jquery.periodicalupdater.js" %>
     <%= javascript_include_tag "jquery.updater.js" %>
+    <script type="text/javascript" src="javascripts/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.bgiframe-2.1.1.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="javascripts/jquery-show-popup.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.mouse.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.button.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.draggable.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.resizable.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.effects.core.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.ui.dialog.js"></script>
+    <link type="text/css" href="css/jquery.ui.theme.css" rel="stylesheet" />
+    <link type="text/css" href="css/jquery.ui.dialog.css" rel="stylesheet" />
+    <link type="text/css" href="css/jquery.ui.core.css" rel="stylesheet" />
     <%= yield :add_billing %>
 
     <!-- embedded styles for dynamic layout options -->

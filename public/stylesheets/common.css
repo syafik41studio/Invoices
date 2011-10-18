@@ -1,0 +1,229 @@
+.tag_menu {
+    width: 100%;
+}
+
+.list_message {
+    width : 100%;
+    float: left;
+    margin-top: 10px;
+    border-top: 1px solid #dedede;
+    padding-top: 10px;
+}
+
+a.btn_newmessage {
+    background: #e6e6e6;
+    border: 1px solid #D3D3D3;
+    padding: 5px;
+    float: right;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 0px !Important;
+}
+
+a.btn_newmessage:hover {
+    color: #555;
+    border: 1px solid #aaa;
+    text-decoration: none;
+}
+
+.img_stle {
+    float: left;
+    margin-right: 5px;
+}
+
+.desc_message {
+    float: right;
+    width: 85%;
+}
+
+.name_msg {
+    font-size: 14px;
+    color: #333;
+    float:left;
+    width: 70%;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.date_msg {
+    float: right;
+    width: 28%;
+    text-align: right;
+    font-size: 11px;
+    color: #b5b5b5;
+    font-weight: bold;
+}
+
+.content_msg {
+    font-size: 12px;
+    float: left;
+    width: 100%;
+    color: #777 !important;
+}
+
+.content_msg2 {
+    font-size: 12px;
+    float: left;
+    width: 100%;
+    color: #777 !important;
+}
+
+.tbl_message {
+    float:left;
+    width: 100%;
+}
+
+.tbl_message input {
+    height: 20px;
+    width: 255px;
+    
+}
+
+.tbl_message textarea {
+    height: 100px;
+    width: 255px;
+    
+}
+
+.tbl_message td {
+    vertical-align: top;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+}
+
+.tag_menu input {
+    float: right;
+    border: 1px solid #D3D3D3;
+    height:34px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 5px;
+    color: #666;
+}
+
+a.btn_search {
+    background: url("../images/btn_search.png") no-repeat;
+    width: 22px;
+    height: 26px;
+    float: right;
+}
+
+a.btn_search:hover, a.btn_search:focus {
+    border: none;
+    outline: none;
+}
+
+.content_msg p {
+    float: left;
+    width: 70%;
+    line-height: 15px;
+    color: #777 !important;
+}
+
+.opt_message {
+    float: right;
+    width: 100px;
+    margin-top: 10px;
+}
+
+a.opt_1 {
+    background: url("../images/opt_1.png") no-repeat;
+    width: 8px;
+    height: 9px;
+    float: right;
+    margin-left: 10px;
+}
+
+a.opt_2{
+    background: url("../images/opt_2.png") no-repeat;
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-left: 10px;
+}
+
+a.hovertitle .name_msg:hover {
+    text-decoration: underline;
+}
+
+.action_btn {
+    background: url("../images/action.png") no-repeat;
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+.action_btn:hover {
+    background: url("../images/action_hover.png") no-repeat;
+}
+
+.reply_form {
+    background: none repeat scroll 0 0 #FFFFE4;
+    border-top: 1px solid #DEDEDE;
+    float: left;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.reply_form textarea {
+    height: 60px;
+    width: 315px;
+    float: left;
+    margin-left: 10px;
+}
+
+a.btn_reply {
+    background: #e6e6e6;
+    border: 1px solid #D3D3D3;
+    border-radius: 0 0 0 0 !important;
+    color: #AAAAAA;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    padding: 5px;
+    text-align: center;
+    width: 58px;
+}
+
+a.btn_reply:hover {
+    color: #555;
+    border: 1px solid #aaa;
+    text-decoration: none;
+}
+
+a.attahce_btn {
+    background: url("../images/attach0.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 16px;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 16px;
+}
+
+a.attahce_btn:hover {
+    background: url("../images/attach.png") no-repeat scroll 0 0 transparent;
+}
+
+a.image_btn {
+    background: url("../images/camera0.png") no-repeat scroll 0 0 transparent;
+    float: right;
+    height: 16px;
+    margin-right: 5px;
+    margin-top: 7px;
+    width: 16px;
+}
+
+a.image_btn:hover {
+    background: url("../images/camera.png") no-repeat scroll 0 0 transparent;
+}
+
+

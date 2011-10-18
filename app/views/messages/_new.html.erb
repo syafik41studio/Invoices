@@ -1,6 +1,13 @@
-<% simple_form_for(@message, :remote => true) do |f| %>
-  <div id= "message_errors" style="display:none"></div>
-  Recipient : <%= autocomplete_field :message_recipient ,:email, autocomplete_user_email_messages_path, :as => :autocomplete %> <br />
-  Message : <%= f.input :message, :rows => 2 , :label => false%>
-  <%= f.button :submit, :value => "Send" %> | <%= link_to "Cancel", "#", :id => "cancel-new-messsage" %>
+<% simple_form_for(@message, :remote => true, :html => {:class => "yform"}) do |f| %>
+  <div class="subcolumns">
+	  <div class="c80l">
+      <div id= "message_errors" style="display:none"></div>
+	    <%= label_tag :recipient %>
+	    <%= autocomplete_field :message_recipient ,:email, autocomplete_user_email_messages_path, :as => :autocomplete, :class => "subcl type-text" %> 
+	    <%= f.input :message, :as => "text", :label => "Message", :input_html => { :rows => 5, :cols => 40 }%>
+			<%= f.button :submit, :value => "Send" %>
+		</div>
+	  <div class="c20r">
+		</div>
+  </div>
 <% end %>

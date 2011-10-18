@@ -7,13 +7,13 @@ class ApplicationController < ActionController::Base
 	 end
   end
 
-    def parsedate(datevalue)
-	retvalue = datevalue
-	begin
-		retvalue = Date.strptime(datevalue,DateTime::DATE_FORMATS[:default]).to_s(:db) 		if  !datevalue.empty?
-	rescue
-		p "Date parsing failed for , %s" % [datevalue]
-	end 
-	 retvalue 
+  def parsedate(datevalue)
+	  retvalue = datevalue
+	  begin
+		  retvalue = Date.strptime(datevalue,DateTime::DATE_FORMATS[:default]).to_s(:db) 		if  !datevalue.empty?
+	  rescue
+		  p "Date parsing failed for , %s" % [datevalue]
+	  end 
+	  retvalue 
   end
  end

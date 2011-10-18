@@ -7,7 +7,8 @@ class CreateMessages < ActiveRecord::Migration
       t.timestamps
     end
     add_index :messages, :sender_id
-    
+    add_index :messages, :message
+    add_index :messages, :status
   end
 
   def self.down

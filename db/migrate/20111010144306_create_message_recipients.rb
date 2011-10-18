@@ -9,6 +9,7 @@ class CreateMessageRecipients < ActiveRecord::Migration
     end
     add_index :message_recipients, :message_id
     add_index :message_recipients, :recipient_id
+    add_index :message_recipients,:status
   end
 
   def self.down
