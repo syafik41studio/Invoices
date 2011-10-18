@@ -5,7 +5,13 @@ class MessagesController < ApplicationController
   autocomplete :user, :email
 
   def index          
-    @messages = Message.select('sender_id').joins(:message_recipients).where("message_recipients.recipient_id = ?", current_user.id).group('sender_id')
+    @messages = MessageRecipient.find(:all,:select => "recipient_id, messages.sender_id",
+      :joins => :message,
+      :conditions => ["message_recipients.recipient_id = ? OR messages.sender_id = ?", current_user.id, current_user.id],
+      :group => "recipient_id, messages.sender_id"
+    )
+    
+#    @messages = Message.select('sender_id').joins(:message_recipients).where("message_recipients.recipient_id = ?", current_user.id).group('message_recipients.message_id, sender_id')
   end
 
   def new

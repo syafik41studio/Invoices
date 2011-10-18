@@ -9,16 +9,25 @@
 </div>
 <div id="list-messages">
   <% @messages.each do |message| %>
-  <div class="list_message" id="list-messages-<%= message.sender_id %>">
+    <div class="list_message" id="list-messages-<%= message.recipient_id %>">
       <img width="" height="" class="img_stle" src="/images/photo.png" />
       <div class="desc_message">
-        <a href="#" class="hovertitle"><div class="name_msg"><%= link_to message.sender.email, message_path(message.sender), :remote => true %></div></a>
+        <a href="#" class="hovertitle">
+          <div class="name_msg">
+            <%if current_user.id==message.recipient_id%>
+              <%user = User.find(message.sender_id) %>
+              <%= link_to user.email, message_path(user), :remote => true %>
+            <% else %>
+              <%= link_to message.receiver.email, message_path(message.receiver), :remote => true %>
+            <% end %>
+          </div>
+        </a>
         <div class="date_msg"><%= message.get_last_message(message.sender_id,current_user.id).created_at.strftime("%b %d, %Y at %l:%m %p") rescue nil%></div>
         <div class="content_msg">
-          <p><%= message.sender.get_last_message(message.sender_id,current_user.id).message.message rescue nil%></p>
+          <p><%= message.receiver.get_last_message(message.recipient_id,current_user.id).message.message rescue nil%></p>
           <div class="opt_message">
-            <%= link_to "", message_path(:id => message.sender_id), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class=>"opt_2"  %>
-            <%= link_to "", unread_message_recipient_path(message.sender.get_last_message(message.sender_id,current_user.id)), :method => :delete, :remote => true, :class=>"opt_1"  %>
+            <%= link_to "", message_path(:id => message.recipient_id), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class=>"opt_2"  %>
+  <%#= link_to "", unread_message_recipient_path(message.receiver.get_last_message(message.recipient_id,current_user.id)), :method => :delete, :remote => true, :class=>"opt_1"  %>
           </div>
         </div>
       </div>

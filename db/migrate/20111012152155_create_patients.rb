@@ -5,7 +5,7 @@ class CreatePatients < ActiveRecord::Migration
       t.string :name
       t.float :age
       t.text :description
-      t.string :visit
+      t.string :visits
       t.string :primary_contact
       t.string :relation
       t.string :email
