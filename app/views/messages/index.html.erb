@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="col3">
   <div id="col3_content">
     <h2>Messages</h2>
@@ -85,3 +86,40 @@
 			</div>
 		</div>
   </div>
+=======
+<h2>Messages</h2>
+<div class="tag_menu">
+  <a class="btn_search" href="#"></a>
+  <% form_tag(search_messages_path, :remote => true) do %>
+    <%= autocomplete_field_tag "search_message", "",autocomplete_user_email_messages_path, :as => :autocomplete %>
+  <% end %>
+  <%= link_to "+ New Message", new_message_path, :class=>"btn_newmessage", :id=>"create-user", :remote => true %>
+  <div style="clear:both"></div>
+</div>
+<div id="list-messages">
+  <% @messages.each do |message| %>
+  <div class="list_message" id="list-messages-<%= message.sender_id %>">
+      <img width="" height="" class="img_stle" src="/images/photo.png" />
+      <div class="desc_message">
+        <a href="#" class="hovertitle"><div class="name_msg"><%= link_to message.sender.email, message_path(message.sender), :remote => true %></div></a>
+        <div class="date_msg"><%= message.get_last_message(message.sender_id,current_user.id).created_at.strftime("%b %d, %Y at %l:%m %p") rescue nil%></div>
+        <div class="content_msg">
+          <p><%= message.sender.get_last_message(message.sender_id,current_user.id).message.message rescue nil%></p>
+          <div class="opt_message">
+            <%= link_to "", message_path(:id => message.sender_id), :confirm => 'Are you sure?', :method => :delete, :remote => true, :class=>"opt_2"  %>
+            <%= link_to "", unread_message_recipient_path(message.sender.get_last_message(message.sender_id,current_user.id)), :method => :delete, :remote => true, :class=>"opt_1"  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<!-- Popup Content -->
+<div id="dialog-form" title="New Message" >
+  <div id="new-message">
+    <% @message = Message.new %>
+    <%= render :partial => "new" %>
+  </div>
+</div>
+<!-- //Popup Content -->
+>>>>>>> 05d7d6f8b29529a7e1b998b1e5d4dce256dae040

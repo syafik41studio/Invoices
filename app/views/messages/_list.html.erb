@@ -1,6 +1,16 @@
+
 <% @message_recipients.each do |mr| %>
-  <strong><%= mr.receiver.email %></strong><br />
-  <%= mr.message.message %><br />
-  <small><%= mr.created_at.strftime("%b %d, %Y at %l:%m %p") %></small>
-  <hr />
+<div class="list_message" id="list-messages-<%= mr.id %>">
+    <img width="" height="" class="img_stle" src="/images/photo.png" />
+    <div class="desc_message">
+      <a href="#" class="hovertitle"><div class="name_msg"><%= mr.message.sender.email %></div></a>
+      <div class="date_msg"><%= mr.message.created_at.strftime("%b %d, %Y at %l:%m %p") %></div>
+      <div class="content_msg">
+        <p><%=  mr.message.message %></p>
+        <div class="opt_message">
+
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

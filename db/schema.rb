@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111010144306) do
+ActiveRecord::Schema.define(:version => 20111012152719) do
 
   create_table "billing_entities", :force => true do |t|
     t.string   "name"
@@ -55,19 +55,44 @@ ActiveRecord::Schema.define(:version => 20111010144306) do
   end
 
   create_table "message_recipients", :force => true do |t|
-    t.integer  "message_id"
-    t.integer  "recipient_id"
+    t.integer  "message_id",                 :null => false
+    t.integer  "recipient_id",               :null => false
     t.string   "status",       :limit => 10
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "message_recipients", ["message_id"], :name => "index_message_recipients_on_message_id"
+  add_index "message_recipients", ["recipient_id"], :name => "index_message_recipients_on_recipient_id"
+
   create_table "messages", :force => true do |t|
-    t.integer  "sender_id"
+    t.integer  "sender_id",                :null => false
     t.text     "message"
     t.string   "status",     :limit => 10
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
+
+  create_table "patients", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.float    "age"
+    t.text     "description"
+    t.string   "primary_contact"
+    t.string   "visits"
+    t.string   "relation"
+    t.string   "email"
+    t.string   "phone_number"
+    t.string   "city"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "roles", :force => true do |t|

@@ -4,8 +4,8 @@ class MessagesController < ApplicationController
   
   autocomplete :user, :email
 
-  def index
-    @messages = Message.select('sender_id').joins(:message_recipients).where("message_recipients.recipient_id" => 1).group('sender_id')
+  def index          
+    @messages = Message.select('sender_id').joins(:message_recipients).where("message_recipients.recipient_id = ?", current_user.id).group('sender_id')
   end
 
   def new
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
         mr = @message.message_recipients.last
         @message_recipients = MessageRecipient.find(:all,
           :include    => :message,
-          :conditions => ["(message_recipients.recipient_id = ? AND messages.sender_id = ?) or (message_recipients.recipient_id = ? AND messages.sender_id = ?) ", mr.recipient_id, 1, 1, mr.recipient_id],
+          :conditions => ["(message_recipients.recipient_id = ? AND messages.sender_id = ?) or (message_recipients.recipient_id = ? AND messages.sender_id = ?) ", mr.recipient_id, current_user.id, current_user.id, mr.recipient_id],
           :order      => "message_recipients.created_at ASC"
         )
         format.html { redirect_to(@message, :notice => 'Message snt') }
@@ -59,6 +59,18 @@ class MessagesController < ApplicationController
     @user = MessageRecipient.get_unread(current_user.id)
     respond_to do |format|
       format.js {@user.to_json}
+    end
+  end
+
+
+  def destroy
+    message_recipients =  MessageRecipient.find(:all, :joins => :message, :conditions => ["recipient_id = ? AND messages.sender_id = ?", current_user.id,  params[:id]])
+    message_recipients.each do |mr|
+      mr.update_attribute(:status, "delete")
+    end
+    @user_id = params[:id]
+    respond_to do |format|
+      format.js
     end
   end
 end
