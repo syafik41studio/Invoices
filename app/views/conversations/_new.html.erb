@@ -1,0 +1,17 @@
+<% simple_form_for(@conversation, :remote => true, :html => {:class => "yform"}) do |f| %>
+  <fieldset>
+    <div id= "message_errors" style="display:none"></div>
+    Recipient :
+    <%= f.text_field :recipient_tokens, "data-pre" => @users.map(&:attributes).to_json  %>
+    Message : <%= f.input :body, :label => false, :as => :text,  :input_html =>{:rows => 6 , :cols => 55}%>
+    <% f.hidden :owner_id, :input_html => {:value => current_user.id} %>
+  </fieldset>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#conversation_recipient_tokens").tokenInput("/user_token_input.json", {
+      theme: "facebook"
+    });
+  });
+</script>

@@ -4,7 +4,7 @@
   <% form_tag(search_messages_path, :remote => true) do %>
     <%#= autocomplete_field_tag "search_message", "",autocomplete_user_email_messages_path, :as => :autocomplete %>
   <% end %>
-  <%= link_to "+ New Message", new_message_path, :class=>"btn_newmessage", :id=>"create-user", :remote => true %>
+  <%= link_to "+ New Message", new_conversation_path, :class => "btn_newmessage", :id => "create-user", :remote => true %>
   <div style="clear:both"></div>
 </div>
 <div id="list-messages">

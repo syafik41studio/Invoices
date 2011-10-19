@@ -6,6 +6,7 @@
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag "applayout", :media =>"all" %>
     <%= stylesheet_link_tag "common" %>
+    <%= stylesheet_link_tag "token-input-facebook" %>
     <!--[if lte IE 7]>
     <%= stylesheet_link_tag "yaml/patches/patch_nav_vlist", :media =>"all" %>
     <![endif]-->
@@ -16,6 +17,7 @@
     <%= javascript_include_tag "jquery.periodicalupdater.js" %>
     <%= javascript_include_tag "jquery.updater.js" %>
     <%= javascript_include_tag "jquery-show-popup.js" %>
+    <%= javascript_include_tag "jquery.tokeninput.js" %>
     <%= yield :add_billing %>
     <% if current_user %>
       <script>
@@ -83,8 +85,8 @@
               <p class="alert"><%= alert %></p>
               <%= yield %>
               <!-- Popup Content -->
-              <div id="dialog-form" title="New Message" >
-                <div id="new-message">
+              <div id="dialog-form" title="New Message">
+                <div id="new-message" style="width: 488px;">
                 </div>
               </div>
               <!-- //Popup Content -->

@@ -2,6 +2,7 @@ App::Application.routes.draw do
   resources :patients
 
   get "messages/index"
+  match "user_token_input" => 'conversations#user_token_input'
 
   devise_for :users
   resources :billing_entities
