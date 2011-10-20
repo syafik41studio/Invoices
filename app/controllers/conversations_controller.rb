@@ -25,8 +25,12 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    @conversation = Conversation.new(params[:conversation])
-    
+    @conversation = Conversation.build_conversation(params[:conversation])
+    if @conversation.save
+      render :update do |page|
+        page.redirect_to conversation_path(@conversation)
+      end
+    end
   end
   
 end

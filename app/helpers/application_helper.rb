@@ -12,9 +12,9 @@ module ApplicationHelper
   def conversation_title(conversation)
     members_of_conversation = conversation.users
     if members_of_conversation.count > 3
-      members_of_conversation[0..2].map(:email).join(",") + " and #{pluralize(members_of_conversation.count - 3,"other", "others")}"
+      members_of_conversation[0..2].map(&:email).join(",") + " and #{pluralize(members_of_conversation.count - 3,"other", "others")}"
     else
-      members_of_conversation[0..2].map(:email).join(",")
+      members_of_conversation[0..2].map(&:email).join(",")
     end
   end
 end

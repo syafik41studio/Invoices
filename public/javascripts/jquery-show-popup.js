@@ -68,7 +68,7 @@ $(function() {
                     //                                    '<td>' + email.val() + '</td>' +
                     //                                    '<td>' + password.val() + '</td>' +
                     //                                    '</tr>');
-                    $('#new_message_conversation').submit();
+                    $('#new_conversation').submit();
                 //                                $(this).dialog('close');
                 }
             },
