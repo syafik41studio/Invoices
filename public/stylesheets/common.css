@@ -78,13 +78,13 @@ a.btn_newmessage:hover {
 .tbl_message input {
     height: 20px;
     width: 255px;
-    
+
 }
 
 .tbl_message textarea {
     height: 100px;
     width: 255px;
-    
+
 }
 
 .tbl_message td {
@@ -171,15 +171,18 @@ a.hovertitle .name_msg:hover {
     padding-top: 10px;
     width: 100%;
 }
+.reply_form .content {
+    margin:0 auto;
+    width: 500px;
+}
 
 .reply_form textarea {
     height: 60px;
-    width: 315px;
     float: left;
     margin-left: 10px;
 }
 
-a.btn_reply {
+.btn_reply {
     background: #e6e6e6;
     border: 1px solid #D3D3D3;
     border-radius: 0 0 0 0 !important;
@@ -194,10 +197,17 @@ a.btn_reply {
     width: 58px;
 }
 
-a.btn_reply:hover {
+btn_reply:hover {
     color: #555;
     border: 1px solid #aaa;
     text-decoration: none;
+}
+
+.title_message{
+    padding: 5px;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 a.attahce_btn {
@@ -226,4 +236,11 @@ a.image_btn:hover {
     background: url("../images/camera.png") no-repeat scroll 0 0 transparent;
 }
 
+.sender_opts {
+    background-image: url("/images/message_opts.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+}
 

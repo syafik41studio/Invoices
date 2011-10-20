@@ -3,6 +3,7 @@ App::Application.routes.draw do
 
   get "messages/index"
   match "user_token_input" => 'conversations#user_token_input'
+  match "reply_message/:id" => 'conversations#reply_message', :as => :reply_message
 
   devise_for :users
   resources :billing_entities
@@ -19,7 +20,11 @@ App::Application.routes.draw do
     end
   end
 
-  resources :conversations
+  resources :conversations do
+    collection do
+      get 'notifications'
+    end
+  end
 
   get "pages/home"
   root :to => "pages#home"

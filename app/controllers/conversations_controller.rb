@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.includes(:users, :messages).
+    @conversations = Conversation.includes(:users).
       where("users.id = ?",current_user.id).
       order("conversations.updated_at DESC")
   end
@@ -17,7 +17,7 @@ class ConversationsController < ApplicationController
   end
 
   def user_token_input
-    @users = User.where("email like ?", "%#{params[:q]}%")
+    @users = User.where("email like ? AND id <> ?", "%#{params[:q]}%", current_user.id)
     respond_to do |format|
       format.html
       format.json { render :json => @users.map(&:attributes) }
@@ -32,5 +32,24 @@ class ConversationsController < ApplicationController
       end
     end
   end
+
+  def show
+    @conversation = Conversation.find(params[:id])
+    @messages =  MessageConversation.included_me(@conversation, current_user).recent
+  end
+
+  def update
+    @conversation = Conversation.find(params[:id])
+    @conversation.update_conversation_with_reply(params[:conversation])
+    @message = @conversation.last_message
+  end
+
+  def notifications
+    @inbox = MessageConversation.my_inbox(current_user)
+    respond_to do |format|
+      format.js {@inbox.to_json}
+    end
+  end
+
   
 end

@@ -1,0 +1,4 @@
+$("#add_message").append("<%= escape_javascript(render :partial => "message", :locals => {:message => @message}) %>");
+$(document).ready(function() {
+  $('#conversation_body').val('');
+});

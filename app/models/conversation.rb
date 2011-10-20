@@ -3,17 +3,14 @@ class Conversation < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :messages, :class_name => "MessageConversation"
 
-  attr_accessible :recipient_tokens, :body, :owner_id
-  attr_accessor :recipient_tokens, :body, :owner_id
+  attr_accessible :recipient_tokens, :body, :owner_id, :last_message
+  attr_accessor :recipient_tokens, :body, :owner_id, :last_message
 
   validates :recipient_tokens, :presence => true
   validates :body, :presence => true
 
   def self.build_conversation(param)
     conversation = Conversation.new(param)
-    p "------asdasdasd----------------"
-    p conversation.list_member_conversation
-    p "----------------------------------"
     members = conversation.list_member_conversation
     if members.size.eql?(2)
       exist_conversation = Conversation.includes(:users).where("users.id = ?", members.last).first
@@ -22,17 +19,30 @@ class Conversation < ActiveRecord::Base
         exist_conversation.owner_id = param[:owner_id]
         exist_conversation.body = param[:body]
         exist_conversation.build_message_conversation_for_each_member
+        exist_conversation.updated_at = Time.now
         return exist_conversation
       else
+        conversation.updated_at = Time.now
         conversation.save_member_for_new_conversation
         conversation.build_message_conversation_for_each_member
         return conversation
       end
     else
+      conversation.updated_at = Time.now
       conversation.save_member_for_new_conversation
       conversation.build_message_conversation_for_each_member
       return conversation
     end
+  end
+
+  def update_conversation_with_reply(param)
+    conversation = self
+    conversation.recipient_tokens = param[:recipient_tokens]
+    conversation.owner_id = param[:owner_id]
+    conversation.body = param[:body]
+    conversation.build_message_conversation_for_each_member
+    conversation.updated_at = Time.now
+    conversation.save
   end
 
   def list_member_conversation
@@ -40,14 +50,12 @@ class Conversation < ActiveRecord::Base
   end
 
   def build_message_conversation_for_each_member
-    members = self.list_member_conversation.shift(1)
-    p "--------------members----------"
-    p members
-    p "------------"
+    members = self.list_member_conversation
+    members.delete(self.owner_id)
     members.each do |member|
-      self.messages.push(
-        MessageConversation.new(:sender_id => self.owner_id,
-          :recipient_id => member, :body => self.body ))
+      self.last_message =  MessageConversation.new(:sender_id => self.owner_id,
+          :recipient_id => member, :body => self.body )
+      self.messages.push(self.last_message)
     end
   end
 
