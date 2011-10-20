@@ -1,4 +1,6 @@
 App::Application.routes.draw do
+  resources :posts
+
   resources :patients
 
   get "messages/index"
