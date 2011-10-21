@@ -1,7 +1,7 @@
 <h2>Messages</h2>
 <div class="tag_menu">
   <a class="btn_search" href="#"></a>
-  <%= form_tag(search_messages_path, :remote => true) do %>
+  <%= form_tag(search_conversation_path, :remote => true) do %>
     <%= autocomplete_field_tag "search_message", "",autocomplete_user_email_messages_path, :as => :autocomplete %>
   <% end %>
   <%= link_to "+ New Message", new_conversation_path, :class => "btn_newmessage", :id => "create-user", :remote => true %>

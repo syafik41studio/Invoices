@@ -1,5 +1,6 @@
 class Conversation < ActiveRecord::Base
-
+  require 'digest'
+  
   has_and_belongs_to_many :users
   has_many :messages, :class_name => "MessageConversation"
 
@@ -51,10 +52,11 @@ class Conversation < ActiveRecord::Base
 
   def build_message_conversation_for_each_member
     members = self.list_member_conversation
+    token = Digest::SHA1.hexdigest("#{members.to_s}-#{Time.now}")
     members.delete(self.owner_id)
     members.each do |member|
       self.last_message =  MessageConversation.new(:sender_id => self.owner_id,
-        :recipient_id => member, :body => self.body )
+        :recipient_id => member, :body => self.body, :message_token => token )
       self.messages.push(self.last_message)
     end
   end
@@ -66,12 +68,22 @@ class Conversation < ActiveRecord::Base
     end
   end
 
-  def unread_messages
-    @unread = self.messages.where("status_for_recipient = ?", 'Unread')
+  def unread_messages(user)
+    @unread = self.messages.where("status_for_recipient = ? AND recipient_id = ?", 'Unread', user.id )
   end
   
-  def have_unread_message?
-    @have_inbox ||= !self.unread_messages.blank?
+  def have_unread_message?(user)
+    @have_inbox ||= !self.unread_messages(user).blank?
+  end
+
+  def mark_as_read(user)
+    MessageConversation.update_all("status_for_recipient = 'Read'",
+      "conversation_id = #{self.id} AND status_for_recipient = 'Unread' AND recipient_id = #{user.id}")
+  end
+
+  def mark_as_unread(user)
+    MessageConversation.update_all("status_for_recipient = 'Unread'",
+      "conversation_id = #{self.id} AND status_for_recipient = 'Read' AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
   end
 
   def is_unread?

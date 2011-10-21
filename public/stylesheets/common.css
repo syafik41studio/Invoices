@@ -141,7 +141,7 @@ a.btn_search:hover, a.btn_search:focus {
 
 a.opt_1 {
     background: url("../images/opt_1.png") no-repeat;
-    width: 8px;
+    width: 10px;
     height: 9px;
     float: right;
     margin-left: 10px;
@@ -149,6 +149,14 @@ a.opt_1 {
 
 a.opt_2{
     background: url("../images/opt_2.png") no-repeat;
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-left: 10px;
+}
+
+a.opt_3{
+    background: url("../images/opt_3.png") no-repeat;
     width: 10px;
     height: 10px;
     float: right;

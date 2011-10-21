@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.includes(:users, :messages).
+    @conversations = Conversation.includes(:users).
       where("users.id = ?",current_user.id).
       order("conversations.updated_at DESC")
   end
@@ -36,6 +36,7 @@ class ConversationsController < ApplicationController
   def show
     @conversation = Conversation.find(params[:id])
     @messages =  MessageConversation.included_me(@conversation, current_user).recent
+    @conversation.mark_as_read(current_user)
   end
 
   def update
@@ -53,14 +54,12 @@ class ConversationsController < ApplicationController
 
   def mark_as_read
     @conversation = Conversation.find(params[:id])
-    MessageConversation.update_all("status_for_recipient = 'Read'", 
-      "conversation_id = #{@conversation.id} AND status_for_recipient = 'Unread'")
+    @conversation.mark_as_read(current_user)
   end
 
   def mark_as_unread
     @conversation = Conversation.find(params[:id])
-    MessageConversation.update_all("status_for_recipient = 'Unread'",
-      "conversation_id = #{@conversation.id} AND status_for_recipient = 'Read' AND id = #{@conversation.messages.last.id}")
+    @conversation.mark_as_unread(current_user)
   end
 
   def archive

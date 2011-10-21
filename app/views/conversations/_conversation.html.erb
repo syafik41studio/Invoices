@@ -1,9 +1,9 @@
-<div class="list_message <%= conversation.have_unread_message? ? "unread_message" : "" %>">
+<div class="list_message <%= conversation.have_unread_message?(current_user) ? "unread_message" : "" %>">
   <img width="" height="" class="img_stle" src="/images/photo.png" />
   <div class="desc_message">
     <a href="#" class="hovertitle">
       <div class="name_msg">
-        <%= link_to "#{conversation_title(conversation)} #{conversation.unread_messages.count > 1 ? "(#{conversation.unread_messages.count})" : ""}", conversation_path(conversation) %>
+        <%= link_to "#{conversation_title(conversation)} #{conversation.unread_messages(current_user).count > 1 ? "(#{conversation.unread_messages(current_user).count})" : ""}", conversation_path(conversation) %>
       </div>
     </a>
     <div class="date_msg">
@@ -12,10 +12,9 @@
     <div class="content_msg">
       <p><%= conversation.messages.last.body %></p>
       <div class="opt_message">
-        <%= link_to "",  %>
         <%= link_to "", archive_conversation_path(conversation), :remote => true, :class => "opt_2", :title => "Archive", :id => "archive-#{conversation.id}" %>
-        <% if  conversation.have_unread_message? %>
-          <%= link_to "", mark_as_read_conversation_path(conversation), :remote => true, :class => "opt_1", :title => "Mark as Read", :id => "mark_as_read-#{conversation.id}" %>
+        <% if conversation.have_unread_message?(current_user) %>
+          <%= link_to "", mark_as_read_conversation_path(conversation), :remote => true, :class => "opt_3", :title => "Mark as Read", :id => "mark_as_read-#{conversation.id}" %>
         <% else %>
           <%= link_to "", mark_as_unread_conversation_path(conversation), :remote => true, :class => "opt_1", :title => "Mark as Unread", :id => "mark_as_unread-#{conversation.id}" %>
         <% end %>
