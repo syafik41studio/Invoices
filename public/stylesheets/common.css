@@ -1,13 +1,23 @@
 .tag_menu {
     width: 100%;
+    margin-bottom: 10px;
+    height:40px;
 }
 
 .list_message {
     width : 100%;
     float: left;
-    margin-top: 10px;
     border-top: 1px solid #dedede;
-    padding-top: 10px;
+    padding-bottom:10px;
+    padding-left:8px;
+    padding-right:2px;
+    padding-top:10px;
+    border-color: #DCE2EC;
+}
+
+.unread_message{
+    background-color: #EBEEF4;
+    border-color: #DCE2EC;
 }
 
 a.btn_newmessage {

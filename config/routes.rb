@@ -24,6 +24,11 @@ App::Application.routes.draw do
     collection do
       get 'notifications'
     end
+    member do
+     get "mark_as_read"
+     get "mark_as_unread"
+     get "archive"
+    end
   end
 
   get "pages/home"

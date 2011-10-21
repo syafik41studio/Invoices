@@ -54,7 +54,7 @@ class Conversation < ActiveRecord::Base
     members.delete(self.owner_id)
     members.each do |member|
       self.last_message =  MessageConversation.new(:sender_id => self.owner_id,
-          :recipient_id => member, :body => self.body )
+        :recipient_id => member, :body => self.body )
       self.messages.push(self.last_message)
     end
   end
@@ -64,6 +64,26 @@ class Conversation < ActiveRecord::Base
     members.each do |member|
       self.users.push(User.find(member))
     end
+  end
+
+  def unread_messages
+    @unread = self.messages.where("status_for_recipient = ?", 'Unread')
+  end
+  
+  def have_unread_message?
+    @have_inbox ||= !self.unread_messages.blank?
+  end
+
+  def is_unread?
+    self.status.eql?("Unread")
+  end
+
+  def is_read?
+    self.status.eql?("Read")
+  end
+
+  def is_archive?
+    self.status.eql?("Archive")
   end
 
 end

@@ -1,11 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+s<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= stylesheet_link_tag "applayout", :media =>"all" %>
-    <%= stylesheet_link_tag "common" %>
     <%= stylesheet_link_tag "token-input-facebook" %>
     <!--[if lte IE 7]>
     <%= stylesheet_link_tag "yaml/patches/patch_nav_vlist", :media =>"all" %>
@@ -18,6 +17,7 @@
     <%= javascript_include_tag "jquery.updater.js" %>
     <%= javascript_include_tag "jquery-show-popup.js" %>
     <%= javascript_include_tag "jquery.tokeninput.js" %>
+    <%= javascript_include_tag "jquery.tipsy.js" %>
     <%= yield :add_billing %>
     <% if current_user %>
       <script type="text/javascript">
