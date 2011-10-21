@@ -11,6 +11,7 @@ s<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.o
     <![endif]-->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" type="text/css" />
     <%= javascript_include_tag "jquery.min.js" %>
+    <%= include_tiny_mce_if_needed %>
     <%= javascript_include_tag "rails" %>
     <%= javascript_include_tag "autocomplete-rails.js" %>
     <%= javascript_include_tag "jquery.periodicalupdater.js" %>
@@ -69,6 +70,7 @@ s<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.o
               <h3>Left Pane contents</h3>
               <%= link_to "Patients", patients_path %> <br />
               <%= link_to "Billing Entites", billing_entities_path %> <br />
+              <%= link_to "Whiteboard", posts_path %> <br />
               <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, conversations_path %>
             </div>
           </div>

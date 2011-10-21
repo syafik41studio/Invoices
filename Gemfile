@@ -8,12 +8,17 @@ gem 'rails', '3.0.3'
 gem 'jquery-rails'
 
 gem 'annotate'  , :group  =>[:development]
+#gem "use_tinymce"
+
 
 gem 'simple_form'
 
 gem 'pg','0.11.0'
 
 gem 'kaminari'
+
+gem 'execjs'
+gem 'therubyracer'
 
 gem 'devise'
 
