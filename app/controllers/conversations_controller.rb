@@ -69,12 +69,14 @@ class ConversationsController < ApplicationController
   end
 
   def search_conversations_by_name
-    @conversations = Conversation.select("conversations.id, users.first_name, users.last_name, message_conversations.id, message_conversations.sender_id, message_conversations.recipient_id").includes(:users, :messages).where("(first_name||' '|| last_name) ILIKE ? AND message_conversations.recipient_id = ?", "%#{params[:q]}%", current_user.id)
+    @conversations = Conversation.by_name(params[:q])
+    @conversations.select{|c| c.users.include?(current_user)}
     respond_to do |format|
       format.html
       format.json {
         render :json => @conversations.map{|conv|
-          conv.attributes.merge({:conversation_title => conversation_title(@conversation), :last_message => @conversations.last_message_from_sender_to_recipient(sender, recipient)}) }
+          conv.attributes.merge({:title => conversation_title(conv), :last_message => conv.messages.last})
+        }
       }
     end  
   end

@@ -10,6 +10,14 @@ class Conversation < ActiveRecord::Base
   validates :recipient_tokens, :presence => true
   validates :body, :presence => true
 
+  scope :by_name, lambda{|name|
+    includes(:users, :messages).where("(users.first_name||' '||users.last_name) ILIKE ?", "%#{name}%")
+  }
+
+  scope :include_me, lambda{|user|
+    includes(:users).where("users.id = ?", user.id)
+  }
+
   def self.build_conversation(param)
     conversation = Conversation.new(param)
     members = conversation.list_member_conversation
