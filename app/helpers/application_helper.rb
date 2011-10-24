@@ -9,15 +9,6 @@ module ApplicationHelper
     end
   end
 
-  def conversation_title(conversation)
-    members_of_conversation = conversation.users.where("users.id <> ?", current_user.id)
-    if members_of_conversation.count >= 3
-      members_of_conversation[0..2].map(&:email).join(", ") + " and #{pluralize(members_of_conversation.count - 3,"other", "others")}"
-    else
-      members_of_conversation[0..2].map(&:email).join(", ")
-    end
-  end
-
   def custom_time(time)
     distance = distance_of_time_in_words(time, Time.now)
     if distance.include?("1 day")

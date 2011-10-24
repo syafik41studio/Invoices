@@ -5,6 +5,7 @@ App::Application.routes.draw do
 
   get "messages/index"
   match "user_token_input" => 'conversations#user_token_input'
+  match "search_conversations_by_name" => 'conversations#search_conversations_by_name'
   match "reply_message/:id" => 'conversations#reply_message', :as => :reply_message
 
   devise_for :users

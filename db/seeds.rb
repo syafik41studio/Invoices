@@ -17,6 +17,6 @@ Invoice.create(:name => "Invoice 8", :description => "description 8")
 Invoice.create(:name => "Invoice 9", :description => "description 9")
 
 
-User.create(:email => "admin@email.com", :password => "password")
-User.create(:email => "sender@email.com", :password => "password")
-User.create(:email => "recipient@email.com", :password => "password")
+User.create(:email => "admin@email.com", :password => "password", :first_name => "Admin", :last_name => "Admin")
+User.create(:email => "sender@email.com", :password => "password", :first_name => "Sender", :last_name => "Sender")
+User.create(:email => "recipient@email.com", :password => "password", :first_name => "Recipient", :last_name => "Recipient")

@@ -3,7 +3,7 @@ class Conversation < ActiveRecord::Base
   
   has_and_belongs_to_many :users
   has_many :messages, :class_name => "MessageConversation"
-
+       
   attr_accessible :recipient_tokens, :body, :owner_id, :last_message
   attr_accessor :recipient_tokens, :body, :owner_id, :last_message
 
@@ -69,11 +69,19 @@ class Conversation < ActiveRecord::Base
   end
 
   def unread_messages(user)
-    @unread = self.messages.where("status_for_recipient = ? AND recipient_id = ?", 'Unread', user.id )
+    @unread ||= self.messages.where("status_for_recipient = ? AND recipient_id = ?", 'Unread', user.id )
+  end
+
+  def inbox(user)
+    @inbox ||= self.messages.where("recipient_id = ?", user.id )
   end
   
   def have_unread_message?(user)
-    @have_inbox ||= !self.unread_messages(user).blank?
+    @have_unread_message ||= !self.unread_messages(user).blank?
+  end
+
+  def contains_inbox(user)
+    @contains ||= !self.inbox(user).blank?
   end
 
   def mark_as_read(user)
@@ -86,16 +94,8 @@ class Conversation < ActiveRecord::Base
       "conversation_id = #{self.id} AND status_for_recipient = 'Read' AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
   end
 
-  def is_unread?
-    self.status.eql?("Unread")
-  end
-
-  def is_read?
-    self.status.eql?("Read")
-  end
-
-  def is_archive?
-    self.status.eql?("Archive")
+  def last_message_from_sender_to_recipient(sender, recipient)
+     self.messages.where("sender_id = ? AND recipient_id = ?", sender.id, recipient.id).last
   end
 
 end

@@ -11,7 +11,8 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $("#conversation_recipient_tokens").tokenInput("/user_token_input.json", {
-      theme: "facebook"
+      theme: "facebook",
+      propertyToSearch: "full_name"
     });
   });
 </script>

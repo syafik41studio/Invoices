@@ -17,10 +17,10 @@ class ConversationsController < ApplicationController
   end
 
   def user_token_input
-    @users = User.where("email like ? AND id <> ?", "%#{params[:q]}%", current_user.id)
+    @users = User.where("(first_name||' '|| last_name) ILIKE ? AND id <> ?", "%#{params[:q]}%", current_user.id)
     respond_to do |format|
       format.html
-      format.json { render :json => @users.map(&:attributes) }
+      format.json { render :json => @users.map{|user| user.attributes.merge(:full_name => user.full_name) } }
     end  
   end
 
@@ -66,6 +66,17 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
     MessageConversation.update_all("status_for_recipient = 'Unread'",
       "conversation_id = #{@conversation.id} AND status_for_recipient = 'Read' AND id = #{@conversation.messages.last.id}")
+  end
+
+  def search_conversations_by_name
+    @conversations = Conversation.select("conversations.id, users.first_name, users.last_name, message_conversations.id, message_conversations.sender_id, message_conversations.recipient_id").includes(:users, :messages).where("(first_name||' '|| last_name) ILIKE ? AND message_conversations.recipient_id = ?", "%#{params[:q]}%", current_user.id)
+    respond_to do |format|
+      format.html
+      format.json {
+        render :json => @conversations.map{|conv|
+          conv.attributes.merge({:conversation_title => conversation_title(@conversation), :last_message => @conversations.last_message_from_sender_to_recipient(sender, recipient)}) }
+      }
+    end  
   end
 
   

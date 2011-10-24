@@ -17,11 +17,11 @@ var DEFAULT_SETTINGS = {
     queryParam: "q",
     searchDelay: 300,
     minChars: 1,
-    propertyToSearch: "email",
+    propertyToSearch: "name",
     jsonContainer: null,
 
 	// Display settings
-//    hintText: "Type in a search term",
+//  hintText: "Type in a search term",
     noResultsText: "No results",
     searchingText: "Searching...",
     deleteText: "&times;",
