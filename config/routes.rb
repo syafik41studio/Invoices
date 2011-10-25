@@ -3,25 +3,12 @@ App::Application.routes.draw do
 
   resources :patients
 
-  get "messages/index"
   match "user_token_input" => 'conversations#user_token_input'
   match "search_conversations_by_name" => 'conversations#search_conversations_by_name'
   match "reply_message/:id" => 'conversations#reply_message', :as => :reply_message
 
   devise_for :users
   resources :billing_entities
-  resources :message_recipients do
-    member do
-      delete 'unread'
-    end
-  end
-  resources :messages do
-    collection do
-      post 'search'
-      get 'notifications'
-      get 'autocomplete_user_email'
-    end
-  end
 
   resources :conversations do
     collection do

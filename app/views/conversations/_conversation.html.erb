@@ -1,4 +1,4 @@
-<div class="list_message <%= conversation.have_unread_message?(current_user) ? "unread_message" : "" %>">
+<div class="list_message <%= conversation.is_unread?(current_user) ? "unread_message" : "" %>">
   <img width="" height="" class="img_stle" src="/images/photo.png" />
   <div class="desc_message">
     <a href="#" class="hovertitle">
@@ -13,9 +13,9 @@
       <p><%= conversation.messages.last.body %></p>
       <div class="opt_message">
         <%= link_to "", archive_conversation_path(conversation), :remote => true, :class => "opt_2", :title => "Archive", :id => "archive-#{conversation.id}" %>
-        <% if conversation.have_unread_message?(current_user) %>
+        <% if conversation.is_unread?(current_user) %>
           <%= link_to "", mark_as_read_conversation_path(conversation), :remote => true, :class => "opt_3", :title => "Mark as Read", :id => "mark_as_read-#{conversation.id}" %>
-        <% elsif conversation.contains_inbox(current_user) %>
+        <% else %>
           <%= link_to "", mark_as_unread_conversation_path(conversation), :remote => true, :class => "opt_1", :title => "Mark as Unread", :id => "mark_as_unread-#{conversation.id}" %>
         <% end %>
       </div>

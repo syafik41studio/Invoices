@@ -3,8 +3,8 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.includes(:users).
-      where("users.id = ?",current_user.id).
+    @conversations = Conversation.includes(:users, :conversation_flag).
+      where("users.id = ? AND conversation_flags.status <> ?",current_user.id, "Archive").
       order("conversations.updated_at DESC")
   end
 
@@ -46,7 +46,7 @@ class ConversationsController < ApplicationController
   end
 
   def notifications
-    @inbox = MessageConversation.my_inbox(current_user)
+    @inbox = Conversation.my_inbox(current_user)
     respond_to do |format|
       format.js {@inbox.to_json}
     end
@@ -64,8 +64,7 @@ class ConversationsController < ApplicationController
 
   def archive
     @conversation = Conversation.find(params[:id])
-    MessageConversation.update_all("status_for_recipient = 'Unread'",
-      "conversation_id = #{@conversation.id} AND status_for_recipient = 'Read' AND id = #{@conversation.messages.last.id}")
+    @conversation.mark_as_archive(current_user)
   end
 
   def search_conversations_by_name
@@ -75,7 +74,7 @@ class ConversationsController < ApplicationController
       format.html
       format.json {
         render :json => @conversations.map{|conv|
-          conv.attributes.merge({:title => conversation_title(conv), :last_message => conv.messages.last})
+          conv.attributes.merge({:title => conversation_title(conv), :last_message => conv.messages.last.body})
         }
       }
     end  

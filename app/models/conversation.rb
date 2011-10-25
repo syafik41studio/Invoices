@@ -3,6 +3,7 @@ class Conversation < ActiveRecord::Base
   
   has_and_belongs_to_many :users
   has_many :messages, :class_name => "MessageConversation"
+  has_one :conversation_flag
        
   attr_accessible :recipient_tokens, :body, :owner_id, :last_message
   attr_accessor :recipient_tokens, :body, :owner_id, :last_message
@@ -18,6 +19,11 @@ class Conversation < ActiveRecord::Base
     includes(:users).where("users.id = ?", user.id)
   }
 
+  scope :my_inbox, lambda{ |user|
+    includes(:conversation_flag, :messages, :users)
+    where("(conversation_flag.status = ? AND users.id = ?) OR messages.status_for_recipient = ?", user.id, 'Unread', 'Unread')
+  }
+
   def self.build_conversation(param)
     conversation = Conversation.new(param)
     members = conversation.list_member_conversation
@@ -28,18 +34,21 @@ class Conversation < ActiveRecord::Base
         exist_conversation.owner_id = param[:owner_id]
         exist_conversation.body = param[:body]
         exist_conversation.build_message_conversation_for_each_member
+        exist_conversation.set_status_to_unread
         exist_conversation.updated_at = Time.now
         return exist_conversation
       else
         conversation.updated_at = Time.now
         conversation.save_member_for_new_conversation
         conversation.build_message_conversation_for_each_member
+        conversation.set_status_to_unread
         return conversation
       end
     else
       conversation.updated_at = Time.now
       conversation.save_member_for_new_conversation
       conversation.build_message_conversation_for_each_member
+      conversation.set_status_to_unread
       return conversation
     end
   end
@@ -76,8 +85,19 @@ class Conversation < ActiveRecord::Base
     end
   end
 
+  def set_status_to_unread
+    if self.persisted?
+      self.conversation_flag.update_attribute(:status, "Unread")
+    else
+      self.conversation_flag = ConversationFlag.new(
+        :user_id => self.owner_id,
+        :status => "Unread"
+      )
+    end
+  end
+
   def unread_messages(user)
-    @unread ||= self.messages.where("status_for_recipient = ? AND recipient_id = ?", 'Unread', user.id )
+    @unread_messages ||= self.messages.where("status_for_recipient = ? AND recipient_id = ?", 'Unread', user.id )
   end
 
   def inbox(user)
@@ -94,16 +114,28 @@ class Conversation < ActiveRecord::Base
 
   def mark_as_read(user)
     MessageConversation.update_all("status_for_recipient = 'Read'",
-      "conversation_id = #{self.id} AND status_for_recipient = 'Unread' AND recipient_id = #{user.id}")
+      "conversation_id = #{self.id} AND recipient_id = #{user.id}")
+    ConversationFlag.update_all("status = 'Read'", "conversation_id = #{self.id} AND user_id = #{user.id}")
   end
 
   def mark_as_unread(user)
     MessageConversation.update_all("status_for_recipient = 'Unread'",
-      "conversation_id = #{self.id} AND status_for_recipient = 'Read' AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
+      "conversation_id = #{self.id} AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
+    ConversationFlag.update_all("status = 'Unread'", "conversation_id = #{self.id} AND user_id = #{user.id}")
+  end
+
+  def mark_as_archive(user)
+    MessageConversation.update_all("status_for_recipient = 'Read'",
+      "conversation_id = #{self.id} AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
+    ConversationFlag.update_all("status = 'Archive'", "conversation_id = #{self.id} AND user_id = #{user.id}")
   end
 
   def last_message_from_sender_to_recipient(sender, recipient)
-     self.messages.where("sender_id = ? AND recipient_id = ?", sender.id, recipient.id).last
+    self.messages.where("sender_id = ? AND recipient_id = ?", sender.id, recipient.id).last
+  end
+
+  def is_unread?(user)
+    @unread ||= ConversationFlag.where("conversation_id = ? AND user_id = ?", self.id, user.id).first.status.eql?("Unread") rescue false
   end
 
 end
