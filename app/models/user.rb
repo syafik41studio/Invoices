@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
 
   has_and_belongs_to_many :roles
-  has_and_belongs_to_many :conversations
+  has_many :conversation_flags
+  has_many :conversations, :through => :conversation_flags
 
   validates :first_name, :last_name, :presence => true
   
@@ -12,23 +13,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name
   
-  has_many :messages, :foreign_key => "sender_id"
   has_many :posts
 
   def full_name
     [first_name, last_name].join(' ')
-  end
-
-  def get_last_message(sender_id,current_id )
-    @message_recipient = MessageRecipient.find(:last,
-      :include    => :message,
-      :conditions => ["(message_recipients.recipient_id = ? AND messages.sender_id = ?) or (message_recipients.recipient_id = ? AND messages.sender_id = ?) ", sender_id, current_id, current_id, sender_id],
-      :order      => "message_recipients.created_at ASC"
-    )
-  end
-
-  def inbox
-    conversations.includes(:messages).where("recipient_id = ? AND status_for_recipient = ?", self.id, 'unread')
   end
   
 end

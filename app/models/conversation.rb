@@ -1,9 +1,9 @@
 class Conversation < ActiveRecord::Base
   require 'digest'
-  
-  has_and_belongs_to_many :users
+
   has_many :messages, :class_name => "MessageConversation"
-  has_one :conversation_flag
+  has_many :conversation_flags
+  has_many :users, :through => :conversation_flags
        
   attr_accessible :recipient_tokens, :body, :owner_id, :last_message
   attr_accessor :recipient_tokens, :body, :owner_id, :last_message
@@ -20,8 +20,8 @@ class Conversation < ActiveRecord::Base
   }
 
   scope :my_inbox, lambda{ |user|
-    includes(:conversation_flag, :messages, :users)
-    where("(conversation_flag.status = ? AND users.id = ?) OR messages.status_for_recipient = ?", user.id, 'Unread', 'Unread')
+    includes(:conversation_flags, :messages).
+      where("conversation_flags.status = ? AND conversation_flags.user_id = ?", 'Unread', user.id)
   }
 
   def self.build_conversation(param)
@@ -39,14 +39,12 @@ class Conversation < ActiveRecord::Base
         return exist_conversation
       else
         conversation.updated_at = Time.now
-        conversation.save_member_for_new_conversation
         conversation.build_message_conversation_for_each_member
         conversation.set_status_to_unread
         return conversation
       end
     else
       conversation.updated_at = Time.now
-      conversation.save_member_for_new_conversation
       conversation.build_message_conversation_for_each_member
       conversation.set_status_to_unread
       return conversation
@@ -87,12 +85,17 @@ class Conversation < ActiveRecord::Base
 
   def set_status_to_unread
     if self.persisted?
-      self.conversation_flag.update_attribute(:status, "Unread")
+      members = self.users.map(&:id)
+      #      ConversationFlag.update_all("status = 'Unread'", ["conversation_id = #{self.id} AND user_id IN (#{members.join(',')})"])
+      ConversationFlag.update_all("status = 'Unread'", ["conversation_id = ? AND user_id IN (?)", self.id, members])
     else
-      self.conversation_flag = ConversationFlag.new(
-        :user_id => self.owner_id,
-        :status => "Unread"
-      )
+      members = self.list_member_conversation
+      members.each do |member|
+        self.conversation_flags.push(ConversationFlag.new(
+            :user_id => member,
+            :status => "Unread"
+          ))
+      end
     end
   end
 
@@ -135,7 +138,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def is_unread?(user)
-    @unread ||= ConversationFlag.where("conversation_id = ? AND user_id = ?", self.id, user.id).first.status.eql?("Unread") rescue false
+    @unread ||= ConversationFlag.where("conversation_id = ? AND user_id = ?", self.id, user.id).first.status.eql?("Unread")
   end
 
 end

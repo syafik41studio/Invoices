@@ -15,9 +15,6 @@ class MessageConversation < ActiveRecord::Base
     where("recipient_id = ? AND status_for_recipient = ?", user.id, 'Unread')
   }
 
-  scope :recent, order("message_token ASC")
-
-
   def set_default_status
     self.status_for_sender =  "Sent"
     self.status_for_recipient = "Unread"

@@ -3,8 +3,8 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.includes(:users, :conversation_flag).
-      where("users.id = ? AND conversation_flags.status <> ?",current_user.id, "Archive").
+    @conversations = Conversation.includes(:users, :conversation_flags).
+      where("users.id = ? AND conversation_flags.status <> ? AND conversation_flags.user_id = ?", current_user.id, "Archive", current_user.id).
       order("conversations.updated_at DESC")
   end
 
@@ -35,7 +35,8 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = Conversation.find(params[:id])
-    @messages =  MessageConversation.included_me(@conversation, current_user).recent
+    @messages =  MessageConversation.included_me(@conversation, current_user)
+    @messages = @messages.sort {|x,y| x.created_at <=> y.created_at }
     @conversation.mark_as_read(current_user)
   end
 
