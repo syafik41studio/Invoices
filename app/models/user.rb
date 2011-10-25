@@ -15,6 +15,14 @@ class User < ActiveRecord::Base
   
   has_many :posts
 
+  scope :by_name, lambda{|name|
+    where("(users.first_name||' '||users.last_name) ILIKE ?", "%#{name}%")
+  }
+
+  scope :not_me, lambda{|user|
+    where("id <> ?", user.id)
+  }
+
   def full_name
     [first_name, last_name].join(' ')
   end

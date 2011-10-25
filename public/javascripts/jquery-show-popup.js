@@ -85,7 +85,7 @@ $(function() {
 
 
 
-    $('#create-user')
+    $('#new-conversation')
     .button()
     .click(function() {
         $('#dialog-form').dialog('open');

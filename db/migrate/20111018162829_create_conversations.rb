@@ -1,7 +1,7 @@
 class CreateConversations < ActiveRecord::Migration
   def self.up
     create_table :conversations do |t|
-      t.string :status
+      t.integer :member_count
       t.timestamps
     end
   end

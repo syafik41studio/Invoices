@@ -11,24 +11,25 @@ class Conversation < ActiveRecord::Base
   validates :recipient_tokens, :presence => true
   validates :body, :presence => true
 
-  scope :by_name, lambda{|name|
-    includes(:users, :messages).where("(users.first_name||' '||users.last_name) ILIKE ?", "%#{name}%")
-  }
-
-  scope :include_me, lambda{|user|
-    includes(:users).where("users.id = ?", user.id)
-  }
-
   scope :my_inbox, lambda{ |user|
     includes(:conversation_flags, :messages).
-      where("conversation_flags.status = ? AND conversation_flags.user_id = ?", 'Unread', user.id)
+      where("(message_conversations.status_for_recipient = ? AND message_conversations.recipient_id = ?)
+         OR (conversation_flags.status = ? AND conversation_flags.user_id = ?)", 'Unread', user.id, 'Unread', user.id)
   }
+
+  scope :my, lambda{|user|
+    includes(:users, :conversation_flags).
+      where("users.id = ? AND conversation_flags.status <> ? AND conversation_flags.user_id = ?", user.id, "Archive", user.id)
+  }
+
+  scope :recent, order("conversations.updated_at DESC")
 
   def self.build_conversation(param)
     conversation = Conversation.new(param)
     members = conversation.list_member_conversation
     if members.size.eql?(2)
-      exist_conversation = Conversation.includes(:users).where("users.id = ?", members.last).first
+      conversations = Conversation.includes(:users).where("conversations.member_count = ? AND users.id IN (?)", 2, members)
+      exist_conversation = conversations.select{|c| c.users.map(&:id).include?(members.first.to_i) && c.users.map(&:id).include?(members.last.to_i)}.first
       unless exist_conversation.blank?
         exist_conversation.recipient_tokens = param[:recipient_tokens]
         exist_conversation.owner_id = param[:owner_id]
@@ -38,12 +39,14 @@ class Conversation < ActiveRecord::Base
         exist_conversation.updated_at = Time.now
         return exist_conversation
       else
+        conversation.member_count = members.count
         conversation.updated_at = Time.now
         conversation.build_message_conversation_for_each_member
         conversation.set_status_to_unread
         return conversation
       end
     else
+      conversation.member_count = members.count
       conversation.updated_at = Time.now
       conversation.build_message_conversation_for_each_member
       conversation.set_status_to_unread
@@ -57,6 +60,7 @@ class Conversation < ActiveRecord::Base
     conversation.owner_id = param[:owner_id]
     conversation.body = param[:body]
     conversation.build_message_conversation_for_each_member
+    conversation.set_status_to_unread
     conversation.updated_at = Time.now
     conversation.save
   end
@@ -86,6 +90,7 @@ class Conversation < ActiveRecord::Base
   def set_status_to_unread
     if self.persisted?
       members = self.users.map(&:id)
+      members.delete(self.owner_id.to_i)
       #      ConversationFlag.update_all("status = 'Unread'", ["conversation_id = #{self.id} AND user_id IN (#{members.join(',')})"])
       ConversationFlag.update_all("status = 'Unread'", ["conversation_id = ? AND user_id IN (?)", self.id, members])
     else

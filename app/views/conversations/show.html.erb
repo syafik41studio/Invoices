@@ -1,5 +1,9 @@
 <div class="tag_menu">
   <span class="title_message"><%= conversation_title(@conversation) %></span>
+  <%= simple_form_for :search, :url => search_conversation_path(@conversation), :method => :get do |f|%>
+    <%= f.input :conversation_id, :label => false, :as => :hidden, :input_html => {:value => @conversation.id} %>
+    <%= f.input :body, :label => false, :input_html => {:style => "height:26px;width:300px;"} %>
+  <% end %>
   <%= link_to "Back to message", conversations_path, :class => "btn_newmessage" %>
 </div>
 <% @messages.each do |message| %>

@@ -1,0 +1,31 @@
+<div class="tag_menu">
+  <span class="title_message">Search Result</span>
+  <%= simple_form_for :search, :url => search_conversation_path(@conversation), :method => :get do |f|%>
+    <%= f.input :conversation_id, :label => false, :as => :hidden, :input_html => {:value => @conversation.id} %>
+    <%= f.input :body, :label => false, :input_html => {:style => "height:26px;width:300px;"} %>
+  <% end %>
+  <%= link_to "Back to message", conversations_path, :class => "btn_newmessage" %>
+</div>
+<% unless @messages.blank? %>
+  <% @messages.each do |message| %>
+    <%= render :partial => "message", :locals => {:message => message} %>
+  <% end %>
+  <span id="add_message"></span>
+
+  <div class="reply_form">
+    <div class="content">
+      <% simple_form_for(@conversation, :remote => true, :html => {:class => "yform"}) do |f| %>
+        <fieldset>
+          <%= f.input :recipient_tokens, :as => :hidden, :input_html => {:value => "#{@conversation.users.map(&:id).join(",")}"}  %>
+          <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 60 }%>
+          <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
+        </fieldset>
+        <%= f.submit "#{@conversation.users.count > 2 ? "Reply All" : "Reply"}", :class => "btn_reply" %>
+      <% end %>
+      <!--<a href="#" class="attahce_btn"></a>
+      <a href="#" class="image_btn"></a> -->
+    </div>
+  </div>
+<% else %>
+  No Messages found
+<% end %>

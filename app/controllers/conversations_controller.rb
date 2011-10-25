@@ -3,9 +3,7 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.includes(:users, :conversation_flags).
-      where("users.id = ? AND conversation_flags.status <> ? AND conversation_flags.user_id = ?", current_user.id, "Archive", current_user.id).
-      order("conversations.updated_at DESC")
+    @conversations = Conversation.my(current_user).recent
   end
 
   def new
@@ -17,7 +15,7 @@ class ConversationsController < ApplicationController
   end
 
   def user_token_input
-    @users = User.where("(first_name||' '|| last_name) ILIKE ? AND id <> ?", "%#{params[:q]}%", current_user.id)
+    @users = User.by_name(params[:q]).not_me(current_user)
     respond_to do |format|
       format.html
       format.json { render :json => @users.map{|user| user.attributes.merge(:full_name => user.full_name) } }
@@ -38,6 +36,7 @@ class ConversationsController < ApplicationController
     @messages =  MessageConversation.included_me(@conversation, current_user)
     @messages = @messages.sort {|x,y| x.created_at <=> y.created_at }
     @conversation.mark_as_read(current_user)
+    @search = SearchCriteria.new
   end
 
   def update
@@ -69,16 +68,24 @@ class ConversationsController < ApplicationController
   end
 
   def search_conversations_by_name
-    @conversations = Conversation.by_name(params[:q])
-    @conversations.select{|c| c.users.include?(current_user)}
+    @conversation_flags = ConversationFlag.by_name(params[:q], current_user)
+    @conversation_flags = @conversation_flags.select{|c| c.conversation.users.include?(current_user)}
     respond_to do |format|
       format.html
       format.json {
-        render :json => @conversations.map{|conv|
-          conv.attributes.merge({:title => conversation_title(conv), :last_message => conv.messages.last.body})
+        render :json => @conversation_flags.map{|conv|
+          conv.conversation.attributes.merge({:title => conversation_title(conv.conversation), :last_message => conv.conversation.messages.last.body})
         }
       }
     end  
+  end
+
+  def search
+    @search = SearchCriteria.new(params[:search])
+    @conversation = Conversation.find(@search.conversation_id)
+    @messages =  MessageConversation.included_me(@conversation, current_user).with_body_criteria(@search.body)
+    @messages = @messages.sort {|x,y| x.created_at <=> y.created_at }
+    @conversation.mark_as_read(current_user)
   end
 
   

@@ -94,7 +94,6 @@ a.btn_newmessage:hover {
 .tbl_message textarea {
     height: 100px;
     width: 255px;
-
 }
 
 .tbl_message td {
@@ -198,6 +197,7 @@ a.hovertitle .name_msg:hover {
     height: 60px;
     float: left;
     margin-left: 10px;
+    width:440px;
 }
 
 .btn_reply {

@@ -11,6 +11,11 @@ class MessageConversation < ActiveRecord::Base
     select("distinct on (message_token) *").where("conversation_id = ? AND(sender_id = ? OR recipient_id = ?)", conversation.id, user.id, user.id)
   }
 
+  scope :with_body_criteria, lambda{|body|
+    where("message_conversations.body like ?", "%#{body}%")
+  }
+
+
   scope :my_inbox, lambda{ |user|
     where("recipient_id = ? AND status_for_recipient = ?", user.id, 'Unread')
   }

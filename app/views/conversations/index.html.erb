@@ -1,9 +1,9 @@
-<h2>Messages</h2>
 <div class="tag_menu">
+  <span class="title_message">Messages</span>
   <!--<a class="btn_search" href="#"></a>-->
   <input type="text" id="input-search-conversation" name="conversation_id" />
-  <%= link_to "+ New Message", new_conversation_path, :class => "btn_newmessage", :id => "create-user", :remote => true %>
-  <div style="clear:both"></div>
+  <%= link_to "+ New Message", "#", :id => "btn_new_message", :class => "btn_newmessage" %>
+  <%= link_to "+ New Message", new_conversation_path, :id => "new-conversation", :class => "btn_newmessage", :remote => true, :style => "display:none" %>
 </div>
 <div id="list-messages">
   <% @conversations.each do |conversation| %>
@@ -24,7 +24,9 @@
         $(window.location).attr('href', '/conversations/'+item.id);
       }
     });
-    $('.token-input-list').css({"float":"right", "clear":"none","margin-left":"10px"});
-    $('.token-input-list').addClass("ui-corner-all");
+    $('.token-input-list').css({"float":"right", "clear":"none","margin-left":"10px", "height":"26px"});
+    $("#btn_new_message").click(function(){
+      $('#new-conversation').click();
+    })
   });
 </script>
