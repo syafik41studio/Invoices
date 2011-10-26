@@ -122,3 +122,14 @@ describe Conversation do
   end
   
 end
+
+# == Schema Information
+#
+# Table name: conversations
+#
+#  id           :integer         not null, primary key
+#  member_count :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+

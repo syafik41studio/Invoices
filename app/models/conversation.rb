@@ -1,4 +1,15 @@
 class Conversation < ActiveRecord::Base
+
+# == Schema Information
+#
+# Table name: conversations
+#
+#  id           :integer         not null, primary key
+#  member_count :integer
+#  created_at   :datetime
+#  updated_at   :datetime
+#
+
   require 'digest'
 
   has_many :messages, :class_name => "MessageConversation"
@@ -147,3 +158,4 @@ class Conversation < ActiveRecord::Base
   end
 
 end
+

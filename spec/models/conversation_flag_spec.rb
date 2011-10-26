@@ -47,3 +47,16 @@ describe ConversationFlag do
   end
 
 end
+
+# == Schema Information
+#
+# Table name: conversation_flags
+#
+#  id              :integer         not null, primary key
+#  user_id         :integer
+#  conversation_id :integer
+#  status          :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
