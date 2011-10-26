@@ -11,5 +11,28 @@ require 'spec_helper'
 #   end
 # end
 describe ConversationsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @user_admin = Factory.create(:user)
+    @user_recipient = Factory.create(:user, {
+        :email => "recipient@email.com",
+        :first_name => "Recipient",
+        :last_name => "Recipient"
+      })
+    @user_sender = Factory.create(:user, {
+        :email => "sender@email.com",
+        :first_name => "Sender",
+        :last_name => "Sender"
+      })
+    @conversation = Conversation.build_conversation(
+      :recipient_tokens => "#{@user_recipient.id}",
+      :owner_id => "#{@user_sender.id}",
+      :body => "Test Message"
+    )
+  end
+
+  it "should show time with ago" do
+    @conversation.save
+    custom_time(@conversation.updated_at).should  == "less than a minute ago"
+  end
+  
 end

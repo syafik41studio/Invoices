@@ -31,6 +31,7 @@ gem 'rspec'  , :group  =>[:development, :test]
 
 
 gem 'rspec-rails' , :group  =>[:development, :test]
+gem 'factory_girl' , :group  =>[:development, :test]
 
 
 # Use unicorn as the web server
