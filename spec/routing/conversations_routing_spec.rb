@@ -24,7 +24,7 @@ describe PostsController do
     end
     
     it "routes to #search_conversations_by_name" do
-      post("/search_conversations_by_name").should route_to("conversations#search_conversations_by_name")
+      get("/search_conversations_by_name").should route_to("conversations#search_conversations_by_name")
     end
 
     it "routes to #notifications" do

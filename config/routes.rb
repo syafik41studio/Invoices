@@ -4,7 +4,7 @@ App::Application.routes.draw do
   resources :patients
 
   get "user_token_input" => 'conversations#user_token_input'
-  post "search_conversations_by_name" => 'conversations#search_conversations_by_name'
+  get "search_conversations_by_name" => 'conversations#search_conversations_by_name'
 
   devise_for :users
   resources :billing_entities
