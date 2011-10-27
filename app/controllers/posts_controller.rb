@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @posts = Post.all(:include => :user)
+    @posts = Post.all(:include => [:user, :comments])
 
     respond_to do |format|
       format.html # index.html.erb

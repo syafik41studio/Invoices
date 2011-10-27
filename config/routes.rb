@@ -21,6 +21,7 @@ App::Application.routes.draw do
     end
   end
 
+  match "/:post_id/comments/"=> "comments#create", :as => :create_comment, :via => :post
   get "pages/home"
   root :to => "pages#home"
 

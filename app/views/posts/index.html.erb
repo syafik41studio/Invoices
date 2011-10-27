@@ -1,29 +1,8 @@
-<h1>Listing posts</h1>
+<!-- //Popup Content -->
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Status</th>    
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="tag_menu">
+  <a class="btn_newmessage" id="create-user"> + Add New </a>
+  <a class="btn_manage" id="create-user"> Manage Existing Posts </a>
+</div>
 
-<% @posts.each do |post| %>
-  <tr>
-    <td><%= post.user.full_name %></td>
-    <td><%= post.title %></td>
-    <td><%=h raw(post.description) %></td>
-    <td><%= post.status %></td>    
-    <td><%= link_to 'Show', post %></td>
-    <td><%= link_to 'Edit', edit_post_path(post) %></td>
-    <td><%= link_to 'Destroy', post, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Post', new_post_path %>
+<%= render :partial => 'list_message', :locals => {:posts => @posts} %>

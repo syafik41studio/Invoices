@@ -30,6 +30,7 @@ GEM
       activemodel (= 3.0.3)
       activesupport (= 3.0.3)
     activesupport (3.0.3)
+    acts_as_commentable (3.0.1)
     annotate (2.4.0)
     arel (2.0.10)
     bcrypt-ruby (3.0.1)
@@ -121,6 +122,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  acts_as_commentable
   annotate
   devise
   execjs

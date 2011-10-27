@@ -20,6 +20,14 @@
     border-color: #DCE2EC;
 }
 
+.comment_wraper {
+background:none repeat scroll 0 0 #EDEDED;
+border-bottom:1px solid #FFFFFF;
+float:left;
+padding:3px;
+width:351px;
+}
+
 a.btn_newmessage {
     background: #e6e6e6;
     border: 1px solid #D3D3D3;
@@ -131,6 +139,34 @@ a.btn_search:hover, a.btn_search:focus {
     line-height: 15px;
     color: #777 !important;
 }
+
+.content_msg b {
+color:#0CB8BB;
+float:left;
+font-size:15px;
+font-weight:bold;
+}
+
+.like_wraper {
+background:none repeat scroll 0 0 #EDEDED;
+border-bottom:1px solid #FFFFFF;
+float:left;
+padding-bottom:5px;
+width:80%;
+}
+
+a.like {
+background:url("/images/like.png") no-repeat scroll 0 0 transparent;
+color:#777777;
+cursor:pointer;
+float:left;
+height:16px;
+margin-top:5px;
+padding-left:22px;
+width:60px;
+}
+
+
 
 .opt_message {
     float: right;

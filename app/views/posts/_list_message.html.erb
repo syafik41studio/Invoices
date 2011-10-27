@@ -1,0 +1,21 @@
+
+<% posts.each do |post| %>
+<div class="list_message">
+  <img src="images/photo.png" class="img_stle" width="" height="" />
+  <div class="desc_message">
+    <a href="#" class="hovertitle"><div class="name_msg"><%= post.title %></div></a>
+    <div class="date_msg"><%= date_format(post.created_at) %></div>
+    <br /><br />
+    <div class="content_msg">    
+      <span>        
+        <b><%= raw  post.description %></b>
+      </span>
+    <br />
+      <div class="like_wraper">
+        <a href="#" class="like"> Likes (0) </a>
+      </div>
+      <%= render :partial => 'shared/comment', :locals => {:post => post} %>
+    </div>
+  </div>
+</div>
+<% end %>

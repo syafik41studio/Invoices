@@ -7,6 +7,8 @@ gem 'rails', '3.0.3'
 
 gem 'jquery-rails'
 
+
+gem "acts_as_commentable"
 gem 'annotate'  , :group  => [:development]
 
 #gem "use_tinymce"

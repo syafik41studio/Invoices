@@ -1,0 +1,35 @@
+
+<% unless post.comments.blank? %>
+  <div class="comment_wraper">
+    <img src="images/photo.png" class="img_stle" width="" height="" /><br />
+    <div class="comment1">
+      <a href="#" class="hovertitle"><div class="name_msg">Tike Suratin</div></a>
+      <br />
+      Lorem Ipsum is simply dummy text of the printing and industry.
+      Lorem Ipsum is simply dummy text of the printing and industry.
+      Lorem Ipsum is simply dummy text of the printing and industry.
+      <div class="date_msg2">
+        05 Oktober 2011
+        <!-- dropdown -->
+        <dl id="sample" class="dropdown dp2">
+          <dt><a href="#"><span> Option <img class="" src="images/arrow2.png" alt="" /> </span></a></dt>
+          <dd>
+            <ul>
+              <li><a href="#">Reply<img class="flag" src="br.png" alt="" /><span class="value">BR</span></a></li>
+              <li><a href="#">Delete<img class="flag" src="fr.png" alt="" /><span class="value">FR</span></a></li>
+            </ul>
+          </dd>
+        </dl>
+        <!-- <span id="result"></span> -->
+             <!-- dropdown -->
+      </div>
+    </div>
+  </div>
+<% else %>
+  <%= link_to "Comment", "#", :onclick => "$('#comment-#{post.id}').toggle();$('#comment-text-#{post.id}').focus();" %>
+  <% form_tag create_comment_path(post), :id => "comment-#{post.id}", :remote => true do   %>
+    <%= text_field_tag "comment_text[#{post.id}]", "" %>
+    <%= hidden_field_tag "comment_type", "Post" %>
+    <%= submit_tag "submit"   %>
+  <% end %>
+<% end %>
