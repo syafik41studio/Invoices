@@ -17,6 +17,7 @@ App::Application.routes.draw do
      get "mark_as_read"
      get "mark_as_unread"
      get "archive"
+     get "unarchive"
      post 'search'
     end
   end

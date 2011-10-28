@@ -19,5 +19,6 @@ class ConversationFlag < ActiveRecord::Base
   scope :by_name, lambda{|name, user|
     includes(:user, :conversation => [:users, :messages]).where("conversation_flags.user_id <> ? AND (users.first_name||' '||users.last_name) ILIKE ?", user.id, "%#{name}%")
   }
+  scope :not_archived, where("conversation_flags.status <> ?", "Archive")
 
 end

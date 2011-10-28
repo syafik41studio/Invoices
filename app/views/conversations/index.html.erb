@@ -2,6 +2,17 @@
   <span class="title_message">Messages</span>
   <!--<a class="btn_search" href="#"></a>-->
   <input type="text" id="input-search-conversation" name="conversation_id" />
+  <dl id="sample" class="dropdown">
+    <dt><a href="#"><span> <%= params[:query].blank? || params[:query].eql?("read_unread") ? "Inbox" : params[:query].capitalize %></span></a></dt>
+    <dd>
+      <ul>
+        <li><%= link_to "Inbox", conversations_path(:query => "read_unread") %></li>
+        <li><%= link_to "Archived", conversations_path(:query => "archive") %></li>
+        <li><%= link_to "Unread", conversations_path(:query => "unread") %></li>
+        <!--<li><%= link_to "Sent", conversations_path(:query => "sent") %></li>-->
+      </ul>
+    </dd>
+  </dl>
   <%= link_to "+ New Message", "#", :id => "btn_new_message", :class => "btn_newmessage" %>
   <%= link_to "+ New Message", new_conversation_path, :id => "new-conversation", :class => "btn_newmessage", :remote => true, :style => "display:none" %>
 </div>
@@ -25,9 +36,11 @@
       }
     });
     $('.token-input-list').css({"float":"right", "clear":"none","margin-left":"10px", "height":"26px"});
-    $('.token-input-input-search-conversation').attr("placeholder", "Search Message");
+    $('.token-input-input-search-conversation').css("width", "24px!important");
     $("#btn_new_message").click(function(){
       $('#new-conversation').click();
     })
   });
 </script>
+<script src="./yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
+<%= javascript_include_tag "jquery.dropdown"  %>

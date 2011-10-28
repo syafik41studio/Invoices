@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    @conversations = Conversation.my(current_user).recent
+    @conversations = Conversation.with_status(current_user, params[:query] || "read_unread").recent
   end
 
   def new
@@ -35,7 +35,7 @@ class ConversationsController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @messages =  MessageConversation.included_me(@conversation, current_user)
     @messages = @messages.sort {|x,y| x.created_at <=> y.created_at }
-    @conversation.mark_as_read(current_user)
+    @conversation.mark_as_read(current_user) unless @conversation.is_archive?(current_user)
     @search = SearchCriteria.new
   end
 
@@ -55,20 +55,41 @@ class ConversationsController < ApplicationController
   def mark_as_read
     @conversation = Conversation.find(params[:id])
     @conversation.mark_as_read(current_user)
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to conversations_path}
+    end
   end
 
   def mark_as_unread
     @conversation = Conversation.find(params[:id])
     @conversation.mark_as_unread(current_user)
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to conversations_path}
+    end
   end
 
   def archive
     @conversation = Conversation.find(params[:id])
     @conversation.mark_as_archive(current_user)
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to conversations_path}
+    end
+  end
+
+  def unarchive
+    @conversation = Conversation.find(params[:id])
+    @conversation.mark_as_unarchive(current_user)
+    respond_to do |format|
+      format.js{}
+      format.html{redirect_to conversations_path}
+    end
   end
 
   def search_conversations_by_name
-    @conversation_flags = ConversationFlag.by_name(params[:q], current_user)
+    @conversation_flags = ConversationFlag.by_name(params[:q], current_user).not_archived
     @conversation_flags = @conversation_flags.select{|c| c.conversation.users.include?(current_user)}
     respond_to do |format|
       format.html

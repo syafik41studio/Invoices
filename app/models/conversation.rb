@@ -28,9 +28,9 @@ class Conversation < ActiveRecord::Base
          OR (conversation_flags.status = ? AND conversation_flags.user_id = ?)", 'Unread', user.id, 'Unread', user.id)
   }
 
-  scope :my, lambda{|user|
+  scope :with_status, lambda{|user, status|
     includes(:users, :conversation_flags).
-      where("users.id = ? AND conversation_flags.status <> ? AND conversation_flags.user_id = ?", user.id, "Archive", user.id)
+      where("users.id = ? AND LOWER(conversation_flags.status) IN (?) AND conversation_flags.user_id = ?", user.id, status.split("_"), user.id)
   }
 
   scope :recent, order("conversations.updated_at DESC")
@@ -144,9 +144,15 @@ class Conversation < ActiveRecord::Base
   end
 
   def mark_as_archive(user)
-    MessageConversation.update_all("status_for_recipient = 'Read'",
+    MessageConversation.update_all("status_for_recipient = 'Archive'",
       "conversation_id = #{self.id} AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
     ConversationFlag.update_all("status = 'Archive'", "conversation_id = #{self.id} AND user_id = #{user.id}")
+  end
+  
+  def mark_as_unarchive(user)
+    MessageConversation.update_all("status_for_recipient = 'Read'",
+      "conversation_id = #{self.id} AND id = #{self.messages.last.id} AND recipient_id = #{user.id}")
+    ConversationFlag.update_all("status = 'Read'", "conversation_id = #{self.id} AND user_id = #{user.id}")
   end
 
   def last_message_from_sender_to_recipient(sender, recipient)
@@ -154,7 +160,15 @@ class Conversation < ActiveRecord::Base
   end
 
   def is_unread?(user)
-    @unread ||= ConversationFlag.where("conversation_id = ? AND user_id = ?", self.id, user.id).first.status.eql?("Unread")
+    @unread ||= self.conversation_flags.where("user_id = ?", user.id).first.status.eql?("Unread")
+  end
+  
+  def is_read?(user)
+    @read ||= self.conversation_flags.where("user_id = ?", user.id).first.status.eql?("Read")
+  end
+  
+  def is_archive?(user)
+    @archive ||= self.conversation_flags.where("user_id = ?", user.id).first.status.eql?("Archive")
   end
 
 end
