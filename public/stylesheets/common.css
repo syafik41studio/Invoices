@@ -13,6 +13,7 @@
     padding-right:2px;
     padding-top:10px;
     border-color: #DCE2EC;
+    margin-bottom: 10px;
 }
 
 .unread_message{
@@ -24,8 +25,9 @@
     background:none repeat scroll 0 0 #EDEDED;
     border-bottom:1px solid #FFFFFF;
     float:left;
-    padding:3px;
-    width:351px;
+    padding:10px;
+    width:93%;
+    margin-top: 10px;
 }
 
 a.btn_newmessage {
@@ -53,7 +55,7 @@ a.btn_newmessage:hover {
 
 .desc_message {
     float: right;
-    width: 85%;
+    width: 90%;
 }
 
 .name_msg {
@@ -64,14 +66,36 @@ a.btn_newmessage:hover {
     font-weight: bold;
     margin-bottom: 3px;
 }
+.title_msg{
+    float:left;
+    width: 70%;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.author-msg{
+    float:left;
+    font-size: 14px;
+    color: #333;
+}
 
 .date_msg {
-    float: right;
-    width: 28%;
     text-align: right;
     font-size: 11px;
     color: #b5b5b5;
     font-weight: bold;
+    float:right;
+    padding-top:2px;
+    margin-left: 10px;
+}
+.date_post {
+    text-align: right;
+    font-size: 11px;
+    color: #b5b5b5;
+    font-weight: bold;
+    float:left;
+    padding-top:2px;
+    margin-left: 10px;
 }
 
 .content_msg {
@@ -147,13 +171,30 @@ a.btn_search:hover, a.btn_search:focus {
     font-size:15px;
     font-weight:bold;
 }
+.title-post{
+    float:left;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color:#0CB8BB;
+    font-size:15px;
+    font-weight:bold;
+}
+.title-post a{
+    color:#0CB8BB;
+    font-size:15px;
+    font-weight:bold;
+}
+.title-post a:hover{
+    text-decoration: none;
+}
 
 .like_wraper {
     background:none repeat scroll 0 0 #EDEDED;
     border-bottom:1px solid #FFFFFF;
     float:left;
     padding-bottom:5px;
-    width:80%;
+    width:96%;
+    margin-top: 15px;
 }
 
 a.like {
@@ -167,7 +208,13 @@ a.like {
     width:60px;
 }
 
-
+.like_wraper div{
+    color:#777777;
+    cursor:pointer;
+    height:16px;
+    margin-top:5px;
+    padding-left:22px;
+}
 
 .opt_message {
     float: right;
@@ -207,7 +254,7 @@ a.opt_4{
 }
 
 a.hovertitle .name_msg:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .action_btn {
@@ -375,4 +422,13 @@ a.image_btn:hover {
 .dropdown dd, .dropdown dt, .dropdown ul {
     margin: 0;
     padding: 0;
+}
+
+.clear{
+    clear:both;
+}
+
+#category_choices ul {
+    list-style-type: none;
+    margin: auto;
 }

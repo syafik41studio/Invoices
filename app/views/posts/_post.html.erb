@@ -1,0 +1,28 @@
+<div class="list_message">
+  <img src="/images/photo.png" class="img_stle" width="" height="" />
+  <div class="desc_message">
+    <div class="title_msg">
+      <div class="author-msg"><%= post.user.full_name %></div>
+      <div class="date_post">  <%= "(#{custom_time(post.created_at)})" %></div>
+    </div>
+    <div class="clear"></div>
+    <div class="title-post"><%= link_to post.title, post_path(post) %></div>
+    <div class="content_msg">
+      <%= raw post.description %>
+      <div class="like_wraper">
+        <!--<a href="#" class="like"> Likes (7) </a> -->
+        <div><%= pluralize(post.total_comment, "Comment", "Comments") %></div>
+        <% unless post.last_commented.blank? %>
+          <div>Last commented : <%= custom_time(post.last_commented) %></div>
+        <% end %>
+        <div>Tags : <%= post.tag_list %></div>
+        <div>Categories : <%= post.post_categories.map(&:name).join(", ") %></div>
+      </div>
+      <% if with_comment %>
+        <% post.comments.each do |comment| %>
+          <%= render "comment", {:comment => comment} %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

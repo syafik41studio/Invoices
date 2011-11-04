@@ -9,6 +9,9 @@ gem 'jquery-rails'
 
 
 gem "acts_as_commentable"
+gem 'acts-as-taggable-on', '~>2.1.0'
+gem "friendly_id", "~> 4.0.0.beta14"
+
 gem 'annotate'  , :group  => [:development]
 
 #gem "use_tinymce"

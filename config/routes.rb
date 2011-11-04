@@ -1,6 +1,11 @@
 App::Application.routes.draw do
-  resources :posts
+  resources :posts do
+    member do
+      post "create_comment"
+    end
+  end
 
+  resources :post_categories
   resources :patients
 
   get "user_token_input" => 'conversations#user_token_input'

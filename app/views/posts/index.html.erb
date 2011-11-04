@@ -1,8 +1,5 @@
 <!-- //Popup Content -->
-
-<div class="tag_menu">
-  <a class="btn_newmessage" id="create-user"> + Add New </a>
-  <a class="btn_manage" id="create-user"> Manage Existing Posts </a>
-</div>
-
-<%= render :partial => 'list_message', :locals => {:posts => @posts} %>
+<%= render "post_view_menu" %>
+<% @posts.each do |post| %>
+  <%= render "post", {:post => post, :with_comment => false} %>
+<% end %>

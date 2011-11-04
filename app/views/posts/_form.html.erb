@@ -1,27 +1,25 @@
-<%= form_for(@post) do |f| %>
+<%= simple_form_for(@post, :html => {:class => "yform"}) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
       <ul>
-      <% @post.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
-  <% end %>     
-    <%= f.hidden_field :user_id, :value => current_user.id %>  
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
+  <% end %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.input :title,:wrapper_html => { :class => "subcl type-text"} %>
+  <%= f.input :description, :label => "Content", :wrapper_html => { :class => "subcl type-text"}, :input_html => {:class => "mceEditor"}%>
+  <%= f.input :status, :collection => ["Publish", "Not Publish"], :include_blank => false %>
+  <br />
+  <%= f.input :tag_list, :label => "Tags" %>
+  <br />
+  <label> Category   <small><%= link_to "Add new Category", new_post_category_path, :remote => true, :id => "new-category-link" %></small></label>
+  <div id="category_choices">
+    <%= raw display_categories(@post, current_user.post_categories) %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description, :class => "mceEditor" %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br />    
-    <%= f.select :status,["Publish", "Hide"] %>
-  </div>  
+  <br />
   <%= f.submit %>
 <% end %>

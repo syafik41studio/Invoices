@@ -1,7 +1,13 @@
 class Post < ActiveRecord::Base
 
   acts_as_commentable
+  acts_as_taggable
   belongs_to :user
+
+  has_and_belongs_to_many :post_categories, :join_table => "posts_with_categories", :association_foreign_key => "category_id"
+
+  validates :title, :presence => true
+
   # == Schema Information
   #
   # Table name: posts

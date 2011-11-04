@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :conversation_flags
   has_many :conversations, :through => :conversation_flags
+  has_many :post_categories
 
   validates :first_name, :last_name, :presence => true
   

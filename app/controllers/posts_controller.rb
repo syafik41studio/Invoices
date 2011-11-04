@@ -1,7 +1,18 @@
 class PostsController < ApplicationController  
-  uses_tiny_mce
+  uses_tiny_mce :only => [:new, :create, :edit, :update, :show], :options => {
+    :theme => 'advanced',
+    :theme_advanced_toolbar_location => "top",
+    :theme_advanced_toolbar_align => "left",
+    :theme_advanced_resizing => true,
+    :theme_advanced_resize_horizontal => false,
+    :paste_auto_cleanup_on_paste => true,
+    :theme_advanced_buttons1 => %w{formatselect fontselect fontsizeselect bold italic underline strikethrough separator justifyleft justifycenter justifyright indent outdent separator bullist numlist forecolor backcolor separator link unlink image undo redo},
+    :theme_advanced_buttons2 => [],
+    :theme_advanced_buttons3 => [],
+    :plugins => %w{ table fullscreen contextmenu paste }
+  }
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:index, :show]
   
   def index
     @posts = Post.all(:include => [:user, :comments])
@@ -14,7 +25,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-
+    @comment = Comment.new
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @post }
@@ -36,7 +47,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(params[:post])
-
     respond_to do |format|
       if @post.save
         format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
@@ -69,6 +79,15 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(posts_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def create_comment
+    @comment = Comment.new(params[:comment])
+    if @comment.save
+      redirect_to post_path(@comment.commentable), :notice => "Comment successfully created."
+    else
+      render :action => :show
     end
   end
 end
