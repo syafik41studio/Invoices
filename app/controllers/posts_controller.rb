@@ -15,7 +15,11 @@ class PostsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   
   def index
-    @posts = Post.all(:include => [:user, :comments])
+    if params[:type].blank?
+      @posts = Post.includes(:user, :comments).published.page params[:page]
+    else
+      @posts = Post.includes(:user, :comments).published.where("()").page params[:page]
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +53,7 @@ class PostsController < ApplicationController
     @post = Post.new(params[:post])
     respond_to do |format|
       if @post.save
-        format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
+        format.html { redirect_to(mine_posts_path, :notice => 'Post was successfully created.') }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
       else
         format.html { render :action => "new" }
@@ -63,7 +67,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to(@post, :notice => 'Post was successfully updated.') }
+        format.html { redirect_to(mine_posts_path, :notice => 'Post was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -90,4 +94,14 @@ class PostsController < ApplicationController
       render :action => :show
     end
   end
+
+  def mine
+    @posts = Post.mine(current_user).page params[:page]
+  end
+
+  def load_query_type
+    @type = params[:type]
+    render :layout => false
+  end
+
 end

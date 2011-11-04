@@ -3,6 +3,10 @@ App::Application.routes.draw do
     member do
       post "create_comment"
     end
+    collection do
+      get "mine"
+      get "search"
+    end
   end
 
   resources :post_categories
@@ -27,7 +31,8 @@ App::Application.routes.draw do
     end
   end
 
-  match "/:post_id/comments/"=> "comments#create", :as => :create_comment, :via => :post
+  match "/:post_id/comments/" => "comments#create", :as => :create_comment, :via => :post
+  match "load_query_type" => "posts#load_query_type"
   get "pages/home"
   root :to => "pages#home"
 

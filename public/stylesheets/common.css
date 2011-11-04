@@ -40,6 +40,7 @@ a.btn_newmessage {
     font-size: 12px;
     font-weight: bold;
     border-radius: 0px !Important;
+    margin-left: 2px;
 }
 
 a.btn_newmessage:hover {
@@ -68,7 +69,7 @@ a.btn_newmessage:hover {
 }
 .title_msg{
     float:left;
-    width: 70%;
+    width: 100%;
     font-weight: bold;
     margin-bottom: 3px;
 }
@@ -96,6 +97,15 @@ a.btn_newmessage:hover {
     float:left;
     padding-top:2px;
     margin-left: 10px;
+}
+.edit_link_post{
+    text-align: right;
+    font-size: 11px;
+    color: #b5b5b5;
+    font-weight: bold;
+    float:right;
+    padding-top:2px;
+    margin-right: 10px;
 }
 
 .content_msg {
@@ -143,7 +153,15 @@ a.btn_newmessage:hover {
         margin-right: 5px;
         padding-left: 5px;*/
     color: #666;
-    margin-left: -7px;
+    margin-left: 2px;
+}
+
+.text_to {
+    color: #666666;
+    float: right;
+    height: 24px;
+    margin-left: 2px;
+    padding-top: 5px;
 }
 
 a.btn_search {

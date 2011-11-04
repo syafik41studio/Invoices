@@ -1,5 +1,7 @@
 <!-- //Popup Content -->
 <%= render "post_view_menu" %>
 <% @posts.each do |post| %>
-  <%= render "post", {:post => post, :with_comment => false} %>
+  <%= render "post", {:post => post, :with_comment => false, :mine => false} %>
 <% end %>
+
+<%= paginate @posts %>

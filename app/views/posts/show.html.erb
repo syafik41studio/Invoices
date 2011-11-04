@@ -1,5 +1,5 @@
 <%= render "post_view_menu" %>
-<%= render "post", {:post => @post, :with_comment => true} %>
+<%= render "post", {:post => @post, :with_comment => true, :mine => false} %>
 
 <div id="comment-form">
   <%= render "comment_form" %>

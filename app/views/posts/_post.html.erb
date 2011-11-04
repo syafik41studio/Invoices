@@ -4,6 +4,11 @@
     <div class="title_msg">
       <div class="author-msg"><%= post.user.full_name %></div>
       <div class="date_post">  <%= "(#{custom_time(post.created_at)})" %></div>
+      <% if mine %>
+        <div class="edit_link_post">
+          <%= link_to "Edit Post", edit_post_path(post), :class => "btn_newmessage"  %>
+        </div>
+      <% end %>
     </div>
     <div class="clear"></div>
     <div class="title-post"><%= link_to post.title, post_path(post) %></div>
@@ -17,6 +22,9 @@
         <% end %>
         <div>Tags : <%= post.tag_list %></div>
         <div>Categories : <%= post.post_categories.map(&:name).join(", ") %></div>
+        <% if mine %>
+          <div>Publish : <%= post.is_published? ? "Yes" : "No" %></div>
+        <% end %>
       </div>
       <% if with_comment %>
         <% post.comments.each do |comment| %>

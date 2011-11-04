@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 
+  paginates_per 10
+   
   acts_as_commentable
   acts_as_taggable
   belongs_to :user
@@ -7,6 +9,21 @@ class Post < ActiveRecord::Base
   has_and_belongs_to_many :post_categories, :join_table => "posts_with_categories", :association_foreign_key => "category_id"
 
   validates :title, :presence => true
+
+  scope :published, where("status = ?", 'Publish')
+  scope :unpublished, where("published != ?", 'Publish')
+  scope :mine, lambda{|user|
+    where("user_id = ?", user.id)
+  }
+
+  default_scope order("created_at DESC")
+  
+  extend FriendlyId
+  friendly_id :title, :use => :slugged
+
+  def is_published?
+    self.status.eql?("Publish")
+  end
 
   # == Schema Information
   #

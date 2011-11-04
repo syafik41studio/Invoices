@@ -1,4 +1,21 @@
 <div class="tag_menu">
+  <%= link_to "Search", "#", :class => "btn_newmessage", :onclick => "do_search_post($('#selected_type').html())"  %>
+  <span id="query_field">
+    <%= show_query_field(@type || "author", params[:query_field] || nil)   %>
+  </span>
+  <dl id="sample" class="dropdown">
+    <dt><a href="#"><span id="selected_type"><%= params[:type] || "Author" %></span></a></dt>
+    <dd>
+      <ul>
+        <li><%= link_to "Author","#", :onclick => "$('#query_field').load('/load_query_type?type=author')"  %></li>
+        <li><%= link_to "Text", "#", :onclick => "$('#query_field').load('/load_query_type?type=text')" %></li>
+        <li><%= link_to "Date", "#", :onclick => "$('#query_field').load('/load_query_type?type=date')" %></li>
+      </ul>
+    </dd>
+  </dl>
   <%= link_to "+Add New", new_post_path, :class => "btn_newmessage"  %>
-  <!--<a class="btn_manage" id="create-user"> Manage Existing Posts </a>-->
+  <%= link_to "Manage Posts ", mine_posts_path, :class => "btn_newmessage"  %>
 </div>
+
+<script src="./yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>
+<%= javascript_include_tag "jquery.dropdown"  %>
