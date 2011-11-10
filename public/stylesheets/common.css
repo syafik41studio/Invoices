@@ -79,6 +79,10 @@ a.btn_newmessage:hover {
     font-size: 14px;
     color: #333;
 }
+.author-msg a{
+    color: #333;
+    text-decoration: none;
+}
 
 .date_msg {
     text-align: right;
@@ -111,8 +115,10 @@ a.btn_newmessage:hover {
 .content_msg {
     font-size: 12px;
     float: left;
-    width: 100%;
+    width: 98%;
     color: #777 !important;
+    padding-right: 10px;
+    text-align: justify;
 }
 
 .content_msg2 {
@@ -178,7 +184,7 @@ a.btn_search:hover, a.btn_search:focus {
 
 .content_msg p {
     float: left;
-    width: 70%;
+    width: 100%;
     line-height: 15px;
     color: #777 !important;
 }
@@ -214,7 +220,11 @@ a.btn_search:hover, a.btn_search:focus {
     width:96%;
     margin-top: 15px;
 }
-
+.like_wraper a{
+    cursor:pointer;
+    text-decoration: none;
+    color: #777777
+}
 a.like {
     background:url("/images/like.png") no-repeat scroll 0 0 transparent;
     color:#777777;
@@ -231,7 +241,7 @@ a.like {
     cursor:pointer;
     height:16px;
     margin-top:5px;
-    padding-left:22px;
+    padding-left:5px;
 }
 
 .opt_message {

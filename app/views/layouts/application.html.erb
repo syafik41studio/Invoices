@@ -21,23 +21,24 @@
     <%= javascript_include_tag "jquery.tokeninput.js" %>
     <%= javascript_include_tag "jquery.tipsy.js" %>
     <%= javascript_include_tag "application.js" %>
+    <%= javascript_include_tag :ckeditor %>
     <%= yield :add_billing %>
-    <% if current_user %>
-      <script type="text/javascript">
-        $.PeriodicalUpdater('/conversations/notifications', {
-          method: 'get', // method; get or post
-          data: '1', // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}
-          minTimeout: 3000, // starting value for the timeout in milliseconds
-          maxTimeout: 8000, // maximum length of time between requests
-          multiplier: 2, // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
-          type: '', // response type - text, xml, json, etc. See $.ajax config options
-          maxCalls: 0, // maximum number of calls. 0 = no limit.
-          autoStop: 0 // automatically stop requests after this many returns of the same data. 0 = disabled.
-        }, function(remoteData, success, xhr, handle) {
-          // Process the new data (only called when there was a change)
-        });
-      </script>
-    <% end %>
+    <%# if current_user %>
+      <%#*<script type="text/javascript">%>
+        <%#*$.PeriodicalUpdater('/conversations/notifications', {%>
+          <%#*method: 'get', // method; get or post%>
+          <%#*data: '1', // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}%>
+          <%#*minTimeout: 3000, // starting value for the timeout in milliseconds%>
+          <%#*maxTimeout: 8000, // maximum length of time between requests%>
+          <%#*multiplier: 2, // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)%>
+          <%#*type: '', // response type - text, xml, json, etc. See $.ajax config options%>
+          <%#*maxCalls: 0, // maximum number of calls. 0 = no limit.%>
+          <%#*autoStop: 0 // automatically stop requests after this many returns of the same data. 0 = disabled.%>
+        <%#*}, function(remoteData, success, xhr, handle) {%>
+          <%#*// Process the new data (only called when there was a change)%>
+        <%#*});%>
+      <%#*</script>%>
+    <%# end %>
     <!-- embedded styles for dynamic layout options -->
     <style type="text/css">
       #js-info { display:block; padding: 10px 20px; background: #fee; color: #800; margin: 0 0 10px 0; }
@@ -56,7 +57,7 @@
             <span>
               <%= DateTime.now.strftime('%d %B %Y') %> | <a href="#">Help/FAQ</a> |
               <% if user_signed_in? %>
-                Signed in as <%= current_user.email %> | <%= link_to "Sign out", destroy_user_session_path,:method=>:delete %>
+                Signed in as <%= link_to current_user.email, user_path(current_user) %> | <%= link_to "Sign out", destroy_user_session_path,:method=>:delete %>
               <% else %>
                 <%= link_to "Sign in", new_user_session_path %>
               <% end %>

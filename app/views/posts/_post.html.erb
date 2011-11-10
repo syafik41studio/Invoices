@@ -1,36 +1,42 @@
 <div class="list_message">
   <img src="/images/photo.png" class="img_stle" width="" height="" />
   <div class="desc_message">
+    <div class="title-post"><%= link_to post.title, post_path(post) %></div>
+    <% if mine %>
+      <div class="edit_link_post">
+        <%= link_to "Edit Post", edit_post_path(post), :class => "btn_newmessage"  %>
+      </div>
+    <% end %>
+    <div class="clear"></div>
     <div class="title_msg">
-      <div class="author-msg"><%= post.user.full_name %></div>
-      <div class="date_post">  <%= "(#{custom_time(post.created_at)})" %></div>
-      <% if mine %>
-        <div class="edit_link_post">
-          <%= link_to "Edit Post", edit_post_path(post), :class => "btn_newmessage"  %>
-        </div>
-      <% end %>
+      <div class="author-msg"><%= link_to post.user.full_name, user_path(post.user) %></div>
+      <div class="date_post">  <%= "(#{post.created_at.strftime("%B %d, %Y %I:%m %p")})" %></div>
     </div>
     <div class="clear"></div>
-    <div class="title-post"><%= link_to post.title, post_path(post) %></div>
-    <div class="content_msg">
-      <%= raw post.description %>
-      <div class="like_wraper">
-        <!--<a href="#" class="like"> Likes (7) </a> -->
-        <div><%= pluralize(post.total_comment, "Comment", "Comments") %></div>
-        <% unless post.last_commented.blank? %>
-          <div>Last commented : <%= custom_time(post.last_commented) %></div>
-        <% end %>
-        <div>Tags : <%= post.tag_list %></div>
-        <div>Categories : <%= post.post_categories.map(&:name).join(", ") %></div>
-        <% if mine %>
-          <div>Publish : <%= post.is_published? ? "Yes" : "No" %></div>
-        <% end %>
-      </div>
-      <% if with_comment %>
-        <% post.comments.each do |comment| %>
-          <%= render "comment", {:comment => comment} %>
-        <% end %>
-      <% end %>
-    </div>
+    <br />
   </div>
+  <div class="content_msg">
+    <% if with_comment %>
+      <%= raw post.description %>
+    <% else %>
+      <%= raw truncate_html(post.description, 700, (link_to "read more", post_path(post)) ).gsub("<>","") %>
+    <% end %>
+  </div>
+  <div class="like_wraper">
+    <!--<a href="#" class="like"> Likes (7) </a> -->
+    <div><%= link_to pluralize(post.total_comment, "Comment", "Comments"), post_path(post) %></div>
+    <% unless post.last_commented.blank? %>
+      <div>Last commented : <%= post.last_commented.strftime("%B %d, %Y %I:%m %p") %></div>
+    <% end %>
+    <div>Tags : <%= post.tag_list %></div>
+    <div>Categories : <%= post.post_categories.map(&:name).join(", ") %></div>
+    <% if mine %>
+      <div>Status : <%= post.status %></div>
+    <% end %>
+  </div>
+  <% if with_comment %>
+    <% post.comments.each do |comment| %>
+      <%= render "comment", {:comment => comment} %>
+    <% end %>
+  <% end %>
 </div>

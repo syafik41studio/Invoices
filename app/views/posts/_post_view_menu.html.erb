@@ -1,7 +1,7 @@
 <div class="tag_menu">
   <%= link_to "Search", "#", :class => "btn_newmessage", :onclick => "do_search_post($('#selected_type').html())"  %>
   <span id="query_field">
-    <%= show_query_field(@type || "author", params[:query_field] || nil)   %>
+    <%= show_query_field(params[:type] || "Author", params[:query_field1], params[:query_field2])   %>
   </span>
   <dl id="sample" class="dropdown">
     <dt><a href="#"><span id="selected_type"><%= params[:type] || "Author" %></span></a></dt>
@@ -10,11 +10,15 @@
         <li><%= link_to "Author","#", :onclick => "$('#query_field').load('/load_query_type?type=author')"  %></li>
         <li><%= link_to "Text", "#", :onclick => "$('#query_field').load('/load_query_type?type=text')" %></li>
         <li><%= link_to "Date", "#", :onclick => "$('#query_field').load('/load_query_type?type=date')" %></li>
+        <li><%= link_to "Tag", "#", :onclick => "$('#query_field').load('/load_query_type?type=tag')" %></li>
+        <li><%= link_to "Category", "#", :onclick => "$('#query_field').load('/load_query_type?type=category')" %></li>
       </ul>
     </dd>
   </dl>
-  <%= link_to "+Add New", new_post_path, :class => "btn_newmessage"  %>
-  <%= link_to "Manage Posts ", mine_posts_path, :class => "btn_newmessage"  %>
+  <% if user_signed_in? and can? :create, Post and can? :mine, Post %>
+    <%= link_to "+Add New", new_post_path, :class => "btn_newmessage"  %>
+    <%= link_to "Manage Posts ", mine_posts_path, :class => "btn_newmessage"  %>
+  <% end %>
 </div>
 
 <script src="./yaml/core/js/yaml-focusfix.js" type="text/javascript"></script>

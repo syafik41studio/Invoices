@@ -1,25 +1,10 @@
 class PostsController < ApplicationController  
-  uses_tiny_mce :only => [:new, :create, :edit, :update, :show], :options => {
-    :theme => 'advanced',
-    :theme_advanced_toolbar_location => "top",
-    :theme_advanced_toolbar_align => "left",
-    :theme_advanced_resizing => true,
-    :theme_advanced_resize_horizontal => false,
-    :paste_auto_cleanup_on_paste => true,
-    :theme_advanced_buttons1 => %w{formatselect fontselect fontsizeselect bold italic underline strikethrough separator justifyleft justifycenter justifyright indent outdent separator bullist numlist forecolor backcolor separator link unlink image undo redo},
-    :theme_advanced_buttons2 => [],
-    :theme_advanced_buttons3 => [],
-    :plugins => %w{ table fullscreen contextmenu paste }
-  }
-  
-  before_filter :authenticate_user!, :except => [:index, :show]
-  
+
+  before_filter :authenticate_user!, :except => [:index, :show, :load_query_type]
+  authorize_resource
+
   def index
-    if params[:type].blank?
-      @posts = Post.includes(:user, :comments).published.page params[:page]
-    else
-      @posts = Post.includes(:user, :comments).published.where("()").page params[:page]
-    end
+    @posts = do_with_search
 
     respond_to do |format|
       format.html # index.html.erb
@@ -102,6 +87,31 @@ class PostsController < ApplicationController
   def load_query_type
     @type = params[:type]
     render :layout => false
+  end
+
+  private
+
+  def do_with_search
+    if params[:type].blank?
+      Post.includes(:user, :comments).published.page params[:page]
+    else
+      case params[:type]
+      when "Author"
+        Post.includes(:user, :comments).published.where("(users.first_name||' '|| users.last_name) ILIKE ?", "%#{params[:query_field1]}%").page params[:page]
+      when "Text"
+        Post.includes(:user, :comments).published.where("description ILIKE ?", "%#{params[:query_field1]}%").page params[:page]
+      when "Date"
+        from_date = params[:query_field1]
+        to_date = params[:query_field2]
+        Post.includes(:user, :comments).published.where("posts.created_at between ? and ?", from_date, to_date).page params[:page]
+      when "Tag"
+        tags = params[:query_field1].split(",")
+        tags = tags.blank? ? "" : tags
+        Post.tagged_with(tags, :any => true).includes(:user, :comments).published.page params[:page]
+      when "Category"
+        Post.includes(:post_categories, :user, :comments).where("post_categories.name ILIKE ?", "%#{params[:query_field1]}%").published.page params[:page]
+      end
+    end
   end
 
 end

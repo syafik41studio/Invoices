@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper :all
  
   def parsedatefield(entity,fieldname)
     if !params[entity][fieldname].nil?
@@ -24,6 +25,11 @@ class ApplicationController < ActionController::Base
     else
       members_of_conversation[0..2].map{|user| user.full_name}.join(", ")
     end
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = "Access denied."
+    redirect_to root_url
   end
 
   helper_method :conversation_title

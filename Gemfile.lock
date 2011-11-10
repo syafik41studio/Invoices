@@ -38,6 +38,10 @@ GEM
     bcrypt-ruby (3.0.1)
     bcrypt-ruby (3.0.1-x86-mingw32)
     builder (2.1.2)
+    cancan (1.6.5)
+    ckeditor (3.6.3)
+      mime-types (~> 1.16)
+      orm_adapter (~> 0.0.5)
     devise (1.4.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -51,6 +55,7 @@ GEM
     faker (1.0.0)
       i18n (~> 0.4)
     friendly_id (4.0.0.beta14)
+    hpricot (0.8.3)
     i18n (0.6.0)
     jquery-rails (1.0.14)
       railties (~> 3.0)
@@ -128,11 +133,14 @@ DEPENDENCIES
   acts-as-taggable-on (~> 2.1.0)
   acts_as_commentable
   annotate
+  cancan
+  ckeditor
   devise
   execjs
   factory_girl
   faker
   friendly_id (~> 4.0.0.beta14)
+  hpricot
   jquery-rails
   kaminari
   paperclip

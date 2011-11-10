@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   belongs_to :user
 
   has_and_belongs_to_many :post_categories, :join_table => "posts_with_categories", :association_foreign_key => "category_id"
-
+  
   validates :title, :presence => true
 
   scope :published, where("status = ?", 'Publish')
@@ -16,7 +16,7 @@ class Post < ActiveRecord::Base
     where("user_id = ?", user.id)
   }
 
-  default_scope order("created_at DESC")
+  default_scope order("posts.created_at DESC")
   
   extend FriendlyId
   friendly_id :title, :use => :slugged

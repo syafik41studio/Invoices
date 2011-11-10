@@ -1,6 +1,10 @@
 <%= render "post_view_menu" %>
 <%= render "post", {:post => @post, :with_comment => true, :mine => false} %>
-
-<div id="comment-form">
-  <%= render "comment_form" %>
-</div>
+<div class="clear"></div>
+<% if user_signed_in? and can? :create_comment, Comment %>
+  <div id="comment-form">
+    <%= render "comment_form" %>
+  </div>
+<% else %>
+<i>Please <%= link_to "log in", new_user_session_path %> to post comment</i>
+<% end %>

@@ -13,8 +13,11 @@ gem 'acts-as-taggable-on', '~>2.1.0'
 gem "friendly_id", "~> 4.0.0.beta14"
 
 gem 'annotate'  , :group  => [:development]
+gem "cancan"
+gem "hpricot"
 
 #gem "use_tinymce"
+gem "ckeditor"
 
 
 gem 'simple_form'

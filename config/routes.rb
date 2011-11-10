@@ -16,6 +16,8 @@ App::Application.routes.draw do
   get "search_conversations_by_name" => 'conversations#search_conversations_by_name'
 
   devise_for :users
+  resources :users
+  
   resources :billing_entities
 
   resources :conversations do

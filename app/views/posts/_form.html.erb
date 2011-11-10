@@ -11,8 +11,8 @@
   <% end %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <%= f.input :title,:wrapper_html => { :class => "subcl type-text"} %>
-  <%= f.input :description, :label => "Content", :wrapper_html => { :class => "subcl type-text"}, :input_html => {:class => "mceEditor"}%>
-  <%= f.input :status, :collection => ["Publish", "Not Publish"], :include_blank => false %>
+  <%= f.ckeditor :description, :label => "Content", :input_html => { :toolbar => 'Full',:style => "width:100%" } %>
+  <%= f.input :status, :collection => ["Publish", "Draft/Hide"], :include_blank => false %>
   <br />
   <%= f.input :tag_list, :label => "Tags" %>
   <br />
