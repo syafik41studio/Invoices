@@ -62,4 +62,10 @@ CKEDITOR.editorConfig = function( config )
         ['Link','Unlink','Anchor'], ['Image', 'Attachment', 'Flash', 'Embed'],
         ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
     ];
+    
+  config.toolbar_Easiest =
+    [
+        ['Bold','Italic','Underline','Strike'], ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+        ['Link'], ['Image', 'Attachment']
+    ];
 };
