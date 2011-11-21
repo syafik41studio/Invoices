@@ -32,3 +32,6 @@ user.save
 user = User.new(:email => "kim@example.com", :password => "password", :first_name => "Kimberly", :last_name => "Mcleod")
 user.roles << roles.last
 user.save
+
+PostCategory.destroy_all
+post_categories = PostCategory.create([{:name => "AVT" }, {:name => "SLP" }, {:name => "Hearing Loss" }, {:name => "Cochlear Implant" }, {:name => "Hearing Aids" }])

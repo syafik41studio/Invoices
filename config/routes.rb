@@ -2,6 +2,8 @@ App::Application.routes.draw do
   resources :posts do
     member do
       post "create_comment"
+      get "like"
+      get "unlike"
     end
     collection do
       get "mine"
@@ -14,6 +16,7 @@ App::Application.routes.draw do
 
   get "user_token_input" => 'conversations#user_token_input'
   get "search_conversations_by_name" => 'conversations#search_conversations_by_name'
+  get "time_zone" => "pages#time_zone"
 
   devise_for :users
   resources :users
@@ -25,11 +28,11 @@ App::Application.routes.draw do
       get 'notifications'
     end
     member do
-     get "mark_as_read"
-     get "mark_as_unread"
-     get "archive"
-     get "unarchive"
-     post 'search'
+      get "mark_as_read"
+      get "mark_as_unread"
+      get "archive"
+      get "unarchive"
+      post 'search'
     end
   end
 

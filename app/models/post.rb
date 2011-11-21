@@ -7,7 +7,9 @@ class Post < ActiveRecord::Base
   belongs_to :user
 
   has_and_belongs_to_many :post_categories, :join_table => "posts_with_categories", :association_foreign_key => "category_id"
-  
+  has_many :likes, :as => :likeable
+
+
   validates :title, :presence => true
 
   scope :published, where("status = ?", 'Publish')

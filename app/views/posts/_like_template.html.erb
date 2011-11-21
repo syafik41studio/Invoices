@@ -1,0 +1,17 @@
+<div id="like-<%= post.id %>">
+  <% if user_signed_in? %>
+    <% if post.likes.map(&:user_id).include?(current_user.id) %>
+      <%= link_to "Likes(#{post.likes.count})", "#", :class => "like", :onclick => "return false" %>
+      <% if post.likes.count > 1 %>
+        <i>You and <%= post.likes.count %> others likes this post</i> |
+      <% else %>
+        <i>You like this post</i> |
+      <% end %>
+      <%= link_to "Unlike", unlike_post_path(post), :remote => true %>
+    <% else %>
+      <%= link_to "Likes(#{post.likes.count})", like_post_path(post), :remote => true, :class => "like" %>
+    <% end %>
+  <% else %>
+    <%= link_to "Likes(#{post.likes.count})", "#", :class => "like", :onclick => "return false" %>  <i>Please <%= link_to "log in", new_user_session_path %> to like a post</i>
+  <% end %>
+</div>

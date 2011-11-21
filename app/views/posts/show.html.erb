@@ -6,5 +6,11 @@
     <%= render "comment_form" %>
   </div>
 <% else %>
-<i>Please <%= link_to "log in", new_user_session_path %> to post comment</i>
+  <i>Please <%= link_to "log in", new_user_session_path %> to post comment</i>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#comment-form").slideto({highlight: false});
+  })
+</script>

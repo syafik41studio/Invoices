@@ -8,7 +8,7 @@ class Comment < ActiveRecord::Base
 
   after_create :set_comment_count_and_last_comment_for_post
 
-  validates :title, :comment, :presence => true
+  validates :comment, :presence => true
 
   # NOTE: install the acts_as_votable plugin if you
   # want user to vote on the quality of comments.

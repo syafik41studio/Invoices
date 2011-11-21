@@ -12,13 +12,16 @@
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <%= f.input :title,:wrapper_html => { :class => "subcl type-text"} %>
   <%= f.ckeditor :description, :label => "Content", :input_html => { :toolbar => 'Easiest',:style => "width:100%" } %>
-  <%= f.input :status, :collection => ["Publish", "Draft/Hide"], :include_blank => false %>
+  <br />
+  <%= f.input :status, :collection => [["Publish","Publish"], ["Save as Draft", "Draft"]], :as => :radio, :label => false %>
   <br />
   <%= f.input :tag_list, :label => "Tags" %>
   <br />
-  <label> Category   <small><%= link_to "Add new Category", new_post_category_path, :remote => true, :id => "new-category-link" %></small></label>
+  <label> Category   <small><%#= link_to "Add new Category", new_post_category_path, :remote => true, :id => "new-category-link" %></small></label>
   <div id="category_choices">
-    <%= raw display_categories(@post, current_user.post_categories) %>
+    <% PostCategory.all.each do |cat| %>
+      <%= check_box_tag "post[post_category_ids][]", cat.id, @post.post_categories.include?(cat) %> <%= cat.name %> <br />
+    <% end %>
   </div>
   <br />
   <%= f.submit %>

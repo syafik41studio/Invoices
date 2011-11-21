@@ -6,22 +6,26 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     if user.has_role?("Provider")
-      can :manage, [Post, Comment]
-      can :new, [Post, Comment]
-      can :create, [Post, Comment]
-      can :update, [Post, Comment]
-      can :edit, [Post, Comment]
+      can :manage, [Post, Comment, Like]
+      can :new, [Post, Comment, Like]
+      can :create, [Post, Comment, Like]
+      can :update, [Post, Comment, Like]
+      can :edit, [Post, Like]
       can :mine, Post
-      can :destroy, [Post, Comment]
+      can :destroy, [Post, Comment, Like]
       can :load_query_type, Post
+      can :like, [Post, Like]
+      can :unlike, [Post, Like]
     elsif user.has_role?("General User") or user.has_role?("Contacts")
-      can :read, [Post, Comment]
-      can :new, Comment
-      can :create, Comment
-      can :create_comment, [Post, Comment]
+      can :read, [Post, Comment, Like]
+      can :new, Comment, Like
+      can :create, Comment, Like
+      can :create_comment, [Post, Comment, Like]
       can :load_query_type, Post
+      can :like, [Post, Like]
+      can :unlike, [Post, Like]
     else
-      can :read, [Post, Comment]
+      can :read, [Post, Comment, Like]
       can :load_query_type, Post
       
     end

@@ -10,7 +10,7 @@
     <div class="clear"></div>
     <div class="title_msg">
       <div class="author-msg"><%= link_to post.user.full_name, user_path(post.user) %></div>
-      <div class="date_post">  <%= "(#{post.created_at.strftime("%B %d, %Y %I:%m %p")})" %></div>
+      <div class="date_post">  <%= "(#{post.created_at.in_time_zone.strftime("%B %d, %Y %I:%M %p")})" %></div>
     </div>
     <div class="clear"></div>
     <br />
@@ -23,10 +23,10 @@
     <% end %>
   </div>
   <div class="like_wraper">
-    <!--<a href="#" class="like"> Likes (7) </a> -->
+    <%= render "like_template", {:post => post} %>
     <div><%= link_to pluralize(post.total_comment, "Comment", "Comments"), post_path(post) %></div>
     <% unless post.last_commented.blank? %>
-      <div>Last commented : <%= post.last_commented.strftime("%B %d, %Y %I:%m %p") %></div>
+      <div>Last commented : <%= post.last_commented.in_time_zone.strftime("%B %d, %Y %I:%M %p") %></div>
     <% end %>
     <div>Tags : <%= post.tag_list %></div>
     <div>Categories : <%= post.post_categories.map(&:name).join(", ") %></div>

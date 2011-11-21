@@ -9,3 +9,7 @@ function do_search_post(type){
     }
 //    
 }
+
+$(document).ready(function(){
+    calculate_time_zone();
+})

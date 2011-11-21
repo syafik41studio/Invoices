@@ -2,7 +2,6 @@
   <%= f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id} %>
   <%= f.input :commentable_id, :as => :hidden, :input_html => {:value => @post.id} %>
   <%= f.input :commentable_type, :as => :hidden, :input_html => {:value => @post.class.to_s} %>
-  <%= f.input :title %>
   <%= f.input :comment, :as => :text, :input_html => {:rows => 10, :cols => 100 } %>
   <br />
   <%= f.submit "Comment" %>

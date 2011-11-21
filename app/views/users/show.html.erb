@@ -1,1 +1,7 @@
-<%= debug @user %>
+<%= simple_form_for @user, :method=> :put do |f|  %>
+  Name : <%= @user.full_name %> <br />
+  Email : <%= @user.email %> <br />
+  Timezone : <%= f.input :timezone, :collection => ActiveSupport::TimeZone.all.map{|tz| [tz, tz.to_s.split(") ").last]} %><br />
+  <%= f.button :submit %>
+
+<% end %>

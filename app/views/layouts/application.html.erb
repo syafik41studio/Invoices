@@ -20,32 +20,34 @@
     <%= javascript_include_tag "jquery-show-popup.js" %>
     <%= javascript_include_tag "jquery.tokeninput.js" %>
     <%= javascript_include_tag "jquery.tipsy.js" %>
+    <%= javascript_include_tag "detect_timezone.js" %>
+    <%= javascript_include_tag "jquery.slideto.min.js" %>
     <%= javascript_include_tag "application.js" %>
     <%= javascript_include_tag :ckeditor %>
     <%= yield :add_billing %>
-    <%# if current_user %>
-      <%#*<script type="text/javascript">%>
-        <%#*$.PeriodicalUpdater('/conversations/notifications', {%>
-          <%#*method: 'get', // method; get or post%>
-          <%#*data: '1', // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}%>
-          <%#*minTimeout: 3000, // starting value for the timeout in milliseconds%>
-          <%#*maxTimeout: 8000, // maximum length of time between requests%>
-          <%#*multiplier: 2, // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)%>
-          <%#*type: '', // response type - text, xml, json, etc. See $.ajax config options%>
-          <%#*maxCalls: 0, // maximum number of calls. 0 = no limit.%>
-          <%#*autoStop: 0 // automatically stop requests after this many returns of the same data. 0 = disabled.%>
-        <%#*}, function(remoteData, success, xhr, handle) {%>
-          <%#*// Process the new data (only called when there was a change)%>
-        <%#*});%>
-      <%#*</script>%>
-    <%# end %>
+    <% if current_user %>
+      <script type="text/javascript">
+        $.PeriodicalUpdater('/conversations/notifications', {
+          method: 'get', // method; get or post
+          data: '1', // array of values to be passed to the page - e.g. {name: "John", greeting: "hello"}
+          minTimeout: 3000, // starting value for the timeout in milliseconds
+          maxTimeout: 8000, // maximum length of time between requests
+          multiplier: 2, // the amount to expand the timeout by if the response hasn't changed (up to maxTimeout)
+          type: '', // response type - text, xml, json, etc. See $.ajax config options
+          maxCalls: 0, // maximum number of calls. 0 = no limit.
+          autoStop: 0 // automatically stop requests after this many returns of the same data. 0 = disabled.
+        }, function(remoteData, success, xhr, handle) {
+          // Process the new data (only called when there was a change)
+        });
+      </script>
+    <% end %>
     <!-- embedded styles for dynamic layout options -->
     <style type="text/css">
       #js-info { display:block; padding: 10px 20px; background: #fee; color: #800; margin: 0 0 10px 0; }
       .js #js-info { display:none; }
     </style>
   </head>
-  <body>
+  <body onload="calculate_time_zone()">
     <div class="page_margins">
       <div id="border-top">
         <div id="edge-tl"></div>
