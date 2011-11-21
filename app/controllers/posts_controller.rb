@@ -4,6 +4,7 @@ class PostsController < ApplicationController
   authorize_resource
 
   def index
+    session[:sort] = params[:sort] || "posts.created_at DESC"
     @posts = do_with_search
 
     respond_to do |format|
@@ -102,6 +103,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @like = Like.where("user_id = ? AND likeable_type = ? AND likeable_id = ? ", current_user.id, @post.class.to_s, @post.id).first
     @like.destroy
+    @post.update_attribute(:total_like, (@post.total_like || 0) - 1)
     respond_to do |format|
       format.js{}
       format.html{redirect_to posts_path}
@@ -112,23 +114,23 @@ class PostsController < ApplicationController
 
   def do_with_search
     if params[:type].blank?
-      Post.includes(:user, :comments, :likes).published.page params[:page]
+      Post.includes(:user, :comments, :likes).published.order(session[:sort]).page params[:page]
     else
       case params[:type]
       when "Author"
-        Post.includes(:user, :comments, :likes).published.where("(users.first_name||' '|| users.last_name) ILIKE ?", "%#{params[:query_field1]}%").page params[:page]
+        Post.includes(:user, :comments, :likes).published.where("(users.first_name||' '|| users.last_name) ILIKE ?", "%#{params[:query_field1]}%").order(session[:sort]).page params[:page]
       when "Text"
-        Post.includes(:user, :comments, :likes).published.where("description ILIKE ?", "%#{params[:query_field1]}%").page params[:page]
+        Post.includes(:user, :comments, :likes).published.where("description ILIKE ?", "%#{params[:query_field1]}%").order(session[:sort]).page params[:page]
       when "Date"
         from_date = params[:query_field1]
         to_date = params[:query_field2]
-        Post.includes(:user, :comments, :likes).published.where("to_char(posts.created_at AT TIME ZONE 'UTC#{session[:tz]}', 'yyyy-mm-dd') between ? and ?", from_date, to_date).page params[:page]
+        Post.includes(:user, :comments, :likes).published.where("to_char(posts.created_at AT TIME ZONE 'UTC#{session[:tz]}', 'yyyy-mm-dd') between ? and ?", from_date, to_date).order(session[:sort]).page params[:page]
       when "Tag"
         tags = params[:query_field1].split(",")
         tags = tags.blank? ? "" : tags
-        Post.tagged_with(tags, :any => true).includes(:user, :comments, :likes).published.page params[:page]
+        Post.tagged_with(tags, :any => true).includes(:user, :comments, :likes).published.order(session[:sort]).page params[:page]
       when "Category"
-        Post.includes(:post_categories, :user, :comments).where("post_categories.name ILIKE ?", "%#{params[:query_field1]}%").published.page params[:page]
+        Post.includes(:post_categories, :user, :comments).where("post_categories.name ILIKE ?", "%#{params[:query_field1]}%").published.order(session[:sort]).page params[:page]
       end
     end
   end

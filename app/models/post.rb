@@ -18,7 +18,7 @@ class Post < ActiveRecord::Base
     where("user_id = ?", user.id)
   }
 
-  default_scope order("posts.created_at DESC")
+#  default_scope order("posts.created_at DESC")
   
   extend FriendlyId
   friendly_id :title, :use => :slugged
