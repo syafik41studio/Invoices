@@ -13,7 +13,7 @@
   <%= f.input :title,:wrapper_html => { :class => "subcl type-text"} %>
   <%= f.ckeditor :description, :label => "Content", :input_html => { :toolbar => 'Easiest',:style => "width:100%" } %>
   <br />
-  <%= f.input :status, :collection => [["Publish","Publish"], ["Save as Draft", "Draft"]], :as => :radio, :label => false %>
+  <%= f.input :status, :collection => [["Publish","Publish"], ["Save as Draft", "Draft"]], :as => :radio, :label => false, :wrapper_html => {:class => "type-check"},:item_wrapper_tag => :div %>
   <br />
   <%= f.input :tag_list, :label => "Tags" %>
   <br />
@@ -24,5 +24,7 @@
     <% end %>
   </div>
   <br />
-  <%= f.submit %>
+  <div class="type-button">
+    <%= f.submit %>
+  </div>
 <% end %>

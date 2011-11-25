@@ -30,6 +30,22 @@
     margin-top: 10px;
 }
 
+#comment-form{
+    border-bottom: 1px solid #FFFFFF;
+    float: left;
+    margin-top: 15px;
+    padding-bottom: 5px;
+    width: 96%;
+}
+.comment-box{
+    border-color: #DCE2EC;
+    border-top: 1px solid #DCE2EC;
+    float: left;
+    margin-bottom: 10px;
+    padding: 10px 2px 10px 8px;
+    width: 100%;
+}
+
 a.btn_newmessage {
     background: #e6e6e6;
     border: 1px solid #D3D3D3;
@@ -316,7 +332,7 @@ a.hovertitle .name_msg:hover {
     height: 60px;
     float: left;
     margin-left: 10px;
-    width:440px;
+    width:452px;
 }
 
 .btn_reply {
@@ -332,6 +348,7 @@ a.hovertitle .name_msg:hover {
     padding: 5px;
     text-align: center;
     width: 58px;
+    margin-top: 15px;
 }
 
 btn_reply:hover {

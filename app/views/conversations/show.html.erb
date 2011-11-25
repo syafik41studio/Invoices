@@ -28,11 +28,11 @@
 <div class="reply_form">
   <div class="content">
     <% simple_form_for(@conversation, :remote => true, :html => {:class => "yform"}) do |f| %>
-      <fieldset>
-        <%= f.input :recipient_tokens, :as => :hidden, :input_html => {:value => "#{@conversation.users.map(&:id).join(",")}"}  %>
-        <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 60 }%>
-        <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
-      </fieldset>
+      <%= f.input :recipient_tokens, :as => :hidden, :input_html => {:value => "#{@conversation.users.map(&:id).join(",")}"}  %>
+      <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 60 }%>
+      <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
+      <br/>
+      <br/>
       <%= f.submit "#{@conversation.users.count > 2 ? "Reply All" : "Reply"}", :class => "btn_reply" %>
     <% end %>
     <!--<a href="#" class="attahce_btn"></a>

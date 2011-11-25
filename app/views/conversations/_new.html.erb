@@ -1,11 +1,9 @@
-<% simple_form_for(@conversation, :remote => true, :html => {:class => "yform", :style => "height:350px"}) do |f| %>
-  <fieldset>
-    <div id= "message_errors" style="display:none"></div>
-    Recipient :
-    <%= f.text_field :recipient_tokens, "data-pre" => @users.map(&:attributes).to_json  %>
-    Message : <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 41}%>
-    <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
-  </fieldset>
+<% simple_form_for(@conversation, :remote => true, :html => {:class => "yform", :style => "overflow:hidden;"}) do |f| %>
+  <div id= "message_errors" style="display:none"></div>
+  Recipient :
+  <%= f.text_field :recipient_tokens, "data-pre" => @users.map(&:attributes).to_json  %>
+  Message : <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 41, :style => "width:455px"}%>
+  <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
 <% end %>
 
 <script type="text/javascript">

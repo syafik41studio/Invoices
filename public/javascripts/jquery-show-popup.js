@@ -43,7 +43,7 @@ $(function() {
 
     $("#dialog-form").dialog({
         autoOpen: false,
-        height: 350,
+        height: 360,
         width: 510,
         modal: true,
         draggable: false,
