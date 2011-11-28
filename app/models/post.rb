@@ -11,6 +11,7 @@ class Post < ActiveRecord::Base
 
 
   validates :title, :presence => true
+  validates :status, :presence => true
 
   scope :published, where("status = ?", 'Publish')
   scope :unpublished, where("published != ?", 'Publish')

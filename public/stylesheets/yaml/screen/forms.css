@@ -63,13 +63,13 @@
   }
 
   /* :hover and :focus status on form fields | Effekt zur Hervorhebung von Formularfeldern bei :hover oder :focus */
-  .yform div.type-text input:focus,
+/*  .yform div.type-text input:focus,*/
 /*  .yform div select:focus,*/
 /*  .yform div textarea:focus,*/
 /*  .yform div.type-text input:hover,
   .yform div select:hover,
   .yform div textarea:hover,*/
-  .yform div.type-text input:active,
+/*  .yform div.type-text input:active,*/
 /*  .yform div select:active,*/
 /*  .yform div textarea:active {
     border:1px #a66 solid;
