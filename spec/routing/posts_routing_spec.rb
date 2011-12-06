@@ -31,5 +31,25 @@ describe PostsController do
       delete("/posts/1").should route_to("posts#destroy", :id => "1")
     end
 
+    it "routes to #create_comment" do
+      post("/posts/test-first-post/create_comment").should route_to("posts#create_comment", :id => "test-first-post")
+    end
+
+    it "routes to #like" do
+      get("/posts/test-first-post/like").should route_to("posts#like", :id => "test-first-post")
+    end
+    
+    it "routes to #unlike" do
+      get("/posts/test-first-post/unlike").should route_to("posts#unlike", :id => "test-first-post")
+    end
+
+    it "routes to #mine" do
+      get("/posts/mine").should route_to("posts#mine")
+    end
+
+    it "routes to #search" do
+      get("/posts/search").should route_to("posts#search")
+    end
+
   end
 end

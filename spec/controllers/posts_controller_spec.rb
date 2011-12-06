@@ -19,27 +19,57 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PostsController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Post. As you add validations to Post, be sure to
-  # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      :title => "Test first post",
+      :description => "Test for content",
+      :status => "Publish"
+    }
+  end
+  before(:each) do
+    @provider_role = Role.create(:name => "Provider")
+    @contacts_role = Role.create(:name => "Contacts")
+    @general_role = Role.create(:name => "General User")
+
+    @user_provider = Factory.create(:user, {
+        :email => "john@example.com",
+        :first_name => "John",
+        :last_name => "Doe",
+        :roles => [@provider_role]
+      })
+
+    @user_contacts = Factory.create(:user, {
+        :email => "melinda@example.com",
+        :first_name => "Melinda",
+        :last_name => "Dee",
+        :roles => [@contacts_role]
+      })
+
+    @user_general = Factory.create(:user, {
+        :email => "kim@example.com",
+        :first_name => "Kimberly",
+        :last_name => "McLeod",
+        :roles => [@general_role]
+      })
+
+    @post = Post.new(valid_attributes)
+
+    sign_in @user_provider
   end
 
   describe "GET index" do
     it "assigns all posts as @posts" do
-      post = Post.create! valid_attributes
+      @post.save
       get :index
-      assigns(:posts).should eq([post])
+      assigns(:posts).should eq([@post])
     end
   end
 
   describe "GET show" do
     it "assigns the requested post as @post" do
-      post = Post.create! valid_attributes
-      get :show, :id => post.id.to_s
-      assigns(:post).should eq(post)
+      @post.save
+      get :show, :id => @post.id.to_s
+      assigns(:post).should eq(@post)
     end
   end
 
@@ -52,9 +82,9 @@ describe PostsController do
 
   describe "GET edit" do
     it "assigns the requested post as @post" do
-      post = Post.create! valid_attributes
-      get :edit, :id => post.id.to_s
-      assigns(:post).should eq(post)
+      @post.save
+      get :edit, :id => @post.id.to_s
+      assigns(:post).should eq(@post)
     end
   end
 
@@ -74,7 +104,7 @@ describe PostsController do
 
       it "redirects to the created post" do
         post :create, :post => valid_attributes
-        response.should redirect_to(Post.last)
+        response.should redirect_to(mine_posts_path)
       end
     end
 
@@ -116,7 +146,7 @@ describe PostsController do
       it "redirects to the post" do
         post = Post.create! valid_attributes
         put :update, :id => post.id, :post => valid_attributes
-        response.should redirect_to(post)
+        response.should redirect_to(mine_posts_path)
       end
     end
 
@@ -151,6 +181,79 @@ describe PostsController do
       post = Post.create! valid_attributes
       delete :destroy, :id => post.id.to_s
       response.should redirect_to(posts_url)
+    end
+  end
+
+  describe "MINE POST path" do
+    it "should show mine post" do
+      @post.user_id = @user_provider.id
+      @post.save
+      get :mine
+      assigns(:posts).should eq([@post])
+    end
+  end
+
+  describe "access posts with role" do
+    it "should have no access to new page" do
+      sign_in @user_contacts
+      get :new
+      assigns(:post).should eq(nil)
+    end
+
+    it "should have no access to new page with no session" do
+      sign_out @user_provider
+      get :new
+      assigns(:post).should eq(nil)
+    end
+
+    it "should have access to posts page with no session" do
+      @post.user_id = @user_provider.id
+      @post.save
+      sign_out @user_provider
+      get :index
+      assigns(:posts).should eq([@post])
+    end
+  end
+
+  describe "ajax request like" do
+    it "should have 1 like" do
+      @post.user_id = @user_provider.id
+      @post.save
+      get :like, :id => @post.slug
+      @post.likes.count.should eq(1)
+    end
+
+    it "should have user who liked the post" do
+      @post.user_id = @user_provider.id
+      @post.save
+      get :like, :id => @post.slug
+      @post.likes.first.user.should eq(@user_provider)
+    end
+  end
+
+  describe "create comment for the post" do
+    it "should create comment" do
+      @post.user_id = @user_provider.id
+      @post.save
+      comment = Comment.create(
+        :user_id => @user_provider.id,
+        :commentable_type => @post.class.to_s,
+        :commentable_id => @post.id,
+        :comment => "Test Comment"
+      )
+      @post.comments.should eq([comment])
+    end
+
+    it "should have 1 comment" do
+      @post.user_id = @user_provider.id
+      @post.save
+      comment = Comment.create(
+        :user_id => @user_provider.id,
+        :commentable_type => @post.class.to_s,
+        :commentable_id => @post.id,
+        :comment => "Test Comment"
+      )
+      @post.comments.count.should eq(1)
     end
   end
 

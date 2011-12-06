@@ -47,22 +47,22 @@
 }
 
 a.btn_newmessage {
-    background: #e6e6e6;
-    border: 1px solid #D3D3D3;
+    background: url("../stylesheets/yaml/screen/images/button_yellow.png") repeat-x scroll left top #5E5607;
+    /*    border: 1px solid #D3D3D3;*/
     padding: 5px;
     float: right;
-    color: #aaa;
+    color: #333300;
     cursor: pointer;
     font-size: 12px;
-    font-weight: bold;
     border-radius: 0px !Important;
     margin-left: 2px;
 }
 
 a.btn_newmessage:hover {
-    color: #555;
-    border: 1px solid #aaa;
+    background: none repeat scroll 0 0 #888800;
+    color: #FFFFFF;
     text-decoration: none;
+    /*    border: 1px solid #D3D3D3;*/
 }
 
 .img_stle {
@@ -122,7 +122,6 @@ a.btn_newmessage:hover {
     text-align: right;
     font-size: 11px;
     color: #b5b5b5;
-    font-weight: bold;
     float:right;
     padding-top:2px;
     margin-right: 10px;
@@ -135,6 +134,7 @@ a.btn_newmessage:hover {
     color: #777 !important;
     padding-right: 10px;
     text-align: justify;
+    overflow: auto;
 }
 
 .content_msg2 {
@@ -408,36 +408,41 @@ a.image_btn:hover {
 }
 
 .dropdown a, .dropdown a:visited {
-    color: #AAAAAA;
+    /*    background: url("../stylesheets/yaml/screen/images/button_yellow.png") repeat-x scroll left top #5E5607;*/
+    /*    border: 1px solid #D3D3D3;*/
+    color: #333300;
     outline: medium none;
     text-decoration: none;
 }
 
-.dropdown a, .dropdown a:visited {
-    color: #AAAAAA;
+.dropdown a:hover {
+    background: none repeat scroll 0 0 #888800;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
 .dropdown dt a span {
     cursor: pointer;
     display: block;
-    padding: 5px;
-    color:#AAAAAA;
+    padding: 4px;
+    color: #333300;
+    font-weight: normal!important;
 }
 
 .dropdown a, .dropdown a:visited {
-    color: #AAAAAA;
+    color: #333300;
     text-decoration: none;
 }
 
 .dropdown dt a {
-    background: url("../images/arrow.png") no-repeat scroll right center #E6E6E6;
-    border: 1px solid #D3D3D3;
+    background: url("../images/arrow.png") no-repeat scroll right center #dbcc2b;
+    /*    border: 1px solid #D3D3D3;*/
     display: block;
-    height: 25px;
+    height: 24px;
     margin-left: 5px;
     padding-right: 20px;
     width: 100px;
+    margin-top: 1px;
 }
 
 .dropdown dd {
@@ -450,8 +455,8 @@ a.image_btn:hover {
 }
 
 .dropdown dd ul {
-    background: none repeat scroll 0 0 #E6E6E6;
-    border: 1px solid #D3D3D3;
+    background: none repeat scroll 0 0 #dbcc2b;
+    /*    border: 1px solid #dbcc2b;*/
     border-top: none;
     color: #AAAAAA;
     display: none;

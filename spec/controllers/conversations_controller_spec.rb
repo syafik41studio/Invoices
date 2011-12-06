@@ -2,26 +2,38 @@ require 'spec_helper'
 
 describe ConversationsController do
   before(:each) do
-    @user_admin = Factory.create(:user)
-    @user_recipient = Factory.create(:user, {
-        :email => "recipient@email.com",
-        :first_name => "Recipient",
-        :last_name => "Recipient"
+    @provider_role = Role.create(:name => "Provider")
+    @contacts_role = Role.create(:name => "Contacts")
+    @general_role = Role.create(:name => "General User")
+
+    @user_provider = Factory.create(:user, {
+        :email => "john@example.com",
+        :first_name => "John",
+        :last_name => "Doe",
+        :roles => [@provider_role]
       })
-    @user_sender = Factory.create(:user, {
-        :email => "sender@email.com",
-        :first_name => "Sender",
-        :last_name => "Sender"
+
+    @user_contacts = Factory.create(:user, {
+        :email => "melinda@example.com",
+        :first_name => "Melinda",
+        :last_name => "Dee",
+        :roles => [@contacts_role]
       })
-    
+
+    @user_general = Factory.create(:user, {
+        :email => "kim@example.com",
+        :first_name => "Kimberly",
+        :last_name => "McLeod",
+        :roles => [@general_role]
+      })
 
     @conversation = Conversation.build_conversation(
-      :recipient_tokens => "#{@user_recipient.id}",
-      :owner_id => "#{@user_sender.id}",
+      :recipient_tokens => "#{@user_provider.id}",
+      :owner_id => "#{@user_contacts.id}",
       :body => "Test Message"
     )
 
-    sign_in @user_sender
+    sign_in @user_contacts
   end
   
   describe "GET index" do
@@ -53,8 +65,8 @@ describe ConversationsController do
   describe "POST create" do
     it "should create new conversation as @conversation" do
       post :create, :conversation => {
-        :recipient_tokens => "#{@user_recipient.id}",
-        :owner_id => "#{@user_sender.id}",
+        :recipient_tokens => "#{@user_provider.id}",
+        :owner_id => "#{@user_contacts.id}",
         :body => "Test Message"
       }
       assigns(:conversation).should be_a(Conversation)
@@ -87,8 +99,8 @@ describe ConversationsController do
       request.env["HTTP_ACCEPT"] = "application/javascript"
       @conversation.save
       put :update, :id => @conversation.id, :conversation => {
-        :recipient_tokens => "#{@user_recipient.id}",
-        :owner_id => "#{@user_sender.id}",
+        :recipient_tokens => "#{@user_provider.id}",
+        :owner_id => "#{@user_contacts.id}",
         :body => "Test Message 2"
       }
       response.should render_template("update")
@@ -98,8 +110,8 @@ describe ConversationsController do
       request.env["HTTP_ACCEPT"] = "application/javascript"
       @conversation.save
       put :update, :id => @conversation.id, :conversation => {
-        :recipient_tokens => "#{@user_recipient.id}",
-        :owner_id => "#{@user_sender.id}",
+        :recipient_tokens => "#{@user_provider.id}",
+        :owner_id => "#{@user_contacts.id}",
         :body => "Test Message 2"
       }
       assigns(:conversation).should eq(@conversation)

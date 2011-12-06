@@ -2,20 +2,34 @@ require 'spec_helper'
 
 describe Conversation do
   before(:each) do
-    @user_admin = Factory.create(:user)
-    @user_recipient = Factory.create(:user, {
-        :email => "recipient@email.com",
-        :first_name => "Recipient",
-        :last_name => "Recipient"
+    @provider_role = Role.create(:name => "Provider")
+    @contacts_role = Role.create(:name => "Contacts")
+    @general_role = Role.create(:name => "General User")
+
+    @user_provider = Factory.create(:user, {
+        :email => "john@example.com",
+        :first_name => "John",
+        :last_name => "Doe",
+        :roles => [@provider_role]
       })
-    @user_sender = Factory.create(:user, {
-        :email => "sender@email.com",
-        :first_name => "Sender",
-        :last_name => "Sender"
+
+    @user_contacts = Factory.create(:user, {
+        :email => "melinda@example.com",
+        :first_name => "Melinda",
+        :last_name => "Dee",
+        :roles => [@contacts_role]
       })
+
+    @user_general = Factory.create(:user, {
+        :email => "kim@example.com",
+        :first_name => "Kimberly",
+        :last_name => "McLeod",
+        :roles => [@general_role]
+      })
+    
     @conversation = Conversation.build_conversation(
-      :recipient_tokens => "#{@user_recipient.id}",
-      :owner_id => "#{@user_sender.id}",
+      :recipient_tokens => "#{@user_provider.id}",
+      :owner_id => "#{@user_contacts.id}",
       :body => "Test Message"
     )
   end
@@ -64,7 +78,7 @@ describe Conversation do
   end
 
   it "should have member of conversation" do
-    @conversation.list_member_conversation.should == ["#{@user_sender.id}", "#{@user_recipient.id}"]
+    @conversation.list_member_conversation.should == ["#{@user_contacts.id}","#{@user_provider.id}"]
   end
 
   it "should have messages on conversations" do
@@ -79,12 +93,12 @@ describe Conversation do
 
   it "should user_sender as sender" do
     @conversation.save
-    @conversation.messages.first.sender.should == @user_sender
+    @conversation.messages.first.sender.should == @user_contacts
   end
 
   it "should user_recipient as recipient" do
     @conversation.save
-    @conversation.messages.first.recipient.should == @user_recipient
+    @conversation.messages.first.recipient.should == @user_provider
   end
 
   it "should have Unread status message for recipient" do
@@ -99,26 +113,26 @@ describe Conversation do
 
   it "should have inbox messages for recipient" do
     @conversation.save
-    inbox = @conversation.inbox(@user_recipient)
+    inbox = @conversation.inbox(@user_provider)
     inbox.should_not == []
   end
   
   it "should have unread message" do
     @conversation.save
-    have = @conversation.have_unread_message?(@user_recipient)
+    have = @conversation.have_unread_message?(@user_provider)
     have.should == true
   end
 
   it "should have Read status message when user read" do
     @conversation.save
-    @conversation.mark_as_read(@user_recipient)
-    @conversation.messages.where("recipient_id = ?", @user_recipient).first.status_for_recipient.should == "Read"
+    @conversation.mark_as_read(@user_provider)
+    @conversation.messages.where("recipient_id = ?", @user_provider).first.status_for_recipient.should == "Read"
   end
 
   it "should have Unread status message when mark as unread" do
     @conversation.save
-    @conversation.mark_as_unread(@user_recipient)
-    @conversation.messages.where("recipient_id = ?", @user_recipient).first.status_for_recipient.should == "Unread"
+    @conversation.mark_as_unread(@user_provider)
+    @conversation.messages.where("recipient_id = ?", @user_provider).first.status_for_recipient.should == "Unread"
   end
   
 end

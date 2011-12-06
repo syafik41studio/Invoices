@@ -7,7 +7,6 @@ gem 'rails', '3.0.3'
 
 gem 'jquery-rails'
 
-
 gem "acts_as_commentable"
 gem 'acts-as-taggable-on', '~>2.1.0'
 gem "friendly_id", "~> 4.0.0.beta14"
