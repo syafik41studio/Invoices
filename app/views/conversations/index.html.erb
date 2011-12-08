@@ -45,3 +45,7 @@
 
 <%#= javascript_include_tag "../stylesheets/yaml/core/js/yaml-focusfix.js" %>
 <%= javascript_include_tag "jquery.dropdown"  %>
+
+<% content_for :popup_content do %>
+  <%= render "shared/popup_content" %>
+<% end %>
