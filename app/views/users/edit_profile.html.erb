@@ -1,0 +1,426 @@
+<style type="text/css">
+  .expand {
+    clear: both;
+    margin: 0;
+    padding-bottom: .75em;
+  }
+
+  .expand a:link, .expand a:visited {
+    display: block;
+    border-width: 1px;
+    background-image: url(/images/arrow-down.gif);
+    background-repeat: no-repeat;
+    background-position: 98% 60%;
+    color: #444444;
+    text-decoration: none;
+  }
+
+  .expand a:link.open, .expand a:visited.open {
+    background-image: url(/images/arrow-up.gif);
+    background-repeat: no-repeat;
+    background-position: 98% 60%;
+    color: #444444;
+    text-decoration: none;
+  }
+  .collapse{
+    border: 2px solid #E2E0EF;
+    margin: 2px 0 1em;
+    overflow: hidden;
+    padding: 1em 10px;
+    position:absolute;
+    background: #F8F8F8;
+  }
+
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("div.expand").toggler({method: "slideFadeToggle"});
+    <%#*$("#speciality_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#gender_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#languages_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#accepting_new_patient_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#about_me_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#biography_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#practice_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#training_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#work_phone_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#work_cell_phone_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#work_fax_num_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#email_address_expand").toggler({method: "slideFadeToggle"});%>
+    <%#*$("#office_address_expand").toggler({method: "slideFadeToggle"});%>
+    
+  })
+</script>
+<h2>Profile</h2>
+<%= simple_form_for(@user_profile, :url => @redirect, :html => { :class => "full" }) do |f| %>
+  <div class="subcolumns">
+    <%= f.input :user_id, :as => :hidden %>
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c25l">
+          Name
+        </div>
+        <div class="c75r">
+          <%= f.input :full_name, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+
+      <div class="subcolumns">
+        <div class="c25l">
+          <div class="expand" id="description_expand">
+            <a href="#" style="display: block">Description</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :description_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select"}, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c75r">
+          <%= f.input :description, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+    <div class="c50r">
+      <div class="subcolumns">
+        <div class="c38l">
+          <div class="expand" id="speciality_expand">
+            <a href="#" style="display: block">My Speciality</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :speciality_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c62r">
+          <%= f.input :speciality, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+
+      <div class="subcolumns">
+        <div class="c38l">
+          <div class="expand" id="gender_expand">
+            <a href="#" style="display: block"> My Gender</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :gender_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c62r">
+          <%= f.input :gender, :collection => [["Male", "Male"], ["Female", "Female"]], :label => false , :wrapper_html => {:class => "subcr type-select" } %>
+        </div>
+      </div>
+
+      <div class="subcolumns">
+        <div class="c38l">
+          <div class="expand" id="languages_expand">
+            <a href="#" style="display: block">Languages I speaks</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :languages_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c62r">
+          <%= f.input :languages, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+      <div class="subcolumns">
+        <div class="c38l">
+          <div class="expand" id="accepting_new_patient_expand">
+            <a href="#" style="display: block">Accepting New Patients</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :accepting_new_patient_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c62r">
+          <%= f.input :accepting_new_patient, :collection => [["Yes", "Yes"], ["No", "No"], ["Please send me message", "Please send me message"]], :include_blank => false, :label => false , :wrapper_html => {:class => "subcr type-select" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c20l">
+    <div class="expand" id="about_me_expand">
+      <a href="#" style="display: block"><h4>About Me</h4></a>
+    </div>
+    <div class="collapse">
+      <fieldset>
+        <legend>Privacy setting : <br /> </legend>
+        <%= f.input :about_me_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select"}, :label => false %>
+      </fieldset>
+    </div>
+  </div>
+  <%= f.input :about_me, :as => :text, :label => false, :wrapper_html => {:class => "subcr type-text"}, :input_html => {:rows => 10} %>
+  <br />
+
+  <div class="c20l">
+    <div class="expand" id="biography_expand">
+      <a href="#" style="display: block"><h4>Biography</h4></a>
+    </div>
+    <div class="collapse">
+      <fieldset>
+        <legend>Privacy setting : <br /> </legend>
+        <%= f.input :biography_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select"}, :label => false %>
+      </fieldset>
+    </div>
+  </div>
+  <%= f.input :biography, :as => :text, :label => false, :wrapper_html => {:class => "subcr type-text"}, :input_html => {:rows => 10} %>
+  <br />
+
+  <div class="c38l">
+    <div class="expand" id="practice_expand">
+      <a href="#" style="display: block"><h4>About My Practice</h4></a>
+    </div>
+    <div class="collapse">
+      <fieldset>
+        <legend>Privacy setting : <br /> </legend>
+        <%= f.input :practice_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select"}, :label => false %>
+      </fieldset>
+    </div>
+  </div>
+  <%= f.input :practice, :as => :text, :label => false, :wrapper_html => {:class => "subcr type-text"}, :input_html => {:rows => 10} %>
+  <br />
+
+  <div class="c38l">
+    <div class="expand" id="training_expand">
+      <a href="#" style="display: block"><h4>My Training and Certification</h4></a>
+    </div>
+    <div class="collapse">
+      <fieldset>
+        <legend>Privacy setting : <br /> </legend>
+        <%= f.input :training_and_cert_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select"}, :label => false %>
+      </fieldset>
+    </div>
+  </div>
+  <h4></h4>
+  <%= f.input :training_and_cert, :as => :text, :label => false, :wrapper_html => {:class => "subcr type-text"}, :input_html => {:rows => 10} %>
+  <br />
+
+  <h4>My Contact Information</h4>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="work_phone_expand">
+            <a href="#" style="display: block">Work Phone</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :work_phone_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.input :work_phone, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+    <div class="c50r">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="subcolumns">
+            <div class="c20l" style="text-align: right;">
+              Ext
+            </div>
+            <div class="c80r">
+              <%= f.input :ext, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="work_cell_phone_expand">
+            <a href="#" style="display: block">Work Cell Phone</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :work_cell_phone_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.input :work_cell_phone, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="work_fax_num_expand">
+            <a href="#" style="display: block">Work Fax Number</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :work_fax_number_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.input :work_fax_number, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="email_address_expand">
+            <a href="#" style="display: block">Email Address</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :email_address_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.input :email_address, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="office_address_expand">
+            <a href="#" style="display: block"> Office Address</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :office_address_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.input :office_address, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "Address line 1" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+        </div>
+        <div class="c50r">
+          <%= f.input :office_address_2, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "Address line 2" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+        </div>
+        <div class="c50r">
+          <div class="c25l">
+            <%= f.input :city, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "city"  %>
+          </div>
+          <div class="c50l">
+            <%= f.input :state, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "state"  %>
+          </div>
+          <div class="c25l">
+            <%= f.input :zip, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "zip"  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="working_hours_expand">
+            <a href="#" style="display: block">Working Hours</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :working_hours_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%=  f.input :working_hours, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="working_hours_expand">
+            <a href="#" style="display: block">Preferred Contact Method</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :prefered_contact_method_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%=  f.input :prefered_contact_method, :label => false, :wrapper_html => {:class => "subcr type-text" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          <div class="expand" id="holiday_expand">
+            <a href="#" style="display: block">Holidays Observed</a>
+          </div>
+          <div class="collapse">
+            <fieldset>
+              <legend>Privacy setting : <br /> </legend>
+              <%= f.input :holiday_observed_pv, :collection => [["Allow public view", false],["Allow for my own private view only", true]], :include_blank => false, :wrapper_html => {:class => "subcr type-select" }, :label => false %>
+            </fieldset>
+          </div>
+        </div>
+        <div class="c50r">
+          <%= f.simple_fields_for :holiday_observeds, :wrapper => 'inline' do |holiday_observed| %>
+            <%= render 'holiday_observed_fields', :f => holiday_observed %>
+          <% end %>
+          <%= link_to_add_association '( + )', f, :holiday_observeds, :render_options => { :wrapper => 'inline' } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns center">
+    <%= f.submit %>
+  </div>
+<% end %>

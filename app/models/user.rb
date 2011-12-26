@@ -33,6 +33,8 @@ class User < ActiveRecord::Base
   has_many :conversations, :through => :conversation_flags
   has_many :post_categories
   has_many :posts
+  has_one  :profile
+
 
   validates :first_name, :last_name, :presence => true
   
@@ -42,7 +44,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name,
-    :timezone, :slug
+    :timezone, :slug, :full_name
 
   extend FriendlyId
   friendly_id :full_name, :use => :slugged

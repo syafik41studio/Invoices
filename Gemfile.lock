@@ -42,6 +42,7 @@ GEM
     ckeditor (3.6.3)
       mime-types (~> 1.16)
       orm_adapter (~> 0.0.5)
+    cocoon (1.0.15)
     devise (1.4.7)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -135,6 +136,7 @@ DEPENDENCIES
   annotate
   cancan
   ckeditor
+  cocoon
   devise
   execjs
   factory_girl

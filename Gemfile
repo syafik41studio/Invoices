@@ -20,6 +20,7 @@ gem "ckeditor"
 
 
 gem 'simple_form'
+gem "cocoon"
 
 gem 'pg','0.11.0'
 

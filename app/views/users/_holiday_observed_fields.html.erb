@@ -1,0 +1,20 @@
+<div class="nested-fields subcolumns">
+  <div class="c80r">
+    <div class="c80l">
+      <%= f.input :simple_date, :label => false, :wrapper_html => {:class => "subcr type-text" }, :input_html => {:class => "datepicker"}  %>
+    </div>
+    <div class="c80l">
+      <%= f.input :holiday_name, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "name"   %>
+    </div>
+    <div class="c80l">
+      <%= f.input :holiday_description, :label => false, :wrapper_html => {:class => "subcr type-text" }, :placeholder => "description" %>
+    </div>
+    <div class="c20l">
+      <%= link_to_remove_association "( - )", f %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+</script>

@@ -1,4 +1,4 @@
-<% simple_form_for(@conversation, :remote => true, :html => {:class => "yform", :style => "overflow:hidden;"}) do |f| %>
+<%= simple_form_for(@conversation, :remote => true, :html => {:class => "yform", :style => "overflow:hidden;"}) do |f| %>
   <div id= "message_errors" style="display:none"></div>
   Recipient :
   <%= f.text_field :recipient_tokens, "data-pre" => @users.map(&:attributes).to_json  %>

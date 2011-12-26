@@ -19,7 +19,13 @@ App::Application.routes.draw do
   get "time_zone" => "pages#time_zone"
 
   devise_for :users
-  resources :users
+  resources :users do
+    get "edit_profile", :on => :member
+    put "update_profile", :on => :member
+    post "create_profile", :on => :collection
+  end
+
+#  resources :profiles
   
   resources :billing_entities
 

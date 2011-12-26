@@ -1,7 +1,194 @@
-<%= simple_form_for @user, :method=> :put do |f|  %>
-  Name : <%= @user.full_name %> <br />
-  Email : <%= @user.email %> <br />
-  Timezone : <%= f.input :timezone, :collection => ActiveSupport::TimeZone.all.map{|tz| [tz, tz.to_s.split(") ").last]} %><br />
-  <%= f.button :submit %>
+<h2>Profile</h2>
+<div class="subcolumns">
+  <div class="c50l">
+    <h2><%= @user.full_name %> (<%= link_to "Edit Profile", edit_profile_user_path(@user), :class => "internal-link" %>) </h2>
+    <h6><%= @profile.description if @profile %></h6>
+    <%= link_to "send me a message", "", :class => "internal-link" %>
+  </div>
+  <div class="c50r">
+    <div class="subcolumns">
+      <div class="c50l">
+        My Speciality
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "No Description" : @profile.speciality  %>
+      </div>
+    </div>
 
-<% end %>
+    <div class="subcolumns">
+      <div class="c50l">
+        My Gender
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.gender  %>
+      </div>
+    </div>
+
+    <div class="subcolumns">
+      <div class="c50l">
+        Languages I speak
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.languages  %>
+      </div>
+    </div>
+    <div class="subcolumns">
+      <div class="c50l">
+        Accepting New Patients
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.accepting_new_patient  %>
+      </div>
+    </div>
+  </div>
+</div>
+<h4>About Me</h4>
+<p class="info">
+  <%= @profile.blank? ? "No Description" : @profile.about_me  %>
+</p>
+
+<h4>Biography</h4>
+<p class="info">
+  <%= @profile.blank? ? "No Description" : @profile.biography  %>
+</p>
+
+<h4>About My Practice</h4>
+<p class="info">
+  <%= @profile.blank? ? "No Description" : @profile.practice  %>
+</p>
+
+<h4>My Training and Certification</h4>
+<p class="info">
+  <%= @profile.blank? ? "No Description" : @profile.training_and_cert  %>
+</p>
+
+<h4>My Contact Information</h4>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Work Phone
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.work_phone  %>
+      </div>
+    </div>
+  </div>
+  <div class="c50r">
+    <div class="subcolumns">
+      <div class="c50l">
+        Extension : <%= @profile.blank? ? "" : @profile.ext  %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Work Cell Phone
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.work_cell_phone  %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Work Fax Number
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.work_fax_number  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Email Address
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.email_address  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Office Address
+      </div>
+      <div class="c50r">
+        : <%= @profile.blank? ? "" : @profile.office_address  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+      </div>
+      <div class="c50r">
+        <%= @profile.blank? ? "" : @profile.office_address_2  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+      </div>
+      <div class="c50r">
+        <%= @profile.blank? ? "" : @profile.city  %>
+        <%= @profile.blank? ? "" : @profile.state  %>
+        <%= @profile.blank? ? "" : @profile.zip  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Working Hours
+      </div>
+      <div class="c50r">
+        <%= @profile.blank? ? "" : @profile.working_hours  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Preferred Contact Method
+      </div>
+      <div class="c50r">
+        <%= @profile.blank? ? "" : @profile.prefered_contact_method  %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcolumns">
+      <div class="c50l">
+        Holidays Observed
+      </div>
+      <div class="c50r">
+      </div>
+    </div>
+  </div>
+</div>
+
