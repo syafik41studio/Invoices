@@ -36,19 +36,19 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $("div.expand").toggler({method: "slideFadeToggle"});
-    <%#*$("#speciality_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#gender_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#languages_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#accepting_new_patient_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#about_me_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#biography_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#practice_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#training_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#work_phone_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#work_cell_phone_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#work_fax_num_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#email_address_expand").toggler({method: "slideFadeToggle"});%>
-    <%#*$("#office_address_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#speciality_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#gender_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#languages_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#accepting_new_patient_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#about_me_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#biography_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#practice_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#training_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#work_phone_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#work_cell_phone_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#work_fax_num_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#email_address_expand").toggler({method: "slideFadeToggle"});%>
+<%#*$("#office_address_expand").toggler({method: "slideFadeToggle"});%>
     
   })
 </script>
@@ -412,12 +412,16 @@
           </div>
         </div>
         <div class="c50r">
-          <%= f.simple_fields_for :holiday_observeds, :wrapper => 'inline' do |holiday_observed| %>
-            <%= render 'holiday_observed_fields', :f => holiday_observed %>
-          <% end %>
-          <%= link_to_add_association '( + )', f, :holiday_observeds, :render_options => { :wrapper => 'inline' } %>
         </div>
       </div>
+    </div>
+  </div>
+  <div id="holiday_observeds">
+    <%= f.simple_fields_for :holiday_observeds, :wrapper => 'inline' do |holiday_observed| %>
+      <%= render 'holiday_observed_fields', :f => holiday_observed %>
+    <% end %>
+    <div class="links">
+      <%= link_to_add_association '( + )', f, :holiday_observeds, :render_options => { :wrapper => 'inline' } %>
     </div>
   </div>
   <div class="subcolumns center">

@@ -187,6 +187,19 @@
         Holidays Observed
       </div>
       <div class="c50r">
+        <% @profile.holiday_observeds.each do |holiday| %>
+        <div class="subcolumns">
+          <div class="c33l">
+            <%= holiday.holiday_date.strftime("%b %d") rescue nil %>
+          </div>
+          <div class="c66r">
+            <%= holiday.holiday_name %>
+          </div>
+          <div class="c80l">
+            <%= holiday.holiday_description %>
+          </div>
+        </div>
+        <% end %>
       </div>
     </div>
   </div>
