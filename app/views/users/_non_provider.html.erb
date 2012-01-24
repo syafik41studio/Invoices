@@ -1,0 +1,220 @@
+<h2>Profile</h2>
+<div class="subcolumns">
+  <div class="c50l">
+    <h2><%= @user.full_name %>
+      <% if is_my_profile?(@user) %>
+        (<%= link_to "Edit Profile", edit_profile_user_path(@user), :class => "internal-link" %>)
+      <% end %>
+    </h2>
+    <% if (@profile and @profile.description_pv.eql?(false)) or is_my_profile?(@user) %>
+      <h6><%= @profile.blank? ? "" : @profile.description %></h6>
+    <% end %>
+    <% if user_signed_in? && !is_my_profile?(@user)  %>
+      <%= link_to "send me a message", send_message_user_path(@user), :class => "internal-link" %>
+    <% end %>
+  </div>
+  <div class="c50r">
+    <% if (@profile and @profile.speciality_pv.eql?(false)) or is_my_profile?(@user) %>
+      <div class="subcolumns">
+        <div class="c50l">
+          My Occupation
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.speciality  %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if (@profile and @profile.gender_pv.eql?(false)) or is_my_profile?(@user) %>
+      <div class="subcolumns">
+        <div class="c50l">
+          My Gender
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.gender  %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if (@profile and @profile.languages_pv.eql?(false)) or is_my_profile?(@user) %>
+      <div class="subcolumns">
+        <div class="c50l">
+          Languages I speak
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.languages  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% if (@profile and @profile.about_me_pv.eql?(false)) or is_my_profile?(@user) %>
+  <h4>About Me</h4>
+  <p class="info">
+    <%= @profile.blank? ? "No Description" : @profile.about_me  %>
+  </p>
+<% end %>
+
+<% if (@profile and @profile.biography_pv.eql?(false)) or is_my_profile?(@user) %>
+  <h4>Biography</h4>
+  <p class="info">
+    <%= @profile.blank? ? "No Description" : @profile.biography  %>
+  </p>
+<% end %>
+
+<% if (@profile and @profile.practice_pv.eql?(false)) or is_my_profile?(@user) %>
+  <h4>My Interests</h4>
+  <p class="info">
+    <%= @profile.blank? ? "No Description" : @profile.practice  %>
+  </p>
+<% end %>
+
+<% if (@profile and @profile.training_and_cert_pv.eql?(false)) or is_my_profile?(@user) %>
+  <h4>Looking For</h4>
+  <p class="info">
+    <%= @profile.blank? ? "No Description" : @profile.training_and_cert  %>
+  </p>
+<% end %>
+
+<h4>My Contact Information</h4>
+<div class="subcolumns">
+  <div class="c50l">
+    <% if (@profile and @profile.work_phone_pv.eql?(false)) or is_my_profile?(@user) %>
+      <div class="subcolumns">
+        <div class="c50l">
+          Phone Number
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.work_phone  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if (@profile and @profile.work_phone_pv.eql?(false)) or is_my_profile?(@user) %>
+    <div class="c50r">
+      <div class="subcolumns">
+        <div class="c50l">
+          Extension : <%= @profile.blank? ? "" : @profile.ext  %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% if (@profile and @profile.work_cell_phone_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Cell Phone Number
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.work_cell_phone  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if (@profile and @profile.work_fax_number_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Fax Number
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.work_fax_number  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if (@profile and @profile.email_address_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Email Address
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.email_address  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if (@profile and @profile.office_address_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Address
+        </div>
+        <div class="c50r">
+          : <%= @profile.blank? ? "" : @profile.office_address  %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+        </div>
+        <div class="c50r">
+          <%= @profile.blank? ? "" : @profile.office_address_2  %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+        </div>
+        <div class="c50r">
+          <%= @profile.blank? ? "" : @profile.city  %>
+          <%= @profile.blank? ? "" : @profile.state  %>
+          <%= @profile.blank? ? "" : @profile.zip  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if (@profile and @profile.working_hours_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Preferred Contact Hours
+        </div>
+        <div class="c50r">
+          <%= @profile.blank? ? "" : @profile.working_hours  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if (@profile and @profile.prefered_contact_method_pv.eql?(false)) or is_my_profile?(@user) %>
+  <div class="subcolumns">
+    <div class="c50l">
+      <div class="subcolumns">
+        <div class="c50l">
+          Preferred Contact Method
+        </div>
+        <div class="c50r">
+          <%= @profile.blank? ? "" : @profile.prefered_contact_method  %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+

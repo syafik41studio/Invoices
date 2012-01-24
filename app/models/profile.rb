@@ -1,8 +1,11 @@
 class Profile < ActiveRecord::Base
 
+  has_attached_file :avatar, :styles => { :large => "120x120>", :thumb => "33x33#", :medium => "50x50#" }
+
   belongs_to :user
   has_many :holiday_observeds
 
+  validates :full_name, :presence => true
   accepts_nested_attributes_for :holiday_observeds, :reject_if => :all_blank, :allow_destroy => true
   
   attr_accessor :full_name
@@ -13,9 +16,11 @@ class Profile < ActiveRecord::Base
     :accepting_new_patient_pv, :about_me_pv, :biography_pv, :practice_pv, :training_and_cert_pv,
     :work_phone_pv, :ext_pv, :work_cell_phone_pv, :work_fax_number_pv, :email_address_pv,
     :office_address_pv, :office_addresss_2_pv, :city_pv,:state_pv, :zip_pv, :working_hours_pv,
-    :prefered_contact_method_pv, :holiday_observed_pv, :description, :description_pv, :holiday_observeds_attributes
+    :prefered_contact_method_pv, :holiday_observed_pv, :description, :description_pv, :holiday_observeds_attributes,
+    :avatar_file_name, :avatar_file_size, :avatar_content_type, :avatar_updated_at, :avatar
 
   after_save :set_user_full_name
+
 
   def set_user_full_name
     arr_name = self.full_name.split(" ")

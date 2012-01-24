@@ -27,6 +27,7 @@ class Patient < ActiveRecord::Base
 
 
   paginates_per 1
+
   has_attached_file :avatar, :styles => {:thumb => ["50x50#", :png] }
   validates :name, :presence => true
   validates :age, :presence => true, :inclusion => { :in => 0..9 }

@@ -1,1 +1,1 @@
-$("#like-<%= @post.id %>").html("<%= escape_javascript(render "like_template", {:post => @post}) %>");
+$("#like-<%= @post.id %>").html("<%= escape_javascript(render "posts/like_template", {:post => @post}) %>");

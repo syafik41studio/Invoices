@@ -1,0 +1,6 @@
+<% if @user %>
+  <%= image_tag((@user.profile.avatar.url(:large) rescue "/images/no_user.jpg"), :height => "80px", :width => "110px") %>
+  <div id="follow_content" class="subcolumns" style="margin-top: 10px;">
+    <%= render "shared/follow_content" %>
+  </div>
+<% end %>

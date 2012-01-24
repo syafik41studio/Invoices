@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   has_many :post_categories
   has_many :posts
   has_one  :profile
+  has_many :followers, :foreign_key => "following_id"
+  has_many :followings, :class_name => "Follower", :foreign_key => "follower_id"
+  has_many :contacts, :as => :entity
 
 
   validates :first_name, :last_name, :presence => true
@@ -63,6 +66,10 @@ class User < ActiveRecord::Base
 
   def has_role?(role)
     self.roles.map{|b| b.name}.include?(role)
+  end
+
+  def already_followed_by?(user)
+    self.followers.map { |follow| follow.follower_id  }.include?(user.id)
   end
   
 end

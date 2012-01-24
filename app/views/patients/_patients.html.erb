@@ -21,14 +21,14 @@
         Most Recent Progress Notes :
       </div>
       <div>
-        <%= link_to 'Show', patient %> |
-        <%= link_to 'Edit', edit_patient_path(patient) %> |
-        <%= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete %>
+        <%= link_to 'Show', user_patient_path(@user, patient) %> |
+        <%= link_to 'Edit', edit_user_patient_path(@user, patient) %> |
+        <%= link_to 'Destroy', user_patient_path(@user, patient), :confirm => 'Are you sure?', :method => :delete %>
       </div>
     </div>
     <div style="clear:both;"></div>
   </div>
 <% end %>
 <div id="patients">
-  <%=  link_to "More", patients_path(:page => @page), :remote => true%>
+  <%=  link_to "More", user_patients_path(@user, :page => @page), :remote => true %>
 </div>

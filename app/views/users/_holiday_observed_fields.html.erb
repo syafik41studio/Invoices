@@ -15,6 +15,8 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-</script>
+<% if f.object.new_record? %>
+  <script type="text/javascript">
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+  </script>
+<% end %>

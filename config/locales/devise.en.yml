@@ -1,5 +1,4 @@
 # Additional translations at http://github.com/plataformatec/devise/wiki/I18n
-
 en:
   errors:
     messages:
@@ -10,7 +9,6 @@ en:
       not_saved:
         one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} errors prohibited this %{resource} from being saved:"
-
   devise:
     failure:
       already_authenticated: 'You are already signed in.'
@@ -24,6 +22,10 @@ en:
     sessions:
       signed_in: 'Signed in successfully.'
       signed_out: 'Signed out successfully.'
+    devise/sessions:
+      user:
+        signed_in: 'Signed in successfully.'
+        signed_out: 'Signed out successfully.'
     passwords:
       send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'

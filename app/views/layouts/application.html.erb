@@ -12,7 +12,6 @@
     <![endif]-->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" type="text/css" />
     <%= javascript_include_tag "jquery.min.js" %>
-    <%= include_tiny_mce_if_needed %>
     <%= javascript_include_tag "rails" %>
     <%= javascript_include_tag "autocomplete-rails.js" %>
     <%= javascript_include_tag "jquery.periodicalupdater.js" %>
@@ -58,7 +57,32 @@
               <% end %>
             </span>
           </div>
-          <h1>System Title</h1>
+          <div class="subcolumns">
+            <div class="c20l">
+              <h1>Logo</h1>
+            </div>
+            <div class="c20l">
+              <div class="c50l">
+                <h4><%= link_to "Home", root_path %></h4>
+              </div>
+              <% if user_signed_in? %>
+                <div class="c50l">
+                  <h4><%= link_to "My Profile", user_path(current_user) %></h4>
+                </div>
+              <% end %>
+            </div>
+            <div class="c25l">
+              <%= text_field_tag "search", "", :placeholder => "Search", :style => "width:85%" %>
+            </div>
+            <div class="c20l">
+              <div class="c50l">
+                <h4>Setting</h4>
+              </div>
+              <div class="c50l">
+                <h4>Help</h4>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="teaser">
         </div>
@@ -66,10 +90,16 @@
           <div id="col1">
             <div id="col1_content" class="clearfix">
               <h3>Left Pane contents</h3>
-              <%= link_to "Patients", patients_path %> <br />
-              <%= link_to "Billing Entites", billing_entities_path %> <br />
-              <%= link_to "Whiteboard", posts_path %> <br />
-              <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, conversations_path %>
+              <% if !controller_name.eql?("users") %>
+                <% if current_user and current_user.has_role?("Provider") %>
+                  <%= link_to "Patients", patients_path %> <br />
+                <% end %>
+                <%= link_to "Billing Entites", billing_entities_path %> <br />
+                <%= link_to "Whiteboard", posts_path %> <br />
+                <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, conversations_path %>
+              <% else %>
+                <%= render "shared/profile_left_content" %>
+              <% end %>
             </div>
           </div>
           <div id="col2">

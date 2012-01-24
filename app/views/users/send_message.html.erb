@@ -1,0 +1,25 @@
+<h2>Send Message</h2>
+<%= simple_form_for(@conversation, :remote => true, :html => {:class => "full", :style => "overflow:hidden;"}) do |f| %>
+  <div id= "message_errors" style="display:none"></div>
+  <div class="subcolumns">
+    <div class="c20l">
+      Recipient
+    </div>
+    <div class="c80r">
+      : <%= @user.full_name %>
+      <%= f.input :recipient_tokens, :input_html => {:value => @user.id}, :label =>  false, :as => :hidden  %>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <div class="c20l">
+      Message
+    </div>
+    <div class="c80r">
+      <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 41, :style => "width:455px"}%>
+      <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
+    </div>
+  </div>
+  <div class="subcolumns">
+    <%= f.submit "Send Message" %>
+  </div>
+<% end %>

@@ -1,7 +1,7 @@
-<%= render "right_pane" %>
-<%= render "post_view_menu" %>
+<%= render "posts/right_pane" %>
+<%= render "posts/post_view_menu" %>
 <% @posts.each do |post| %>
-  <%= render "post", {:post => post, :with_comment => false, :mine => false} %>
+  <%= render "posts/post", {:post => post, :with_comment => false, :mine => false} %>
 <% end %>
 
 <%= paginate @posts %>

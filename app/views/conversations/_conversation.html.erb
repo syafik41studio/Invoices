@@ -1,5 +1,5 @@
 <div class="list_message <%= conversation.is_unread?(current_user) ? "unread_message" : "" %>">
-  <img width="" height="" class="img_stle" src="/images/photo.png" />
+  <%= conversation_title_photo(conversation) %>
   <div class="desc_message">
     <a href="#" class="hovertitle">
       <div class="name_msg">

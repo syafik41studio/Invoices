@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   helper :all
 
   before_filter :set_time_zone
-  after_filter :loop_redirect_until_timezone_exist
  
   def parsedatefield(entity,fieldname)
     if !params[entity][fieldname].nil?
@@ -21,13 +20,25 @@ class ApplicationController < ActionController::Base
 	  retvalue 
   end
 
-  def conversation_title(conversation)
-    members_of_conversation = conversation.users.where("users.id <> ?", current_user.id)
+  def conversation_title(conversation, user = current_user)
+    members_of_conversation = conversation.users.where("users.id <> ?", user.id)
     if members_of_conversation.count >= 3
-      members_of_conversation[0..2].map{|user| user.full_name}.join(", ") + " and #{pluralize(members_of_conversation.count - 3,"other", "others")}"
+      members_of_conversation[0..2].map{|u| u.full_name}.join(", ") + " and #{pluralize(members_of_conversation.count - 3,"other", "others")}"
     else
-      members_of_conversation[0..2].map{|user| user.full_name}.join(", ")
+      members_of_conversation[0..2].map{|u| u.full_name}.join(", ")
     end
+  end
+
+  def is_my_profile?(user)
+    current_user.eql?(user)
+  end
+
+  def controller_name
+    params[:controller]
+  end
+
+  def action_name
+    params[:action]
   end
 
   def set_time_zone
@@ -38,14 +49,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def loop_redirect_until_timezone_exist
-  end
-
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = "Access denied."
     redirect_to root_url
   end
 
-  helper_method :conversation_title
+  helper_method :conversation_title, :is_my_profile?
 
 end

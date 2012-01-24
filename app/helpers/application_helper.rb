@@ -28,4 +28,35 @@ module ApplicationHelper
     end
   end
 
+  def conversation_photos(conversation, user = current_user)
+    members_of_conversation = conversation.users.where("users.id <> ?", user.id)
+    profiles = members_of_conversation[0..3].map{|u| u.profile}
+    photos = []
+    profiles.each do |p|
+      photo_url = p.nil? ? "/images/photo.png" : p.avatar.url(:thumb)
+      photos.push(content_tag(:div, image_tag(photo_url, :height => 20, :width => 20), :style => "float:left;height:20px;width:20px") )
+    end
+    photos.join(" ").html_safe
+  end
+
+  def conversation_title_photo(conversation, user = current_user)
+    members_of_conversation = conversation.users.where("users.id <> ?", user.id)
+    profile = members_of_conversation[0].profile
+    photo_url = if profile and !profile.avatar_file_name.blank?
+      profile.avatar.url(:medium)
+    else
+      "/images/photo.png"
+    end
+    image_tag(photo_url)
+  end
+
+  def photo_profile(profile)
+    photo_url = if profile and !profile.avatar_file_name.blank?
+      profile.avatar.url(:medium)
+    else
+      "/images/photo.png"
+    end
+    image_tag(photo_url,:width => "50px", :height => "50px")
+  end
+
 end

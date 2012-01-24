@@ -1,11 +1,12 @@
 class PatientsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :get_user
   
   # GET /patients
   # GET /patients.xml
   def index
     @title = "Patients"
-    @patients = Patient.order(:name).page(params[:page])
+    @patients = Patient.where("user_id = ?", current_user.id).order(:name).page(params[:page])
     @page = params[:page] ? params[:page].to_i + 1 : 2
     respond_to do |format|
       format.html # index.html.erb
@@ -13,6 +14,7 @@ class PatientsController < ApplicationController
       format.xml  { render :xml => @patients }
     end
   end
+
 
   # GET /patients/1
   # GET /patients/1.xml
@@ -47,7 +49,7 @@ class PatientsController < ApplicationController
   # POST /patients
   # POST /patients.xml
   def create
-    @patient = Patient.new(params[:patient])
+    @patient = Patient.new(params[:patient].merge(:user_id => current_user.id))
 
     respond_to do |format|
       if @patient.save
@@ -87,4 +89,11 @@ class PatientsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def get_user
+    @user = User.find(params[:user_id])
+  end
+  
 end

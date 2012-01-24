@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @profile = @user.profile
+    @posts = @user.posts.page params[:page]
   end
 
   def update
@@ -23,10 +23,10 @@ class UsersController < ApplicationController
 
   def create_profile
     @user = User.find(params[:profile][:user_id])
-    @profile = Profile.new(params[:profile])
+    @user_profile = Profile.new(params[:profile])
     @redirect = create_profile_users_path 
-    if @profile.save
-      redirect_to user_path(@user), :notice => "user profile has been successfully updated."
+    if @user_profile.save
+      redirect_to user_path(@user), :notice => "Changes to your profile have been saved successfully."
     else
       render :edit_profile
     end
@@ -34,14 +34,54 @@ class UsersController < ApplicationController
 
   def update_profile
     @user = User.find(params[:profile][:user_id])
-    @profile = @user.profile
-    @redirect = update_profile_user_path(@profile)
-    @profile.attributes = params[:profile]
-    if @profile.save
-      redirect_to user_path(@user), :notice => "user profile has been successfully updated."
+    @user_profile = @user.profile
+    @redirect = update_profile_user_path(@user_profile)
+    if @user_profile.update_attributes(params[:profile])
+      redirect_to user_path(@user), :notice => "Changes to your profile have been saved successfully."
     else
       render :edit_profile
     end
   end
+
+  def send_message
+    @conversation = Conversation.new
+    @user = User.find(params[:id])
+  end
+
+  def load_profile
+    @user = User.find(params[:id])
+    @profile = @user.profile
+  end
+
+  def load_posts
+    @user = User.find(params[:id])
+    @posts = @user.posts.page params[:page]
+  end
+
+  def follow
+    @user = User.find(params[:id])
+    follower_user = current_user
+    Follower.create(
+      :following_user => @user,
+      :follower_user => follower_user
+    )
+  end
+
+  def unfollow
+    @user = User.find(params[:id])
+    follow = Follower.where("following_id = ? and follower_id = ?", @user.id, current_user.id).first
+    follow.destroy
+  end
+
+  def load_all_follower
+    @user = User.find(params[:id])
+    @followers = @user.followers.includes(:follower_user => :profile)
+  end
+  
+  def load_all_following
+    @user = User.find(params[:id])
+    @followings = @user.followings.includes(:following_user => :profile)
+  end
+
   
 end

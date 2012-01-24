@@ -23,9 +23,17 @@ App::Application.routes.draw do
     get "edit_profile", :on => :member
     put "update_profile", :on => :member
     post "create_profile", :on => :collection
+    get "send_message", :on => :member
+    get "load_posts", :on => :member
+    get "load_profile", :on => :member
+    get "unfollow", :on => :member
+    get "follow", :on => :member
+    get "load_all_follower", :on => :member
+    get "load_all_following", :on => :member
+    resources :provider_contacts
   end
 
-#  resources :profiles
+  #  resources :profiles
   
   resources :billing_entities
 
