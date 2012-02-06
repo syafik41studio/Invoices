@@ -1,0 +1,17 @@
+<%= simple_form_for(resource, :as => resource_name,:html => {:class=>"yform"} , :url => session_path(resource_name)) do |f| %>
+  <fieldset>
+    <Legend>Sign in</legend>
+    <div class="subcolumns">
+      <div class="c80l">
+        <%= f.input :email,:wrapper_html => { :class => "subcl type-text"}%>
+        <%= f.input :password,:wrapper_html => { :class => "subcl type-text"}%>
+        <%= f.input :remember_me, :wrapper_html => { :class => "subcl type-check"}, :as => :boolean if devise_mapping.rememberable? %>
+        <%= f.button :submit, "Sign in"  %>
+      </div>
+      <div class="c20r">
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+
+<%= render :partial => "devise/shared/links" %>

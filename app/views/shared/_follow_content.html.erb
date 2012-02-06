@@ -1,0 +1,49 @@
+<% if @user.has_role?("Provider") %>
+  <h5>Followers (<%= @user.followers.count %>)</h5>
+  <div class="subcolumns">
+    <% @user.followers.limit(10).each do |follower| %>
+      <% user = follower.follower_user  %>
+      <% profile = user.profile  %>
+      <div class="c33l">
+        <%= link_to image_tag((profile.avatar.url(:thumb) rescue "/images/no_user.jpg"), :width => "33px", :height => "33px"), user_path(user)  %>
+      </div>
+    <% end %>
+  </div>
+  <% if @user.followers.count > 0 %>
+    <div class="subcolumns">
+      <%= link_to "View All >>", load_all_follower_user_path(@user), :remote => true, :id => "view_all_follower"  %>
+      <div id="dialog-follower" title="Follower for <%= @user.full_name %>">
+        <div style='margin-top:20px'><center><img src='/images/loader.gif'></img></center></div>
+      </div>
+    </div>
+    <%= render "dialog.js" %>
+  <% end %>
+  <div class="subcolumns">
+    <%= render "shared/follow_link" %>
+  </div>
+  <% if is_my_profile?(@user) %>
+    <div class="subcolumns" style="margin-top: 20px;">
+      <%= link_to "My Contacts", user_provider_contacts_path(@user) %>
+    </div>
+  <% end %>
+<% else %>
+  <h5>Follows (<%= @user.followings.count %>)</h5>
+  <div class="subcolumns">
+    <% @user.followings.limit(10).each do |following| %>
+      <% user = following.following_user  %>
+      <% profile = user.profile  %>
+      <div class="c33l">
+        <%= link_to image_tag((profile.avatar.url(:thumb) rescue "/images/no_user.jpg"), :width => "33px", :height => "33px"), user_path(user)  %>
+      </div>
+    <% end %>
+  </div>
+  <% if @user.followings.count > 0 %>
+    <div class="subcolumns">
+      <%= link_to "View All >>", load_all_following_user_path(@user), :remote => true, :id => "view_all_following"  %>
+      <div id="dialog-following" title="Follows for <%= @user.full_name %>">
+        <div style='margin-top:20px'><center><img src='/images/loader.gif'></img></center></div>
+      </div>
+    </div>
+    <%= render "dialog.js" %>
+  <% end %>
+<% end %>

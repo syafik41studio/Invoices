@@ -1,0 +1,15 @@
+<div class="comment_wraper">
+  <% profile = comment.user.profile %>
+  <%= image_tag((profile.avatar.url(:medium) rescue "/images/no_user.jpg"), :width => "50px", :height => "50px") %>
+  <div class="desc_message">
+    <div class="title_msg">
+      <div class="author-msg"><%= comment.user.full_name %></div>
+      <div class="date_post">  <%= "(#{comment.created_at.in_time_zone.strftime("%B %d, %Y %I:%M %p")})" %></div>
+    </div>
+    <div class="clear"></div>
+    <div class="title-post"><%= comment.title %></div>
+    <div class="content_msg">
+      <%= raw comment.comment %>
+    </div>
+  </div>
+</div>

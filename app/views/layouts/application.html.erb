@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title><%= title %></title>
+    <%= csrf_meta_tag %>
+    <%= stylesheet_link_tag "applayout", :media =>"all" %>
+    <%= stylesheet_link_tag "token-input-facebook" %>
+    <%= stylesheet_link_tag "token-input" %>
+    <!--[if lte IE 7]>
+    <%= stylesheet_link_tag "yaml/patches/patch_nav_vlist", :media =>"all" %>
+    <![endif]-->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" type="text/css" />
+    <%= javascript_include_tag "jquery.min.js" %>
+    <%= javascript_include_tag "rails" %>
+    <%= javascript_include_tag "autocomplete-rails.js" %>
+    <%= javascript_include_tag "jquery.periodicalupdater.js" %>
+    <%= javascript_include_tag "jquery.updater.js" %>
+    <%= javascript_include_tag "jquery-show-popup.js" %>
+    <%= javascript_include_tag "jquery.tokeninput.js" %>
+    <%= javascript_include_tag "jquery.tipsy.js" %>
+    <%= javascript_include_tag "detect_timezone.js" %>
+    <%= javascript_include_tag "jquery.slideto.min.js" %>
+    <%= javascript_include_tag "application.js" %>
+    <%= javascript_include_tag "collapse-expand.js" %>
+    <%= javascript_include_tag :cocoon %>
+    <%= javascript_include_tag :ckeditor %>
+    <%= yield :add_billing %>
+    <% if current_user %>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $.get('/conversations/notifications');
+        })
+      </script>
+    <% end %>
+    <!-- embedded styles for dynamic layout options -->
+    <style type="text/css">
+      #js-info { display:block; padding: 10px 20px; background: #fee; color: #800; margin: 0 0 10px 0; }
+      .js #js-info { display:none; }
+    </style>
+  </head>
+  <body onload="calculate_time_zone()">
+    <div class="page_margins">
+      <div id="border-top">
+        <div id="edge-tl"></div>
+        <div id="edge-tr"></div>
+      </div>
+      <div class="page">
+        <div id="header" role="banner">
+          <div id="topnav" role="contentinfo">
+            <span>
+              <%= DateTime.now.strftime('%d %B %Y') %> | <a href="#">Help/FAQ</a> |
+              <% if user_signed_in? %>
+                Signed in as <%= link_to current_user.email, user_path(current_user) %> | <%= link_to "Sign out", destroy_user_session_path,:method=>:delete %>
+              <% else %>
+                <%= link_to "Sign in", new_user_session_path %>
+              <% end %>
+            </span>
+          </div>
+          <div class="subcolumns">
+            <div class="c20l">
+              <h1>Logo</h1>
+            </div>
+            <div class="c20l">
+              <div class="c50l">
+                <h4><%= link_to "Home", root_path %></h4>
+              </div>
+              <% if user_signed_in? %>
+                <div class="c50l">
+                  <h4><%= link_to "My Profile", user_path(current_user) %></h4>
+                </div>
+              <% end %>
+            </div>
+            <div class="c25l">
+              <%= text_field_tag "search", "", :placeholder => "Search", :style => "width:85%" %>
+            </div>
+            <div class="c20l">
+              <div class="c50l">
+                <h4>Setting</h4>
+              </div>
+              <div class="c50l">
+                <h4>Help</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="teaser">
+        </div>
+        <div id="main">
+          <div id="col1">
+            <div id="col1_content" class="clearfix">
+              <h3>Left Pane contents</h3>
+              <% if !controller_name.eql?("users") %>
+                <% if current_user and current_user.has_role?("Provider") %>
+                  <%= link_to "Patients", patients_path %> <br />
+                <% end %>
+                <%= link_to "Billing Entites", billing_entities_path %> <br />
+                <%= link_to "Whiteboard", posts_path %> <br />
+                <%=h link_to "Messages <span id='notification-messages'></span>".html_safe, conversations_path %>
+              <% else %>
+                <%= render "shared/profile_left_content" %>
+              <% end %>
+            </div>
+          </div>
+          <div id="col2">
+            <div id="col2_content" class="clearfix">
+              <div class="info">
+                <%= yield :right_pane %>
+              </div>
+            </div>
+          </div>
+          <div id="col3">
+            <div id="col3_content" class="clearfix">
+              <p class="notice"><%= notice %></p>
+              <p class="alert"><%= alert %></p>
+              <%= yield %>
+              <%= yield :popup_content %>
+            </div>
+            <!-- IE Column Clearing -->
+            <div id="ie_clearing"> &#160; </div>
+          </div>
+        </div>
+        <!-- begin: #footer -->
+        <div id="footer">Layout based on <a href="http://www.yaml.de/">YAML</a>
+        </div>
+      </div>
+      <div id="border-bottom">
+        <div id="edge-bl"></div>
+        <div id="edge-br"></div>
+      </div>
+    </div>
+    <div>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+    <%= javascript_include_tag "jquery-ui.min.js"%>
+    <%= javascript_include_tag "../stylesheets/yaml/add-ons/accessible-tabs/jquery.tabs.js" %>
+    <%= javascript_include_tag "../stylesheets/yaml/add-ons/syncheight/jquery.syncheight.js" %>
+    <%= javascript_include_tag "../stylesheets/yaml/core/js/yaml-focusfix.js" %>
+  </body>
+</html>
+

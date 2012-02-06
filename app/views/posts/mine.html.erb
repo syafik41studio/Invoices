@@ -1,0 +1,7 @@
+<%= render "posts/right_pane" %>
+<%= render "posts/post_view_menu" %>
+<% @posts.each do |post| %>
+  <%= render "posts/post", {:post => post, :with_comment => false, :mine => true} %>
+<% end %>
+
+<%= paginate @posts %>

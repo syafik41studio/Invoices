@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+<p>
+      <%= image_tag @patient.avatar.url(:thumb) %>
+    </p>
+<p>
+  <b>Name:</b>
+  <%= @patient.name %>
+</p>
+
+<p>
+  <b>Age:</b>
+  <%= @patient.age %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @patient.description %>
+</p>
+
+<p>
+  <b>Primary contact:</b>
+  <%= @patient.primary_contact %>
+</p>
+
+<p>
+  <b>Relation:</b>
+  <%= @patient.relation %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @patient.email %>
+</p>
+
+<p>
+  <b>Phone number:</b>
+  <%= @patient.phone_number %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @patient.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @patient.state %>
+</p>
+
+
+<%= link_to 'Edit', edit_patient_path(@patient) %> |
+<%= link_to 'Back', patients_path %>

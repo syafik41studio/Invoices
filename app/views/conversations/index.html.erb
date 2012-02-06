@@ -1,0 +1,51 @@
+<div class="tag_menu">
+  <span class="title_message">Messages</span>
+  <!--<a class="btn_search" href="#"></a>-->
+  <input type="text" id="input-search-conversation" name="conversation_id" />
+  <dl id="sample" class="dropdown">
+    <dt><a href="#"><span> <%= params[:query].blank? || params[:query].eql?("read_unread") ? "Inbox" : params[:query].capitalize %></span></a></dt>
+    <dd>
+      <ul>
+        <li><%= link_to "Inbox", conversations_path(:query => "read_unread") %></li>
+        <li><%= link_to "Archived", conversations_path(:query => "archive") %></li>
+        <li><%= link_to "Unread", conversations_path(:query => "unread") %></li>
+        <!--<li><%= link_to "Sent", conversations_path(:query => "sent") %></li>-->
+      </ul>
+    </dd>
+  </dl>
+  <%= link_to "+ New Message", "#", :id => "btn_new_message", :class => "btn_newmessage" %>
+  <%= link_to "+ New Message", new_conversation_path, :id => "new-conversation", :class => "btn_newmessage", :remote => true, :style => "display:none" %>
+</div>
+<div id="list-messages">
+  <% @conversations.each do |conversation| %>
+    <div id="conversation-<%= conversation.id %>">
+      <%= render "conversation", {:conversation => conversation} %>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#input-search-conversation").tokenInput("/search_conversations_by_name.json", {
+      propertyToSearch: "title",
+      tokenLimit: 1,
+      resultsFormatter: function(item){ return "<li>" + "<img src='/images/photo.png' height='25px' width='25px' />" + "<div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.title + "</div><div class='email'>" + item.last_message + "</div></div></li>" },
+      tokenFormatter: function(item) { return "<li><p>" + item.title + "</p></li>" },
+      onAdd:function(item){
+        $(window.location).attr('href', '/conversations/'+item.id);
+      }
+    });
+    $('.token-input-list').css({"float":"right", "clear":"none","margin-left":"10px", "height":"26px"});
+    $('.token-input-input-search-conversation').css("width", "24px!important");
+    $("#btn_new_message").click(function(){
+      $('#new-conversation').click();
+    })
+  });
+</script>
+
+<%#= javascript_include_tag "../stylesheets/yaml/core/js/yaml-focusfix.js" %>
+<%= javascript_include_tag "jquery.dropdown"  %>
+
+<% content_for :popup_content do %>
+  <%= render "shared/popup_content" %>
+<% end %>

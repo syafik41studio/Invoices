@@ -1,0 +1,35 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+en:
+  date:
+     formats:
+       default: "%m/%d/%Y"
+  site:
+     name: 'System'
+  user:
+     suspended_identifiers:
+       yes: Yes
+       no: No
+  contact:
+     relationship_identifiers:
+       mother: Mother
+       father: Father
+       brother: Brother
+       sister: Sister
+       motherinlaw: Mother in Law
+       fatherinlaw: Father in Law
+       relative: Relative
+       guardian: Legal Guardian
+       prospect: Prospect
+       physician: Referring Physicians
+     disposition_identifiers:
+       initial: Initial Contact
+       interested: Interested
+       PendingApproval: Pending Insurance Approval
+  patient:
+    gender_identifiers:
+      male: Male
+      female: Female
+    contactmethod_identifiers:
+      test1: Test1
+      test2: Test2

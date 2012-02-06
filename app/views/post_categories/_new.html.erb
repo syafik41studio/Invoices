@@ -1,0 +1,8 @@
+<% simple_form_for(@post_category, :remote => true, :html => {:class => "yform"}) do |f| %>
+  <fieldset>
+    <div id= "message_errors" style="display:none"></div>
+    <%= f.input :name %>
+    <%= f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id} %>
+    <%= f.input :parent_id, :collection => PostCategory.mine(current_user) %>
+  </fieldset>
+<% end %>

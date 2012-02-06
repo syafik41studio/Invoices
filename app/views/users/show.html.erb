@@ -1,0 +1,5 @@
+<% if @user.has_role?("Provider") %>
+  <%= render "provider" %>
+<% else %>
+  <%= render "non_provider" %>
+<% end %>

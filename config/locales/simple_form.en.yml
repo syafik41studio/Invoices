@@ -1,0 +1,19 @@
+en:
+  simple_form:
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+       text: 'Mandatory field'
+       mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<attr title="Mandatory field">*</attr>'
+    error_notification:
+      default_message: "Some errors were found, please take a look:"
+    labels:
+      user:
+        email:'E-mail'
+    hints:
+    placeholders:
+      user:
+        rememberme: 'Remember me'

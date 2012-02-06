@@ -1,0 +1,161 @@
+<% content_for :add_billing do  %>
+
+  <%= stylesheet_link_tag "jquery-ui" %>
+  <%= javascript_include_tag "jquery-ui.min" %>
+  <style>
+    span{
+      display: block;
+    }
+  </style>
+  <script>
+    $(document).ready(function() {
+      $("#billing_entity_billing_format").change(function() {
+        var billing_format = $('select#billing_entity_billing_format :selected').val();
+        if(billing_format == "custom"){
+          $("div#billing-format-custom").show();
+          $("div#billing-format-cms-1500").hide();
+        }else{
+          $("div#billing-format-custom").hide();
+          $("div#billing-format-cms-1500").show();
+        }
+        return false;
+      });
+      
+      $("input:radio[@name='billing_entity[invoice_id]']").click(function() {
+        var value  = $(this).val();
+        var text  = $(this).next();
+        $('#billing_entity_invoice_id').val(value);
+        $('#billing_entity_invoice_id_name').text("Invoice Name : "+text.text());
+      });
+      
+      var name = $("input[@name='billing_entity[invoice_id]']:checked"),
+      //content = $( "#custom-field-name" ),
+
+      allFields = $( [] ).add( name ).add( content ),
+      tips = $( ".validateTips" );
+
+      function updateTips( t ) {
+        tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+        setTimeout(function() {
+          tips.removeClass( "ui-state-highlight", 1500 );
+        }, 500 );
+      }
+
+      function checkLength( o, n, min, max ) {
+        if ( o.val().length > max || o.val().length < min ) {
+          o.addClass( "ui-state-error" );
+          updateTips( "Length of " + n + " must be between " +
+            min + " and " + max + "." );
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function checkRegexp( o, regexp, n ) {
+        if ( !( regexp.test( o.val() ) ) ) {
+          o.addClass( "ui-state-error" );
+          updateTips( n );
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      $( "#dialog-form" ).dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Add Custom Invoice": function() {
+            var bValid = true;
+            allFields.removeClass( "ui-state-error" );
+            var name = $("input[@name='billing_entity[invoice_id]']:checked");
+            //bValid = bValid && checkLength( name, "username", 3, 16 );
+            //bValid = bValid && checkLength( content, "email", 6, 80 );
+
+            //bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "name may consist of a-z, 0-9, underscores, begin with a letter." );
+            //bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "contente may consist of a-z, 0-9, underscores, begin with a letter." );
+
+            if ( bValid ) {
+            //  $( "#billing-format-custom" ).append(
+             // "<input name='billing_entity[invoice_id]' style='display:none;' value='"+name.val()+"' />");
+              $( this ).dialog( "close" );
+            }
+          },
+          Cancel: function() {
+            $( this ).dialog( "close" );
+          }
+        },
+        close: function() {
+          allFields.val( "" ).removeClass( "ui-state-error" );
+        }
+      });
+
+      $( "#custom-field" ).click(function() {
+        $( "#dialog-form" ).dialog( "open" );
+      });
+    });
+  </script>
+<% end %>
+<div id="dialog-form" title="Custom Invoice">
+  <p class="validateTips">All form fields are required.</p>
+  <%= simple_form_for(@billing_entity) do |f| %>
+
+    <%= f.association :invoice,:label => "Invoice name",  :as => :radio, :style => "width:150px;"%>
+  <% end %>
+</div>
+
+
+
+<%= simple_form_for(@billing_entity) do |f| %>
+  <%= f.error_notification %>
+  <div class="inputs" style="border: 1px solid black;padding:20px;">
+    <%= f.input :name, :label => 'Entity Name' %>
+    <%= f.input :branch %>
+    <%= f.input :entity_type, :label => 'Type', :collection => ["Insurance", "School District", "CCS"] %>
+    <%= f.input :active, :label => 'Entity Active' %>
+    <%= f.input :billing_format, :collection => [["CMS 1500 (Paper)", "paper"], ["CMS 1500 (Electronic)", "electronic"], ["Custom Generate Invoice", "custom"]], :prompt => "Select Billing Format" %>
+    <%= f.input :clearing_house %>
+    <div id="billing-format-custom" style="<%= 'display:none;' if @billing_entity.billing_format && @billing_entity.billing_format!="custom" || @billing_entity.billing_format.nil? %>">
+      Custom Invoice <%= link_to "Add/Change", "#", :id => "custom-field" %>
+      <%=  f.hidden_field :invoice_id %>
+      <span id="billing_entity_invoice_id_name"> Invoice Name : <%= @billing_entity.invoice.name rescue nil %></span>
+    </div>
+    <div id="billing-format-cms-1500" style="<%= 'display:none;' if @billing_entity.billing_format && @billing_entity.billing_format=="custom" || @billing_entity.billing_format.nil? %>">
+      <%= f.input :mediacare %>
+      <%= f.input :mediacaid %>
+      <%= f.input :tricare, :label => "Tricare CHAMPUS" %>
+      <%= f.input :champva, :label => "CHAMPVA" %>
+      <%= f.input :healt_plan, :label => "Group Healt Plan" %>
+      <%= f.input :black_ling, :label => "FECA Black Lung"%>
+      <%= f.input :other %>
+      <%= f.input :insurance_plan %>
+      <%= f.input :accept_assignment %>
+    </div>
+
+  </div>
+  <div class="inputs" style="border-top:none; border: 1px solid black;padding:20px;">
+    <%= f.input :departement %>
+    <%= f.input :attn %>
+    <%= f.input :address_line_1 %>
+    <%= f.input :address_line_2 %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :zip %>
+    <%= f.input :phone %>
+    <%= f.input :fax %>
+    <%= f.input :other_info_1 %>
+    <%= f.input :other_info_2 %>
+    <%= f.input :other_info_3 %>
+    <%= f.input :other_info_4 %>
+    <%= f.input :comment %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,0 +1,36 @@
+<%= render "profile_part.css" %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("div.collapse").hide();
+    $('div.collapse').click(function(event){
+      event.stopPropagation();
+    });
+
+<%#*$("div.expand").toggler();%>
+    $('div.expand').click(function() {
+      $(".collapse").hide();
+      var togglable = $(this).next();
+      togglable.toggle();
+      if(togglable.is(':visible')) {
+        togglable.find('input:visible:enabled:first').focus();
+      };
+      return false;
+    });
+    
+    $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    $("body").click(function(){
+      $(".collapse").each(function(){
+        if($(this).css("display") == "block"){
+          $(this).hide();
+        }
+      })
+    })
+  })
+</script>
+
+<% if @user.has_role?("Provider") %>
+  <%= render "provider_form" %>
+<% else %>
+  <%= render "non_provider_form" %>
+<% end %>

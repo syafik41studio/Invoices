@@ -1,0 +1,38 @@
+<div class="list_message <%= conversation.is_unread?(current_user) ? "unread_message" : "" %>">
+  <%= conversation_title_photo(conversation) %>
+  <div class="desc_message">
+    <a href="#" class="hovertitle">
+      <div class="name_msg">
+        <%= link_to "#{conversation_title(conversation)} #{conversation.unread_messages(current_user).count > 1 ? "(#{conversation.unread_messages(current_user).count})" : ""}", conversation_path(conversation) %>
+      </div>
+    </a>
+    <div class="date_msg">
+      <%#= custom_time(conversation.messages.last.created_at) %>
+      <%= conversation.messages.last.created_at.in_time_zone.strftime("%B %d, %Y %I:%M %p") %>
+    </div>
+    <div class="content_msg">
+      <p><%= conversation.messages.last.body %></p>
+      <div class="opt_message">
+        <% if conversation.is_archive?(current_user) %>
+          <%= link_to "", unarchive_conversation_path(conversation), :remote => true, :class => "opt_4", :title => "Unarchive", :id => "unarchive-#{conversation.id}" %>
+        <% else %>
+          <%= link_to "", archive_conversation_path(conversation), :remote => true, :class => "opt_2", :title => "Archive", :id => "archive-#{conversation.id}" %>
+        <% end %>
+        <% if conversation.is_unread?(current_user) %>
+          <%= link_to "", mark_as_read_conversation_path(conversation), :remote => true, :class => "opt_3", :title => "Mark as Read", :id => "mark_as_read-#{conversation.id}" %>
+        <% elsif conversation.is_read?(current_user) %>
+          <%= link_to "", mark_as_unread_conversation_path(conversation), :remote => true, :class => "opt_1", :title => "Mark as Unread", :id => "mark_as_unread-#{conversation.id}" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#mark_as_read-<%= conversation.id %>').tipsy({gravity: 'se'});
+    $('#mark_as_unread-<%=  conversation.id %>').tipsy({gravity: 'se'});
+    $('#archive-<%=  conversation.id %>').tipsy({gravity: 'se'});
+    $('#unarchive-<%=  conversation.id %>').tipsy({gravity: 'se'});
+  })
+</script>

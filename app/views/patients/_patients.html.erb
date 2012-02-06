@@ -1,0 +1,34 @@
+<% @patients.each do |patient| %>
+  <div>
+    <div style="float:left;">
+      <%= image_tag patient.avatar.url(:thumb) %>
+    </div>
+    <div style="float:left;">
+      <div>
+        <%= patient.name %> (<%= patient.age %>), <%= patient.description %>
+      </div>
+      <div>
+        <%= patient.city %>, <%= patient.state %>
+      </div>
+      <div>
+        <%= patient.visits %>
+      </div>
+      <div>
+        Primary Contact: <%= patient.primary_contact.capitalize %>(<%= patient.relation %>),
+        Preferred Contact: <%= patient.email %> or <%= patient.phone_number %>
+      </div>
+      <div>
+        Most Recent Progress Notes :
+      </div>
+      <div>
+        <%= link_to 'Show', user_patient_path(@user, patient) %> |
+        <%= link_to 'Edit', edit_user_patient_path(@user, patient) %> |
+        <%= link_to 'Destroy', user_patient_path(@user, patient), :confirm => 'Are you sure?', :method => :delete %>
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+<% end %>
+<div id="patients">
+  <%=  link_to "More", user_patients_path(@user, :page => @page), :remote => true %>
+</div>

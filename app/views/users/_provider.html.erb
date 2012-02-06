@@ -1,0 +1,35 @@
+<style type="text/css">
+  .profile{
+    padding:10px 4px 4px 4px;
+  }
+  .tab_link{
+    font-size: 150%;
+    color: #222222;
+    text-decoration: none;
+  }
+  .selected_tab{
+    font-size: 150%;
+    color: red;
+  }
+</style>
+<h2>Profile</h2>
+<div class="subcolumns" style="background-color: #F5F5F5;color: #666666;padding:5px 3px 3px 3px;">
+  <div class="c33l">
+    <div class="c50l">
+      <%= link_to "Post".html_safe, load_posts_user_path(@user), :class => "tab_link", :onclick => "$('#content-profile').html('');$('#loader').show();return false;", :remote => true %>
+    </div>
+    <div class="c50r">
+      <%= link_to "About".html_safe, load_profile_user_path(@user), :class => "tab_link", :onclick => "$('#content-profile').html('');$('#loader').show();return false;", :remote => true %>
+    </div>
+  </div>
+</div>
+<div class="subcolumns profile">
+  <div id="loader" style="display: none;">
+    <center>
+      <%= image_tag "/images/loader.gif" %>
+    </center>
+  </div>
+  <div id="content-profile" class="subcolumns">
+    <%= render "user_posts" %>
+  </div>
+</div>

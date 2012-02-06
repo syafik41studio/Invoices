@@ -1,0 +1,10 @@
+<div class="list_message">
+  <%= photo_profile(message.sender.profile) %>
+  <div class="desc_message">
+    <a href="#" class="hovertitle"><div class="name_msg"><%= message.sender.full_name %></div></a>
+    <div class="date_msg"><%= message.created_at.in_time_zone.strftime("%B %d, %Y %I:%M %p") %></div>
+    <div class="content_msg2">
+      <p><%= message.body %></p>
+    </div>
+  </div>
+</div>

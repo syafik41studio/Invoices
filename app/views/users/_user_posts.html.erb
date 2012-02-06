@@ -1,0 +1,4 @@
+<% @posts.each do |post| %>
+  <%= render "posts/post", {:post => post, :with_comment => false, :mine => is_my_profile?(@user)} %>
+<% end %>
+<%= paginate @posts %>

@@ -1,0 +1,76 @@
+<%= simple_form_for([@parent,@contact],:wrapper=>false,:html => { :class=>"full", :multipart =>true}) do |f| %>
+  <fieldset>
+    <Legend>Contact Details</legend>
+    <%= render "shared/form_errors", :object => @contact %>
+    <div class="subcolumns">
+      <div class="c25l">
+        <%= f.input :firstname,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :lastname,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :middleinitial,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25r">
+        <%= f.input :relatedas,  :collection => Contact.relations,:value_method=>:first,:label_method=>:second, :wrapper_html=>{:class=>"subcr type-select"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :email,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :contactsince,:as=>:datepicker, :wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :gender, :collection => Contact.genders,:value_method=>:first,:label_method=>:second,  :wrapper_html=>{:class=>"subcr type-select"}%>
+      </div>
+      <div class="c25r">
+        <%= f.input :disposition, :collection => Contact.disposition, :value_method=>:first,:label_method=>:second, :wrapper_html=>{:class=>"subcr type-select"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :homephone,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :workphone,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25l">
+        <%= f.input :cellphone,:wrapper_html => { :class => "subcl type-text"}%>
+      </div>
+      <div class="c25r">
+        <%= f.input :fax,:wrapper_html => { :class => "subcr type-text"}%>
+      </div>
+      <div class="c50l">
+        <%= f.input :address1,:wrapper_html => { :class => "subcl type-text"}%>
+        <%= f.input :address2,:wrapper_html => { :class => "subcl type-text"}%>
+        <div class="c50l">
+          <%= f.input :city,:wrapper_html => { :class => "subcl type-text"}%>
+        </div>
+        <div class="c25l">
+          <%= f.input :state,:wrapper_html => { :class => "subcl type-text"}%>
+        </div>
+        <div class="c25r">
+          <%= f.input :zip,:wrapper_html => { :class => "subcr type-text"}%>
+        </div>
+        <div class="subcl type-text">
+          <%= f.label :photo %>
+          <%= f.file_field :photo %>
+          <% if  @contact.photo.present? %>
+            <%= image_tag @contact.photo.url(:thumb) %>
+          <% else %>
+            <%= image_tag '/images/photo.png',:size=>"100x75"%>
+          <% end %>
+        </div>
+      </div>
+      <div class="c50r">
+        <%= f.input :lastcommunicatedon,:as=>:datepicker,:wrapper_html => { :class => "subcl type-text"}%>
+        <%= f.input  :prefcontactmethod,:as=>:select,:wrapper_html=>{:class=>"subcl type-select"}, :collection => Contact.contactmethods,:value_method=>:first,:label_method=>:second %>
+        <%= f.input :comments, :as=>:text, :wrapper_html => { :class=>"subcl type-text"},:input_html=> {:rows=>4}%>
+        <%= f.input :isprimary,:wrapper_html => { :class => "subcr type-check"}%>
+      </div>
+    </div>
+    <div class="type-button">
+      <%= f.button "submit" %>
+    </div>
+  </fieldset>
+<% end %>
+

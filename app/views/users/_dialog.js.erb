@@ -1,0 +1,51 @@
+<% if @user.has_role?("Provider") %>
+  <script type="text/javascript">
+    $(function() {
+      $( "#dialog-follower" ).dialog({
+        autoOpen: false,
+        height: 300,
+        width: 500,
+        modal: true,
+        resizable: false,
+        buttons: {
+          Cancel: function() {
+            $( this ).dialog( "close" );
+          }
+        },
+        close: function() {
+          $(this).html("<div style='margin-top:20px'><center><img src='/images/loader.gif'></img></center></div>");
+        }
+      });
+
+      $( "#view_all_follower" )
+      .click(function() {
+        $( "#dialog-follower" ).dialog( "open" );
+      });
+    })
+  </script>
+<% else %>
+  <script type="text/javascript">
+    $(function(){
+      $( "#dialog-following" ).dialog({
+        autoOpen: false,
+        height: 300,
+        width: 500,
+        modal: true,
+        resizable: false,
+        buttons: {
+          Cancel: function() {
+            $( this ).dialog( "close" );
+          }
+        },
+        close: function() {
+          $(this).html("<div style='margin-top:20px'><center><img src='/images/loader.gif'></img></center></div>");
+        }
+      });
+
+      $( "#view_all_following" )
+      .click(function() {
+        $( "#dialog-following" ).dialog( "open" );
+      });
+    })
+  </script>
+<% end %>

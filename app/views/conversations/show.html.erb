@@ -1,0 +1,44 @@
+<div class="tag_menu">
+  <span class="title_message"><%= conversation_title(@conversation) %></span>
+  <%= simple_form_for :search, :url => search_conversation_path(@conversation), :method => :get do |f|%>
+    <%= f.input :conversation_id, :label => false, :as => :hidden, :input_html => {:value => @conversation.id} %>
+    <%= f.input :body, :label => false, :input_html => {:style => "height:26px;width:165px;margin-left: 5px;
+    margin-right: 5px;padding-left: 5px;"} %>
+  <% end %>
+  <dl id="sample" class="dropdown">
+    <dt><a href="#"><span> Actions</span></a></dt>
+    <dd>
+      <ul>
+        <li><%= link_to "Mark as Unread", mark_as_unread_conversation_path(@conversation) %></li>
+        <% if @conversation.is_archive?(current_user) %>
+          <li><%= link_to "Unarchive", unarchive_conversation_path(@conversation) %></li>
+        <% else %>
+          <li><%= link_to "Archive", archive_conversation_path(@conversation) %></li>
+        <% end %>
+      </ul>
+    </dd>
+  </dl>
+  <%= link_to "Back to message", conversations_path, :class => "btn_newmessage" %>
+</div>
+<% @messages.each do |message| %>
+  <%= render :partial => "message", :locals => {:message => message} %>
+<% end %>
+<span id="add_message"></span>
+
+<div class="reply_form">
+  <div class="content">
+    <% simple_form_for(@conversation, :remote => true, :html => {:class => "yform"}) do |f| %>
+      <%= f.input :recipient_tokens, :as => :hidden, :input_html => {:value => "#{@conversation.users.map(&:id).join(",")}"}  %>
+      <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 60 }%>
+      <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
+      <br/>
+      <br/>
+      <%= f.submit "#{@conversation.users.count > 2 ? "Reply All" : "Reply"}", :class => "btn_reply" %>
+    <% end %>
+    <!--<a href="#" class="attahce_btn"></a>
+    <a href="#" class="image_btn"></a> -->
+  </div>
+</div>
+
+<%#= javascript_include_tag "../stylesheets/yaml/core/js/yaml-focusfix.js" %>
+<%= javascript_include_tag "jquery.dropdown"  %>

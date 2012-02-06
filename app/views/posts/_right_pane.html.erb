@@ -1,0 +1,5 @@
+<% content_for :right_pane do %>
+  <%= link_to " Most Liked Posts", posts_path(:sort => "total_like DESC") %> <br />
+  <%= link_to " Most Commented Posts", posts_path(:sort => "total_comment ASC") %> <br />
+  <%= link_to " Most Recent Posts", posts_path(:sort => "posts.created_at DESC") %> <br />
+<% end %>

@@ -1,0 +1,30 @@
+<%= simple_form_for(@post, :html => {:class => "yform"}) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.input :title,:wrapper_html => { :class => "subcl type-text"} %>
+  <%= f.ckeditor :description, :label => "Content", :input_html => { :toolbar => 'Easiest',:style => "width:100%" } %>
+  <br />
+  <%= f.input :status, :collection => [["Publish","Publish"], ["Save as Draft", "Draft"]], :as => :radio, :label => false, :wrapper_html => {:class => "type-check"},:item_wrapper_tag => :div %>
+  <br />
+  <%= f.input :tag_list, :label => "Tags" %>
+  <br />
+  <label> Category   <small><%#= link_to "Add new Category", new_post_category_path, :remote => true, :id => "new-category-link" %></small></label>
+  <div id="category_choices">
+    <% PostCategory.all.each do |cat| %>
+      <%= check_box_tag "post[post_category_ids][]", cat.id, @post.post_categories.include?(cat) %> <%= cat.name %> <br />
+    <% end %>
+  </div>
+  <br />
+  <div class="type-button">
+    <%= f.submit %>
+  </div>
+<% end %>
