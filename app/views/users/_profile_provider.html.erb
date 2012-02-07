@@ -9,7 +9,16 @@
       <h6><%= @profile.blank? ? "" : @profile.description %></h6>
     <% end %>
     <% if user_signed_in? && !is_my_profile?(@user)  %>
-      <%= link_to "send me a message", send_message_user_path(@user), :class => "internal-link" %>
+      <%= link_to "send me a message", "#", :id => "btn_new_message", :class => "internal-link" %>
+      <%= render "shared/popup_content" %>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('#btn_new_message').click(function() {
+            $('#dialog-form').dialog('open');
+            $("#new-message").load('<%= send_message_user_path(@user) %>');
+          });
+        })
+      </script>
     <% end %>
   </div>
   <div class="c50r">

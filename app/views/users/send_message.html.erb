@@ -1,25 +1,22 @@
-<h2>Send Message</h2>
-<%= simple_form_for(@conversation, :remote => true, :html => {:class => "full", :style => "overflow:hidden;"}) do |f| %>
+<%= simple_form_for(@conversation, :remote => true, :html => {:id => "new_conversation", :class => "yform", :style => "overflow:hidden;"}) do |f| %>
   <div id= "message_errors" style="display:none"></div>
   <div class="subcolumns">
     <div class="c20l">
       Recipient
     </div>
-    <div class="c80r">
-      : <%= @user.full_name %>
-      <%= f.input :recipient_tokens, :input_html => {:value => @user.id}, :label =>  false, :as => :hidden  %>
+    <div class="c66r">
+      <%= @user.full_name  %>
+      <%= f.input :recipient_tokens, :as => :hidden, :input_html => {:value => @user.id}, :wrapper_html => {:class => "subcr type-text" }  %>
     </div>
   </div>
-  <div class="subcolumns">
+  <div class="subcolumns" style="margin-top: 20px;">
     <div class="c20l">
       Message
     </div>
-    <div class="c80r">
-      <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 41, :style => "width:455px"}%>
-      <%= f.input :owner_id,  :as =>  :hidden, :input_html => { :value => current_user.id } %>
+    <div class="c66r">
+      <%= f.input :body, :label => false, :as => :text,  :input_html => { :rows => 6 , :cols => 35, :style => "width:283px;height: 140px;"}%>
+      <%= f.input :owner_id, :as => :hidden, :input_html => { :value => current_user.id } %>
     </div>
   </div>
-  <div class="subcolumns">
-    <%= f.submit "Send Message" %>
-  </div>
 <% end %>
+

@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @profile = @user.profile
     @posts = @user.posts.page params[:page]
   end
 
@@ -46,6 +47,7 @@ class UsersController < ApplicationController
   def send_message
     @conversation = Conversation.new
     @user = User.find(params[:id])
+    render :layout => false
   end
 
   def load_profile
